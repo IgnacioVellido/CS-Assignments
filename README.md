@@ -25,7 +25,7 @@ Recopilación de trabajos, ejercicios y apuntes realizados durante el grado de I
 **3º**
 * Primer cuatrimestre    
     * [Modelos de Computación](https://github.com/IgnacioVellido/MC)
-    * [Diseño y Desarrollo de Sistemas de Información](3GII/DDSI)
+    * [Diseño y Desarrollo de Sistemas de Información](https://github.com/iscoct/DDSI)
     * [Fundamentos de Redes](3GII/FR)
     * [Informática Gráfica](3GII/IG)   
     * [Ingeniería de Servidores](3GII/ISE)
