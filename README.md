@@ -14,18 +14,26 @@ Recopilación de trabajos, ejercicios y apuntes realizados durante el grado de I
     * [Arquitectura de Computadores](2GII/AC)
     * [Algorítmica](2GII/AL)
     * [Estructura de Computadores](2GII/EC)
-    * [Estructuras de Datos](2GII/ED)
+    * [Estructuras de Datos](https://github.com/IgnacioVellido/ED-Quien-es-Quien)
     * [Fundamentos de Bases de Datos](2GII/FBD)
     * [Fundamentos de Ingeniería del Software](2GII/FIS)
     * [Inteligencia Artificial](2GII/IA)
-    * [Programación y Diseño Orientado a Objetos](2GII/PDOO)
+    * [Programación y Diseño Orientado a Objetos](https://github.com/IgnacioVellido/PDOO-Qytetet)
     * [Sistemas Concurrentes y Distribuidos](2GII/SCD)
     * [Sistemas Operativos](2GII/SO)
 
 **3º**
 * Primer cuatrimestre    
-    * [Computación Ubicua e Inteligencia Ambiental](3GII/CUIA)
+    * [Modelos de Computación](https://github.com/IgnacioVellido/MC)
     * [Diseño y Desarrollo de Sistemas de Información](3GII/DDSI)
     * [Fundamentos de Redes](3GII/FR)
-    * [Informática Gráfica](3GII/IG)
+    * [Informática Gráfica](3GII/IG)   
     * [Ingeniería de Servidores](3GII/ISE)
+ * Segundo cuatrimestre
+    * [Aprendizaje Automático](https://github.com/IgnacioVellido/AA)
+    * [Ingeniería del Conocimiento](https://github.com/IgnacioVellido/IC)
+    * [Técnicas de los Sistemas Inteligentes - Práctica 1](https://github.com/IgnacioVellido/TSI-1)
+    * [Técnicas de los Sistemas Inteligentes - Práctica 2](https://github.com/IgnacioVellido/TSI-2)
+    * [Técnicas de los Sistemas Inteligentes - Práctica 3](https://github.com/IgnacioVellido/TSI-3)
+    * [Tecnologias Web](https://github.com/iscoct/TW)
+    
