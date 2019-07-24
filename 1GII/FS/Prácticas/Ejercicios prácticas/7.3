@@ -1,0 +1,8 @@
+#!/bin/bash
+# Uso: Averiguar el nombre del proceso que consume más memoria en el sistema.
+printf "El proceso que consume más memoria en el sistema es:    "
+ps -eo cmd --sort size | tail -1
+printf "\nCon un consumo en kilobytes de:    "
+ps -eo size --sort size | tail -1
+
+# O en una sola orden: ps -eo cmd,size --sort size | tail -1

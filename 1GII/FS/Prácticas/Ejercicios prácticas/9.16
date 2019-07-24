@@ -1,0 +1,22 @@
+break 15
+break 29
+break 42
+break 47
+run
+
+info locals
+p/x $pc
+p/x $sp
+continue
+info locals
+p/x $pc
+p/x $sp
+continue
+info locals
+p/x $pc
+p/x $sp
+continue
+info locals
+p/x $pc
+p/x $sp
+continue

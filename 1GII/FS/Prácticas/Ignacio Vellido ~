@@ -1,0 +1,121 @@
+# Ignacio Vellido Expósito
+# Ejercicio1: ejercicio1.sh
+#!/bin/bash
+
+if [ $# != 1 ] ; then
+printf "%s\n" "Número incorrecto de argumentos" ; exit 
+fi
+if ! test -d $1 ; then
+printf "%s\n" "$1 no es un directorio" ; exit
+fi
+
+_Menu () {
+printf "%s\n" "Seleccione una opción de las siguientes" 
+printf "%s\n" "1) Localizar por tamaño" 
+printf "%s\n" "2) Localizar subdirectorios" 
+printf "%s\n" "3) Salir" 
+} 
+
+
+while :
+do
+	_Menu 
+	read -p "Elija la opción deseada: " OPCION
+	case $OPCION in
+		1) read -p "Introduzca el tamaño del archivo (en bloques): " BLOQUES ;;
+		   #find $1 -size +$BLOQUES | cut -d '/' -f2 | (faltaría mostrar el archivo y su tamaño)
+		2) for ARCHIVO in $(ls $1) 
+		   do
+			if test -d $ARCHIVO ; then $ARCHIVO | sort -r >> subdirectorios ; fi
+		   done ;;
+		3) exit ;;
+		*) printf "%s\n" "Opción no válida" ;;
+	esac
+done
+
+·····················································································
+#Ejercicio2: ejercicio2.sh
+#!/bin/bash
+
+_funcPS() {
+ps -e -o pid,ppid,comm,uid
+}
+
+_funcPS > procesosActuales &
+
+read -p "Introduzca su número identificativo: " $NUMERO
+
+contador=0 
+
+while read $LINEA
+do
+	if [ $(cut -d '	' -f2) -eq $NUMERO ] ; then 
+	$contador++
+	fi 
+done < procesosActuales
+
+echo $contador
+
+·····················································································
+#Ejercicio3
+# Nombre: makefile
+# Uso: make
+
+CC=gcc
+INCLUDE=./cabeceras
+LIB=./componentes
+
+ejercicio3: pesos.o leerCantidadDePesos.o introducirPesos.o
+	$(CC) -o $@ $^ -I$(INCLUDE) -L$(LIB) -lbibliorecaCadenas
+pesos.o:  pesos.cpp cabecera.h
+	$(CC) -c pesos.cpp
+leerCantidadDePesos.o: leerCantidadDePesos.cpp
+	$(CC) -c leerCantidadDePesos.cpp
+introducirPesos.o: introducirPesos.cpp
+	$(CC) -c introducirPesos.cpp
+libbibliotecaCadenas.a: $(LIB)/*.o
+	ar -rvs libbibliotrecaCadenas.a $(LIB)/*.o
+leerCadena.o: leerCadena.cpp
+	$(CC) -c leerCadena.cpp
+mostraCadena.o: mostrarCadena.cpp
+	$(CC) -c mostrarCadena.cpp
+Copiar:
+	cp ./$(LIB)/bibliotecaCadenas.a $HOME
+
+·····················································································
+#Ejercicio4
+
+g++ -g -c MCM.cpp 
+g++ -g -c MinComMul.cpp
+g++ -o ejercicio4 MCM.o MinComMul.o
+
+gdb ejercicio4
+# En principio, el problema se debe situar en la función MinComMul, ya que es la única que 
+# realiza
+operaciones.
+break MinComMul
+(cuando nos pida valores introducimos 2 y 1)
+display i
+display mulx
+c
+break 11
+# Cuando llega a la línea 11, siendo la primera iteración, vemos que la variable "i" tiene el 
+# valor
+2, haciendo la operación incorrectamente (ya que debería empezar por 1).
+break 13
+c
+# Lo comprobamos viendo que "mulx" tiene el valor 4 en vez de 2 (el correcto). Listando el 
+código:
+list 
+# Vemos que al principio del bucle se le añade 1 a la variable i, por tanto esa línea sobra.
+
+#Archivo depura.gdb:
+run
+break MinComMul
+display i
+display mulx
+c
+break 11
+break 13
+c
+list

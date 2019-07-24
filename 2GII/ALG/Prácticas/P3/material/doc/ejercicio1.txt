@@ -1,0 +1,35 @@
+Datos del problema
+ M = Suma a alcanzar
+ C = Enteros a sumar
+ S = Para cada entero de C, indica si se añade a la solución o no
+
+Representación de la solución
+ Vector de bool S con valor:
+  - True: El elemento Si se coge
+  - False: El elemento Si no se coge
+
+Formulación matemática
+ Minimizar el número de elementos que se necesitan para la suma ?
+
+
+Candidatos: C: Enteros proporcionados
+
+Función solución: True si los valores de S suman M
+
+Función de selección: El número más alto de los restantes
+
+Función factible: True si el conjunto solución no suma un valor superior a M
+
+Añadir un objeta a la solución si...al añadirlo se obtiene la suma M o un valor menor
+
+Función objetivo: Minimizar el número de elementos elegidos en S
+
+Obtiene la función de selección la solución óptima ? (contraejemplo en caso contrario)
+
+
+Eficiencia
+  O(n2) para la función ordenación por burbuja
+  O(n) (peor caso, se eligen todos) para el algoritmo Greedy 
+
+Dificultad
+2

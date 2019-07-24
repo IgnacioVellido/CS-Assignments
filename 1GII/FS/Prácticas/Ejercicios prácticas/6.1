@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if (( $# != 2 )) ; then printf "Se deben introducir dos argumentos\n" ; exit ; fi
+if [ -f $1 ] ; then printf "$1 no es un directorio existente\n" ; exit ; fi
+#if 
+for archivo in $(ls $1) ;
+do
+  if (test -f $archivo && wc -c $archivo > $2)
+    then echo $archivo >> archivosSizN.txt
+  fi
+done
+cat archivosSizN.txt

@@ -1,0 +1,23 @@
+# Nombre: makefile
+# Uso: make
+
+COMP="g++"
+OBJ="Functions.o ArrayProc.o Main.o"
+
+ejercicio3:$OBJ
+	$COMP -o ejercicio3 -c $OBJ
+
+Functions.o: Functions.hpp
+	$COMP -g -c Funcions.o -I./
+
+ArrayProc.o: ArrayProc.hpp
+	$COMP -g -c ArrayProc.o -I./
+
+Main.o:
+	$COMP -g -c Main.cpp
+
+touch:
+	touch *.cpp
+
+clear:
+	rm ejercicio3 *.o

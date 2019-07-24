@@ -1,0 +1,40 @@
+#!/bin/bash
+
+function _CompruebaArgumentos {
+	if (( $# == 0 )) 
+	 then printf "Falta el nombre del archivo\n" ; return 1 
+	fi
+	if [ -f "$1" ] 
+	 then : 
+	  else printf "El archivo no existe\n" ; return 1 
+	fi
+
+	return 0
+}
+
+if (_CompruebaArgumentos $1) 
+ then : 
+  else exit 
+fi
+
+function _Menu {
+	printf "\nSeleccione opción:\n"
+	printf "1) Localizar cartucho\n"
+	printf "2) Mostrar cartuchos de estantería o apartado\n"
+	printf "3) Salir\n"
+	printf "Elija la opción deseada:\n\n"
+}
+
+while true ;
+do 
+	_Menu
+	read opcion
+	case $opcion in
+		1) read -p "Introduzca el artículo	" articulo
+		   grep $articulo $1 | cut -d '	' -f3 ;;
+		2) read -p "Introduzca la estantería o el apartado de la misma	" apartado
+		   grep $apartado $1 | cut -d '	' -f1 ;;
+		3) printf "Fin del procesamiento del archivo\n" ; exit ;;
+		*) printf "Opción incorrecta\n" ;;
+	esac
+done

@@ -1,0 +1,23 @@
+# Se compila el programa y se prueba con los resultados que dan bien
+break ecuacionator
+break 43 # línea solucion2
+display discrim
+run
+
+# Se ve que el programa, con los valores en los que discrim > 0 entra a calcular las raíces, tambien se # puede comprobar cambiando los valores de a,b,c con "set variable"
+
+# Probando con los resultados que dan mal
+break ecuacionator
+break 43 # línea solucion2
+display discrim
+run
+info locals
+
+# Se ve que discrim tiene un valor que negativo (-832) pero el programa accede a la parte else del 
+# programa,ya que num1 y num2 tienen valor, cosa que no debería ser.
+# El problema se encuentra entonces en la condición que evalua el if, fijandonos se ve que ecuacionator
+# devuelve siempre 0 para un número negativo, y que el if se cumpliría si ecuacionator es menor estricto
+# de 0, por tanto la sentencia if debería quedar así para que funcione: if (ecuacionator(a, b, c)<=0) 
+
+
+

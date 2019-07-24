@@ -1,0 +1,31 @@
+Principio de optimalidad
+Copiar apuntes
+
+Ecuación recurrente
+Copiar apuntes
+
+Estrategia de aplicación de la formula
+ - Tablas utilizadas, número de filas y columnas
+   Siendo:
+	L = Suma a alcanzar
+        K = Número de elementos (enteros) proporcionados
+
+   La tabla M tiene un tamaño de K+1 filas y L+1 columnas
+
+ - Orden y forma de rellenarla
+   La primera fila se rellena a 0 ya que indica que no tenemos elementos (K=0)
+   La primera columna también se rellena a 0 puesto que señala que la suma a alcanzar es 0 (por tanto, no se necesita ningún elemento Ki)
+
+   El resto de la tabla se rellena aplicando la ecuación recurrente, recorriendola por filas
+   
+
+Reconstrucción de la solución
+Copiar apuntes
+
+
+Eficiencia
+El rellenado de la tabla es de esficiencia (K+1)*(L+1) = OrdenExacto(K*L)
+La recuperación de la solución es de OrdenExacto(n)
+
+Dificultad
+5

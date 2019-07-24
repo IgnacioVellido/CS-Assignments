@@ -1,0 +1,21 @@
+#!/bin/bash
+# Uso: Generar números cada segundo sin parar.
+
+numero=1
+while true;
+do
+	echo "$numero"
+	numero=$[ $numero + 1 ]
+	sleep 1
+done
+
+# Desde otra terminal escribimos:
+
+ps -e 			# Para ver el proceso que se está ejecutando.
+kill -s STOP 3327	# Para detenerlo, 3327 represente el PID del proceso.
+kill -s CONT 3327	# Para que continue.
+kill 3327		# Para terminarlo, tambien se podría haber utilidado 
+			# con la opción -9 por si el proceso hiciese caso
+			# omiso de la señal de interrupción.
+
+

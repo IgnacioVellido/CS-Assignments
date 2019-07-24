@@ -1,0 +1,48 @@
+#!/bin/bash
+ContadorDirectorios=0
+ContadorEjecucion=0
+ContadorTotal=0
+
+_CompruebaArgumento ()  
+{
+	if (( $# == 0 )) 
+	 then return 1 
+	fi
+	if [ -d $1 ] 
+	 then : 
+	  else return 1 
+	fi
+	if [ -r $1 ] 
+	 then : 
+	  else return 1 
+	fi
+	# Si ha llegado hasta aquí signfica que no hay errores con el argumento
+	return 0
+} 
+
+if (_CompruebaArgumento $1) 
+ then : 
+  else printf "Error en el argumento\n" ; exit 
+fi
+
+for archivo in $(ls $1)
+do
+	# Si lo que habría que buscar son archivos poner: 	
+	let ContadorTotal+=1	
+	if [ -d "$archivo" ] 
+	 then let ContadorDirectorios+=1 
+	fi
+	# Consideramos que el poder acceder a un directorio es tener permiso de ejecución	
+	if [ -x "$archivo" ] 
+	 then : 
+	  else let ContadorEjecucion+=1 
+	fi
+done
+
+printf "Número total de archivos: $ContadorTotal\n"
+printf "Número total de directorios: $ContadorDirectorios\n"
+printf "Número total de archivos sin permiso de ejecución: $ContadorEjecucion\n"
+
+# En las comprobaciones se podría haber utilizados:
+# if (test -d $archivo) then ...
+# if (test -x $archivo) then ...

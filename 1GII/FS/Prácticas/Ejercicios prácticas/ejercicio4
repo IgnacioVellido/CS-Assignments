@@ -1,0 +1,11 @@
+a) Añadimos un breakpoint en la función que se encuentra en funciones.cpp
+   break Invertir
+   Y añadimos ya allí el breakpoint en la línea pedida
+   break 39
+b) Directamente con run nos permite añadir nos permite ejecutar el programa y añadir los números uno a uno (o introduciendo run, salto de línea y seguidamente los números separados por un espacio).
+Se puede escribir: display i+1
+   Vemos que no se está accediento correctamente al vector, ya que no comienza en 0 sino en 1, y además accede a la posición 10 que no tiene un valor definido (ya que en C los vectores van desde 0 hasta n-1).
+c) Al mostrar los elementos, concretamente el último, se ve claramente que ese no ha sido introducido. Además, el primer valor que muestra no se corresponde con el que debería, sino con el segundo de la lista.
+d) Como los errores se producen en el muestreo (se podría comprobar que no hay problemas en la inversión mostrando los valores del vector) el fallo se situa en la función "Mostrar". Ya que tanto da errores con el primero como con el último, se deduce que la línea encargada de mostar el elemento muestra el siguiente al que debería. 
+Si reducimos el valor de i al comienzo (por ejemplo con "set variable") a -1, el programa funciona correctamente. Aunque la manera más cómoda de arreglarlo es que en la línea 39, en vez de mostrar i+1, cambiarlo por i.
+

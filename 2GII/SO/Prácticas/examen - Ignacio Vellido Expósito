@@ -1,0 +1,199 @@
+# Examen - Ignacio Vellido Expósito
+
+1 - 
+ a)	groupadd gradoInformatica		# Creando el grupo gradoInformatica
+	useradd usu100 -g gradoInformatica	# Creando el usuario con el grupo principal
+	gpasswd gradoInformatica -a usu100	# Añadiendo el usuario al grupo
+ 
+	# Archivo /etc/passwd
+	usu100:x:500:500::/home/usu100:/bin/bash
+
+	# Archivo /etc/group
+	gradoInformatica:x:500:usu100
+
+	# Archivo /etc/shadow
+	usu100:!!:17465:0:99999:7:::
+
+ b)	usermod -md /home/directorio1/ usu100	# Con -d cambiamos el directorio del usuario
+						# con -m movemos el contenido de su antiguo directorio al nuevo
+
+	# EL archivo /etc/passwd se modifica correctamente
+	usu100:x:500:500::/home/directorio1/:/bin/bash
+
+2 -
+ a) El archivo /proc/fstab contiene los SA montados actualmente en el sistema
+
+		#
+		# /etc/fstab
+		#
+		LABEL=ROOT					/		auto	noatime1 1
+		tmpfs						/dev/shm	tmpfs	defaults0 0
+		tmp						/tmp		tmpfs	rw,mode=1777,fscontext=system_u:object_r:tmp_t:s0	0 0
+		devpts						/dev/pts	devpts	gid=5,mode=620	0 0
+		sysfs						/sys		sysfs	defaults0 0
+		proc						/proc		proc	defaults
+
+    En el se pueden ver los archivos que se montan automaticamente si apaece la palabra
+"auto" o default
+
+    Para montar mi directorio HOME en UML:
+	mkdir EXAM
+	mount none /root/EXAM/ -t hostfs -o /fenix/alum/d2/ignaciove
+
+ b) 	mknod /dev/loop10 b 7 0
+	dd if=/dev/zero of=/root/archivo_SA10 bs=1k count=10000
+		10000+0 records in
+		10000+0 records out
+		10240000 bytes (10 MB) copied, 0.144028 s, 71.1 MB/s
+	losetup /dev/loop10 /root/archivo_SA10
+	fdisk /dev/loop10
+		Device contains neither a valid DOS partition table, nor Sun, SGI or OSF disklabel
+		Building a new DOS disklabel with disk identifier 0xdbb580ee.
+		Changes will remain in memory only, until you decide to write them.
+		After that, of course, the previous content won't be recoverable.
+
+		Warning: invalid flag 0x0000 of partition table 4 will be corrected by w(rite)
+	p
+		Disk /dev/loop10: 10 MB, 10240000 bytes
+		255 heads, 63 sectors/track, 1 cylinders, total 20000 sectors
+		Units = sectors of 1 * 512 = 512 bytes
+		Sector size (logical/physical): 512 bytes / 512 bytes
+		I/O size (minimum/optimal): 512 bytes / 512 bytes
+		Disk identifier: 0xdbb580ee
+
+		       Device Boot      Start         End      Blocks   Id  System
+
+
+	n						# Para crear la partición
+		Command action
+		   e   extended
+		   p   primary partition (1-4)
+
+	p
+		Partition number (1-4, default 1): 
+	<ENTER>
+		Using default value 1
+		First sector (2048-19999, default 2048): 
+	<ENTER>
+		Using default value 2048
+		Last sector, +sectors or +size{K,M,G} (2048-19999, default 19999):
+	<ENTER>
+		Using default value 19999
+	w
+	mke2fs /dev/loop10 				# Creando un sistema de archivos ext2
+		mke2fs 1.41.12 (17-May-2010)
+		Filesystem label=
+		OS type: Linux
+		Block size=1024 (log=0)
+		Fragment size=1024 (log=0)
+		Stride=0 blocks, Stripe width=0 blocks
+		2512 inodes, 10000 blocks
+		500 blocks (5.00%) reserved for the super user
+		First data block=1
+		Maximum filesystem blocks=10485760
+		2 block groups
+		8192 blocks per group, 8192 fragments per group
+		1256 inodes per group
+		Superblock backups stored on blocks: 
+			8193
+
+		Writing inode tables: done                            
+		Writing superblocks and filesystem accounting information: done
+
+		This filesystem will be automatically checked every 20 mounts or
+		180 days, whichever comes first.  Use tune2fs -c or -i to override.
+
+	tune2fs -l /dev/loop10					# Mostrando el contenido del superbloque
+		tune2fs 1.41.12 (17-May-2010)
+		Filesystem volume name:   <none>
+		Last mounted on:          <not available>
+		Filesystem UUID:          cd96815b-3836-430c-87f4-c18cfe347b4b
+		Filesystem magic number:  0xEF53
+		Filesystem revision #:    1 (dynamic)
+		Filesystem features:      ext_attr resize_inode dir_index filetype sparse_super
+		Filesystem flags:         signed_directory_hash 
+		Default mount options:    (none)
+		Filesystem state:         clean
+		Errors behavior:          Continue
+		Filesystem OS type:       Linux
+		Inode count:              2512
+		Block count:              10000
+		Reserved block count:     500
+		Free blocks:              9585
+		Free inodes:              2501
+		First block:              1
+		Block size:               1024
+		Fragment size:            1024
+		Reserved GDT blocks:      39
+		Blocks per group:         8192
+		Fragments per group:      8192
+		Inodes per group:         1256
+		Inode blocks per group:   157
+		Filesystem created:       Thu Oct 26 10:07:18 2017
+		Last mount time:          n/a
+		Last write time:          Thu Oct 26 10:07:18 2017
+		Mount count:              0
+		Maximum mount count:      20
+		Last checked:             Thu Oct 26 10:07:18 2017
+		Check interval:           15552000 (6 months)
+		Next check after:         Tue Apr 24 10:07:18 2018
+		Reserved blocks uid:      0 (user root)
+		Reserved blocks gid:      0 (group root)
+		First inode:              11
+		Inode size:	          128
+		Default directory hash:   half_md4
+		Directory Hash Seed:      39d98f22-a310-446e-ad11-42c978d3c81e
+
+	# No le he puesto etiqueta al SA, en caso de que se quiera: tune2fs -L LABEL_ext2 /dev/loop10
+
+ c) Lo que se deberá hacer será instalar las dependencias, y una vez que ya estén agregadas
+al sistema, instalar el paquete deseado.
+    Si usamos rpm la propia orden nos avisará de cuáles son las dependencias necesarias para
+instalar el paquete.
+
+3 -
+ a) Por ejemplo, con la orden top podemos ver la prioridad de un proceso en la columna PR:
+  	PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND            
+	6058 ignacio+  20  0  6532 2792 2612 S 0,0  0,0   0:00.00  script     
+
+    Y el estado actual del proceso lo podemos ver en la columna S (es este caso indica durmiendo)
+
+
+    Con la orden time y un simple cálculo podemos saber el tiempo de espera del proceso:
+	time ./script 20
+		real	0m20.032s
+		user	0m0.000s
+		sys	0m0.004s
+    Si T_espera = real – user - sys, en nuestro proceso:
+	T_espera = 20,032 - 0,000 - 0,004 = 20,028
+
+ b) Creamos un archivo y mostramos su información
+	touch archivo
+	ls -l archivo
+		-rw-r--r-- 1 ignaciove alumno 0 oct 26 16:27 archivo
+
+    El 1 justo después de los permisos indica el número de enlaces al archivo,
+por ahora, 1, el del propio nombre. Creamos un enlace duro:
+	ln archivo enlaceduro
+	ls -l archivo enlaceduro
+		-rw-r--r-- 2 ignaciove alumno 0 oct 26 16:27 archivo
+		-rw-r--r-- 2 ignaciove alumno 0 oct 26 16:27 enlaceduro
+
+    Vemos ahora que el contador se ha incrementado, y se ha creado una fila para el enlace, 
+con el mismo número en el contador.
+
+
+ c) Con la opción -B decimos en qué unidades tiene que medir el tamaño,
+en este caso en bloques de 2KB
+
+	#!/bin/bash
+	du $1 -B 2K | tail -1
+
+ d)	touch LOG
+	crontab -e		# Abrimos nano con la orden crontab y añadimos:
+		0 23 * 11 * /home/ignaciove/Escritorio/script >> /home/ignaciove/Escritorio/LOG
+	# Guardamos y salimos
+
+	ignaciove@ei140051:~/Escritorio$ cat LOG
+		86223872	.
+

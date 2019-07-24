@@ -1,0 +1,74 @@
+Ignacio Vellido Expósito - F3
+
+Ejercicio 1	   		 -----------------------------------------------------------------
+#!/bin/bash
+
+# Apartado 1
+mkdir $HOME/$1 
+
+# Apartado 2
+find / -name "*[a-z]*" -a -name "*1*" > $HOME/$1/$2 
+
+# Apartado 3
+LISTADO=$3
+ls -l /etc --group-directories-first | sort -r > $HOME/$1/$LISTADO
+
+# Apartado 4
+cp $2 $HOME/Descargas
+
+Ejercicio2 			-------------------------------------------------------------------------
+#!/bin/bash
+
+# Apartado 1
+if (( $# != 2 ))
+then echo "No se ha introducido el número correcto de argumentos" ; exit
+fi
+if ! test -f $1
+then echo "No es un archivo de texto" ; exit
+fi
+
+# Apartado 2
+cat $1 | tail -3 &> $2 
+cat $1 | head -2 &>> $2
+
+# Apartado 3
+caracter1=`wc -m $1`
+caracter2=`wc -m $2`
+
+echo $caracter{1,2}
+wc -m $1 | cut -d' ' -f1 	#No me ha dado tiempo a terminarlo pero se debería 
+printf "%x\n" $diferencia	#guardar el código anterior en una variable y 
+				#mostrarla con la orden que sigue
+# Apartado 4
+cat -n $1
+
+
+##Corrección##
+Ejercicio 1			--------------------------------------------------
+
+# Apartado 2
+find / -name "*[a-Z]*" -a -name "*1*" > $HOME/$1/$2 
+
+# Apartado 3
+LISTADO=$3
+ls -l /etc | sort -r > $HOME/$1/"$LISTADO" (Lo otro tambien estaba bien; LISTADO 
+					    debe ir entre comillas para aceptar 
+					    los espacios en blanco)
+# Apartado 4
+cp $HOME/$1/$2 $HOME/Descargas
+
+Ejercicio 2			----------------------------------------------
+
+# Apartado 1
+if ! test -f $1
+
+# Apartado 2
+tail -3 $1 &> $2 
+head -2 $1 &>> $2
+
+# Apartado 3
+caracter1=`cat $1 | wc -m`
+caracter2=`cat $2 | wc -m`
+doferencia=$(($caracter1 - $caracter2)) 
+printf "$diferencia"
+

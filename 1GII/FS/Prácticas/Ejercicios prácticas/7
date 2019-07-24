@@ -1,0 +1,33 @@
+#!/bin/bash
+
+printf "\nIntroduzca un tipo de shell\n"
+read SHELL
+condicion=false
+for archivo in $(cat /etc/shells | cut -d'/' -f3 | tail -4)
+do
+
+if [ "$SHELL" == "$archivo" ] 
+	then condicion=true
+fi
+done
+
+if $condicion
+	then printf "\nA estos usuarios el shell introducido se les abre por defecto:\n" ;           	        cat /etc/passwd | grep "/$SHELL" | cut -d':' -f1 | sort
+else
+	printf "\nEl shell introducido no existe\n"
+fi
+
+#case  "$SHELL" in
+#  $($shells) ) printf "Hell yeah\n" ;;
+# * ) printf "El shell introducido no existe\n" ; exit ;;
+#esac
+
+#cat /etc/shells | cut -d'/' -f3 | tail -4 | grep $SHELL
+
+#if [ $(cat /etc/shells | cut -d'/' -f3 | tail -4 | grep $SHELL) == 0 ] 
+#	then :
+#else
+#	printf "El shell introducido no existe\n"
+#fi
+
+#cat /etc/passwd | grep $SHELL | cut -d':' -f1 | sort

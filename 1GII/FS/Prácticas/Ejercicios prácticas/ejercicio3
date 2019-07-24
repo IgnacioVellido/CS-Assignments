@@ -1,0 +1,13 @@
+# Nombre: makefile
+# Uso: make 
+
+invertir: funciones.o main.o
+	g++ -o invertir funciones.o main.o
+funciones.o: funciones.cpp funciones.hpp
+	g++ -g -c funciones.cpp -I./
+main.o: main.cpp funciones.hpp
+	g++ -g -c main.cpp -I./
+tocar:
+	touch *.cpp 
+limpiar:
+	rm *.o invertir

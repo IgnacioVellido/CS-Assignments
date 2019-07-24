@@ -1,0 +1,27 @@
+# Nombre del archivo: makefileF
+# Uso: make -f makefileF
+# Descripción: Mantiene las dependencias entre los módulos y la biblioteca
+#              que utiliza programa2.
+
+CC = g++
+INCLUDE_DIR = ./includes/
+LIB_DIR = ./
+
+programa2: main2.o factorial.o hello.o libmates.a
+	$(CC) -L$(LIB_DIR) -o $@ $^
+
+main2.o: main2.cpp	   $(INCLUDE_DIR)functions.h 	$(INCLUDE_DIR)mates.h
+	$(CC) -I$(INCLUDE_DIR) -c main2.cpp
+
+factorial.o: factorial.cpp $(INCLUDE_DIR)functions.h
+	$(CC) -I$(INCLUDE_DIR) -c factorial.cpp
+
+hello.o: hello.cpp	   $(INCLUDE_DIR)functions.h
+	$(CC) -I$(INCLUDE_DIR) -c hello.cpp
+
+libmates.a: sin.o cos.o tan.o
+	ar -rvs libmates.a sin.o cos.o tan.o
+
+sin.o: sin.cpp 		   $(INCLUDE_DIR)mates.h
+	$(CC) -I$(INCLUDE_DIR) -c sin.cpp
+

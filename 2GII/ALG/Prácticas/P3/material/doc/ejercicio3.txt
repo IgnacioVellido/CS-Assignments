@@ -1,0 +1,46 @@
+Principio de optimalidad
+Copiar apuntes
+
+Ecuación recurrente
+
+E(k,m)= max( E(k-1,m) //no cogerlo
+             E(k-1,m-vk)+vk, //coger con+
+             E(k-1,m+vk)-vk, //coger con -
+             E(k-1,m/vk)*vk, //coger con *
+             E(k-1,m*vk)/vk//coger con/
+)
+
+Los casos base serían si k=0 E(0,m)=0 ya  que no tenemos elementos y lo que podemos alcanzar es 0. Cuando m=0
+
+tambien E(k,m)=0. Y cuando m<0 E(k,m)= -infinito y cuando m>Th E(k,m)=-infinito.
+
+Siendo Th el máximo de columnas de tu tabla como os dije podeis usar Th como el producto del máximo de los elementos por el M  (valor que queremos alcanzar).
+
+
+
+
+Estrategia de aplicación de la formula
+ - Tablas utilizadas, número de filas y columnas
+   Una tabla de Casillas(vector de operadores que se pueden aplicar, valor). 
+   N+1 filas
+   N*M + 1 columnas
+
+ - Orden y forma de rellenarla
+   Para cada elemento M[i][j] de la tabla, aplicar la ecuación recurrente
+
+Reconstrucción de la solución
+Hasta que se llegue a la fila 0, se añada a un vector de string todas las soluciones (al principio 1)
+
+Para cada operador a true de la casilla:
+ - Llamar recursivamente a la función con el string K y el operador
+(En el caso de que se herede, no se inserta nada en el string)
+
+Eficiencia
+El coste de rellenar la tabla es de (N+1)*(N*M+1)=OrdenExacto(N*N*M)
+La recuperación de la solución sigue la formulación recursiva, en el peor caso(se pueden aplicar todos los operadores):
+T(n) = 5T(n-1) + 1 (suponemos que el coste de juntar los string es 1)
+
+Debería ser O(5^n)=número de operadores elevado a n (arbol completo)
+
+Dificultad
+7

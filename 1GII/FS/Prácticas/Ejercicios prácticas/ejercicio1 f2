@@ -1,0 +1,26 @@
+#!/bin/bash
+# Ejercio 1 examen F1
+contador_total=0
+contador_escritura=0
+
+if ($1 == "-u") 
+	then ps -o pid,cmd,pmem --sort -pid
+
+else if ($1 == "-d")
+
+	if (! test -d $2 || ! test -r $2) 
+		then printf "El directorio $2 no existe o no se tiene permiso de lectura sobre él" ; exit
+	fi
+
+	for archivo in $(ls $2)
+	do
+		$contador_total++		
+		if test -u $USER		
+		then	if test -w $archivo
+			then $contador_escritura++
+			fi
+		fi
+	done
+else
+	printf "Uso: [-u | -d <directorio>]"
+fi

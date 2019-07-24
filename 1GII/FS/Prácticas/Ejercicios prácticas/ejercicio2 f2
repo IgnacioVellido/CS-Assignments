@@ -1,0 +1,48 @@
+#!/bin/bash
+# Ejercio 1 examen F1
+
+_CompruebaArgumentos () {
+
+if ! test -f $1
+then return false
+fi
+
+if [$2 != "T2A" || $2 != "T2F"]
+then return false
+fi
+
+if [$3 != "A" || $2 != "B"]
+then return false
+fi
+
+return true
+}
+
+_CompruebaEntero () {
+
+if [$1 < 1 || $1 > 99]
+then return false
+fi
+
+return true
+}
+
+if (! _CompruebaArgumentos $1 $2 $3)
+then printf "Uso: $0 <archivo_de_datos> <T2A|T2F> <A|B>\n" ; exit
+fi
+
+salida=true
+
+while salida
+do
+	read -p "Introduzca el número de jugador o FIN para salir:" $numero
+
+	if ["$numero" ==n "FIN"]
+	then exit ;
+	else if ( ! _CompruebaEntero $numero )
+		printf "El número de jugador debe estar comprendido entre 1 y 99\n"
+	fi
+	
+	printf "$2 Acertados por jugador Nº$numero del Equipo $3: "
+	grep "Equipo$3	$numero" | cut -d '	'  -f4
+done
