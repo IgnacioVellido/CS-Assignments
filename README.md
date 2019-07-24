@@ -29,7 +29,7 @@ Recopilación de trabajos, ejercicios y apuntes realizados durante el grado de I
 **3º**
   * [Aprendizaje Automático](https://github.com/IgnacioVellido/UGR-AA)
   * [Diseño y Desarrollo de Sistemas de Información - Prácticas](3GII/DDSI)
-  * [Diseño y Desarrollo de Sistemas de Información - Proyecto](https://github.com/iscoct/DDSI)
+    * [Diseño y Desarrollo de Sistemas de Información - Proyecto](https://github.com/iscoct/DDSI)
   * [Fundamentos de Redes](3GII/FR)
   * [Informática Gráfica](3GII/IG)   
   * [Ingeniería de Servidores](3GII/ISE)
