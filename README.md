@@ -41,6 +41,6 @@ Recopilación de trabajos, ejercicios y apuntes realizados durante el grado de I
   * [Tecnologías Web](https://github.com/IgnacioVellido/UGR-TW)
    
 ## Alumnos con los que he colaborado
-Alberto Sócrates Ortega Calvo
-Juan Manuel Rubio Rodríguez
-Francisco José Cotán López
+* Alberto Sócrates Ortega Calvo
+* Juan Manuel Rubio Rodríguez
+* Francisco José Cotán López
