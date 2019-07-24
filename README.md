@@ -36,8 +36,8 @@ Recopilación de trabajos, ejercicios y apuntes realizados durante el grado de I
   * [Ingeniería del Conocimiento](https://github.com/IgnacioVellido/UGR-IC)
   * [Modelos de Computación](https://github.com/IgnacioVellido/UGR-MC)
   * [Técnicas de los Sistemas Inteligentes - Práctica 1](https://github.com/IgnacioVellido/UGR-TSI-1)
-  * [Técnicas de los Sistemas Inteligentes - Práctica 2](https://github.com/IgnacioVellido/UGR-TSI-2)
-  * [Técnicas de los Sistemas Inteligentes - Práctica 3](https://github.com/IgnacioVellido/UGR-TSI-3)
+    * [Técnicas de los Sistemas Inteligentes - Práctica 2](https://github.com/IgnacioVellido/UGR-TSI-2)
+    * [Técnicas de los Sistemas Inteligentes - Práctica 3](https://github.com/IgnacioVellido/UGR-TSI-3)
   * [Tecnologías Web](https://github.com/IgnacioVellido/UGR-TW)
    
 ## Alumnos con los que he colaborado
