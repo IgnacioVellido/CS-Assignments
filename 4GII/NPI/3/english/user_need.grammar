@@ -1,0 +1,10 @@
+#JSGF V1.0;
+
+grammar user_need;
+
+public <user_need> = [<polite>] <information> {mode = 'true';}
+                    | [<polite>] <payment>;
+
+<information> = [show] information [please] | route | routes | price | prices;
+<payment> = (pay | buy | shop | purchase) [please] | generic;
+<polite> = i want [to] | please | would you ;

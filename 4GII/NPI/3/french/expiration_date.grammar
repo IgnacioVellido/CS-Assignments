@@ -1,0 +1,15 @@
+#JSGF V1.0;
+
+grammar expiration_date;
+
+// 4 digits or month/year
+public <expiration_date> = <digit> <digit> <digit> <digit>
+                         | <month> <year>;
+
+<digit> = zéro | un | deux | trois | quatre | cinq | six | sept | huit | neuf;
+
+<month> = janvier | février | mars | avril | mai | juin | juillet | août
+          | septembre | octobre  | novembre | décembre;
+
+// 2 digits
+<year> = <digit> <digit>;

@@ -1,0 +1,98 @@
+\section{Introducción}
+
+\subsection{Descripción del problema}
+% Breve descripción/formulación del problema (máximo 1 página). Podrá incluirse el mismo contenido repetido en todas las prácticas presentadas por el estudiante.
+
+El Problema del Agrupamiento (PA) es un problema clásico de aprendizaje no supervisado, que consiste agrupar una serie de instancias en un número concreto de clústers de forma lógica. En estas prácticas añadimos restricciones al problema convirtiéndolo en el \textbf{Problema del Agrupamiento con Restricciones} (PAR), una variante NP-Completa semi-supervisada de PA. \\
+
+En PAR por tanto se debe agrupar una serie de datos en un número predefinido de clústers, teniendo que contener cada clúster como mínimo un elemento.
+Además, tenemos dos tipos de restricciones, asociadas a pares de elementos:
+\begin{itemize}
+    \item Must-Link (ML): Ambos elementos deben pertenecer al mismo clúster.
+    \item Cannot-Link (CL): Ambos elementos deben pertenecer a distintos clústers.
+\end{itemize}
+
+A la hora de implementar los algoritmos se considerarán estas restricciones como débiles, es decir, serán relevantes a la hora de determinar la calidad de la solución pero no la consideración de si una posible solución lo es. \\
+
+Trabajaremos con 4 instancias del problema:
+\begin{enumerate}
+    \item \textbf{Iris}: Características de tres tipos de flor de Iris. Contiene 3 clases y 4 dimensiones.
+    \item \textbf{Ecoli}: Características de células. 8 clases y 7 dimensiones.
+    \item \textbf{Rand}: Conjunto de datos artificial de dos dimensiones formado por 3 clústers y 2 dimensiones.
+    \item \textbf{Newthyroid}: Glándulas tiroides de 2015 pacientes. 3 clases y 2 dimensiones
+\end{enumerate}
+
+% ==============================================================================
+% ==============================================================================
+
+\subsection{Consideraciones previas}
+% Breve descripción de la aplicación de los algoritmos empleados al problema (máximo 4 páginas): Todas las consideraciones comunes a los distintos algoritmos se describirán en este apartado, que será previo a la descripción de los algoritmos específicos. Incluirá por ejemplo la descripción del esquema de representación de soluciones y la descripción en pseudocódigo (no código) de la función objetivo y los operadores comunes.
+
+\subsubsection{Función objetivo}
+
+La función objetivo en el problema PAR se calcula en base a la fórmula:
+
+\begin{equation}
+    f = \overline{C} + (infeasibility * \lambda)
+\end{equation}
+
+Siendo:
+
+\begin{equation}
+    \lambda = \frac{\max \{d_i \in D\}}{|R|} \quad tal\ que \ D = Distancias
+\end{equation}
+
+\begin{equation}
+    infeasibility = \sum_{i=0}^{|ML|} \mathds{1}(h_{C}(\overrightarrow{ML_{[i,1]}}) \neq (h_{C}(\overrightarrow{ML_{[i,2]}}) + \sum_{i=0}^{|CL|} \mathds{1}(h_{C}(\overrightarrow{CL_{[i,1]}}) = (h_{C}(\overrightarrow{CL_{[i,2]}})
+\end{equation}
+
+\begin{equation}
+    \overline{C} = \frac{1}{k} \sum_{c_{i}\in C} || \overrightarrow{x_j} - \overrightarrow{u_j} ||_{2}
+\end{equation}
+
+Que es calculada en pseudocódigo: \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+        C $=$ Distancia media intra-cluster \;
+        $\lambda =$ Distancia máxima en el conjunto de datos / nº de restricciones  \;
+        inf $=$ Nº restricciones no cumplidas \;
+    \Return{C + ($\lambda *$ inf)}
+    \caption{Función objetivo}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de datos, solucion, centroides}
+        Separar conjunto de datos según su cluster \;
+        \For{particion del conjunto de datos} {
+            Calcular distancia media de sus elementos al centroide correspondiente \;
+        }        
+    \Return{C}
+    \caption{Distancia media intra-cluster}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKw{KwInFor}{in}
+    \KwIn{s: solución}
+        inf $=$ 0 \;
+        \For{r \textbf{in} $lista\_restricciones$} {
+            \uIf{r $=$ ML \textbf{and} $s[r[0]] \neq s[r[1]]$} {
+                inf++ \;
+            }            
+            \uElseIf{r $=$ CL \textbf{and} $s[r[0]] = s[r[1]]$} {
+                    inf++ \;
+            }
+        }
+    \Return{inf}
+    \caption{Infeasibility}
+\end{algorithm}
+
+\subsubsection{Representación de la solución}
+
+Una solución se representa como un vector de igual longitud que el conjunto de datos, indicando en cada casilla el clúster al que pertenece el elemento i-ésimo. Adicionalmente, es necesario que cada clúster cuente como mínimo con un elemento.

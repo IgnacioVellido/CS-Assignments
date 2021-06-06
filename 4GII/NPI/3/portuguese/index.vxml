@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<vxml xmlns="http://www.w3.org/2001/vxml" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:schemaLocation="http://www.w3.org/2001/vxml 
+      http://www.w3.org/TR/voicexml20/vxml.xsd"
+      xml:lang="pt-PT"
+      version="2.1">
+    <form>
+        <block>
+            Bem-vindo ao serviço de venda de bilhetes Alhambra.
+        </block>
+
+        <!-- ############################################################### -->
+        <!-- Asking for help -->
+        <link event="help"> 
+            <grammar src="help.grammar"/>
+        </link>
+
+        <!-- ############################################################### -->
+        <!-- Getting the user request -->
+        <field name="mode">
+            <grammar src="user_need.grammar"/>
+            <prompt>Que eu possa ajudar?</prompt>
+
+            <catch event="help">
+                <prompt>Você pode comprar um bilhete genérico ou perguntar sobre preços e rotas.</prompt>
+            </catch>
+
+            <filled>
+                <if cond="mode=='true'">                                    
+                    <!-- Go to information -->
+                    <goto next="./information.vxml"/>
+                <else/>
+                    <!-- Go to payment -->
+                    <prompt>Você vai comprar um bilhete genérico para o Alhambra.</prompt>
+                    <goto next="./payment.vxml"/>
+                </if>
+            </filled>
+        </field>
+        <!-- ############################################################### -->
+    </form>
+</vxml>

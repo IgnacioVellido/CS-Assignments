@@ -1,0 +1,317 @@
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* General to all pages */
+
+/* --------------------------------------------- */
+/* Header */
+
+header {
+  background-color: #f4511e;  
+  color: #fff;
+  min-height: 75px;
+}
+
+.logo {
+  width: 100px;
+}
+
+#header-name {
+  letter-spacing: 2px;
+  margin-bottom: 0;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 50px;
+}
+
+#header-phrase {
+  font-size: 15px;
+}
+
+/* --------------------------------------------- */
+/* Nav */
+
+#mainNav {
+  padding: 0;
+}
+
+.navbar {
+  margin-bottom: 0;  
+  border: 0;
+
+  background-color: #f4501ee0;    
+  font-size: 15px;  
+  letter-spacing: 2px;
+  border-radius: 0;  
+}
+
+.navbar li {
+  margin: 0 10px 0 10px;
+}
+
+.navbar li a {
+  color: #fff !important;
+}
+
+.navbar-nav li a:hover, .navbar-nav li.active a {
+  color: #f4511e !important;
+  background-color: #fff;
+}
+
+
+/* --------------------------------------------- */
+/* Body */
+
+html, body, #wrapper, main, aside {
+  min-height:100vh;
+}
+
+#myBody {  
+  background-color: rgb(45, 45, 48);
+}
+
+/* --------------------------------------------- */
+/* Main */
+
+main {
+  border: 1px solid black;
+}
+
+/* --------------------------------------------- */
+/* Aside */
+
+aside {
+  background-color: #db8b49;  
+  border: 1px solid black;
+}
+
+.aside-block {  
+  margin: 0 0 10px 0;  
+  border-bottom: 1px solid black;
+  padding: 5px;
+}
+
+/* --------------------------------------------- */
+/* Footer */
+
+footer {
+  background-color: #f4501ee0;    
+  color: white;
+}
+
+footer p {
+  margin-bottom: 0;
+}
+
+#authors {
+  display: flex;  
+}
+
+#authors > p {
+  margin: 0 10px 0 10px;
+}
+
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* Specific pages */
+
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* Aside widgets */
+
+.widget-title {
+  color: white;
+  font-size: 25px;
+  text-align: center;
+}
+
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* Login/logout form */
+
+.profilepic {
+  border-radius: 50%;
+
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.form-group {
+ font-weight: bold; 
+}
+
+form>.btn {
+  margin-top: 5px;
+}
+
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* Incident */
+
+.incident {
+  border: 1.5px solid rgb(45, 45, 48);
+  border-radius: 5px;
+  background-color: rgb(217, 224, 226);  
+  margin: 10px 0 10px 0;
+}
+
+.incident-content {
+  padding: 10px;
+  padding-top: 0;
+}
+
+dl {
+  width: 50%;
+  padding: 10px;
+  margin-right: 0;
+}
+
+dt {
+  font-size: 16px;
+}
+
+dd>i {
+  margin-left: 3px;
+  margin-right: 15px;
+}
+
+.incident-title {  
+  font-size: 25px;
+  color: white;
+  font-weight: bold;
+
+  padding: 10px;
+  padding-top: 0;
+  padding-bottom: 3px;
+}
+
+.incident-description {
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+/* Images */
+
+.list-images {
+  padding-bottom: 10px; 
+}
+
+.list-images img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+/* Comments */
+
+.list-comments {
+  border: 1px solid black;  
+  border-radius: 5px;
+  margin: 0;
+}
+
+.comment {
+  padding: 10px;
+}
+
+.comment-author {
+  font-size: 15px;
+}
+
+.comment-date {
+  font-size: 15px;
+  color: rgb(23, 104, 104);
+}
+
+/* Buttons */
+
+.btn {
+  background-color: white; 
+  border: none; 
+  color: black; 
+  padding: 12px 16px;
+  cursor: pointer;
+}
+
+.fa-thumbs-up:hover {
+  color: green;
+}
+
+.fa-thumbs-down:hover {
+  color: red;
+}
+
+.fa-edit:hover, .fa-search:hover {
+  color: goldenrod;
+}
+
+.fa-comments:hover, .fa-upload:hover {
+  color: rgb(69, 69, 231);
+}
+
+.fa-trash-alt:hover {
+  color: purple;
+}
+
+.fa-user-plus:hover {
+  color: green;
+}
+
+
+
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* Search */
+
+.main-title {
+  font-size: 27px;
+  text-align: center;
+}
+
+.search-subtitle {
+  font-size: 20px;
+}
+
+.form-block {
+  padding-bottom: 15px;
+  background-color: rgb(217, 224, 226);  
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.form-block>h1, .form-block>div {
+  margin: 5px;
+}
+
+.form-check-inline {
+  justify-content: center;
+}
+
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* Log */
+
+.main-block {
+  margin: 5px;
+}
+
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* --------------------------------------------- */
+/* Users management */
+
+.users-details {
+  height: 45px;
+  font-size: 15px;
+}
+
+.users-details>dl {
+  height: 45px;  
+  padding: 0;
+}

@@ -1,0 +1,117 @@
+La práctica se ha resuelto utilizando el TDA bintree proporcionado,  la implementación de los métodos pedidos se describe a continuación:
+
+- QuienEsQuien::crear_arbol()
+	Partiendo de los vectores "atributos" y "personajes", además de la matriz "tablero", se construye el árbol de la siguiente manera:
+	Se crea el árbol a partir de la primera entrada de la matriz, este nodo corresponde a la raíz del árbol y será siempre la primera pregunta que formulará el juego.
+	Después, para cada fila de la matriz (y comenzando incialmente en la raíz), formulamos las preguntas según los valores del "tablero" hasta que llegamos a un nodo nulo, en ese caso, insertamos la pregunta en la posición de ese nodo, y repetimos para la siguiente. Al terminar la fila, colocamos el personaje según el valor de la última pregunta.
+
+	Para aprovechar el recorrido en el árbol, durante la inserción de los nodos aumentamos los contadores de nºde personajes.
+
+	Con este método, creamos un árbol con un bajo número de nodo, pero sin ser equilibrado. Pese a ello, es probable que existan nodos redundantes, por lo que posteriormente se llama al método correspondiente.
+
+- QuienEsQuien::eliminar_nodos_redundantes(bintree<Pregunta>::node nodo)
+	Utilizamos una función recursiva que para cada nodo (comenzando desde la raíz) comprueba si alguno de sus hijos es nulo (obviamente, primero aseguramos que no sea un nodo hoja).
+	Si al nodo le falta alguno de sus hijos (y por tanto es un nodo redundante), eliminamos el nodo y subimos al hijo a la posición del padre.
+
+- QuienEsQuien::preguntas_formuladas (bintree<Pregunta>::node jugada)
+
+	Este método devuelve las preguntas realizadas hasta la jugada actual
+	Devuelve una lista con dichas preguntas
+	
+	Se resuelve así:
+	
+		Mientras que no se llegue a la raíz
+			Asignamos a jugada siempre su padre
+			Introducimos la pregunta en la lista
+
+- QuienEsQuien::profundidad_promedio_hojas ()
+
+	Calcula la profundidad promedio de todas las hojas
+	
+	Se resuelve de la siguiente manera:
+	
+		Se llama a profundidad_total_hojas con nivel = 0, la raíz y num_hojas = 0
+		Divimos la profundidad total por el número de hojas
+			
+- QuienEsQuien::iniciar_juego()
+	Este método averigua los personajes del jugador hasta que se introduce la opción de salir.
+	Para cada jugada, formula la pregunta, hasta que llega a un nodo con un nº de personaje igual a 1, lo que significa que ha descubierto a la persona, escribiendo el nombre en pantalla.
+
+- QuienEsQuien::eliminar_personaje (const string &nombre)
+	
+	Este método elimina un personaje del árbol dado por su nombre
+	Si no se encuentra ningún personaje con dicho nombre no se hace nada
+	
+	Se resuelve de la siguiente manera:
+	
+		Buscamos el personaje
+		
+		Si el nodo que nos devuelve encuentra_personaje es no nulo
+			Cogemos al padre
+			
+			Si el personaje se encuentra a la izquierda del padre
+				Podamos la parte derecha
+			Sino
+				Podamos la parte izquierda
+			
+			Reemplazamos la pregunta redundante por la parte podada
+		
+- QuienEsQuien::aniade_personaje (const string &nombre, const vector<bool> atributos)
+
+	Añade un personaje dado por su nombre con los atributos indicados
+	
+	Se resuelve de la siguiente manera:
+	
+	Mientras el vector de bool no finalice, no se llegue a una hoja del árbol del QuienEsQuien o el camino desemboque a un nodo nulo
+		Recorrer el árbol según los atributos del vector enviado como parámetro
+		
+	Si el nodo está vacío
+		Lo insertamos ahí
+	Sino
+		Si se llega a una hoja
+			Mientras no se haya insertado el personaje
+				Si los valores del personaje hoja y del enviado son distintos
+					Se inserta por la pregunta en la que vayan
+					Se inserta uno a la derecha y el otro a la izquierda según corresponda
+				Sino
+					Avanzamos la pregunta porque es redundante
+				
+Además, se han necesitado los siguientes métodos auxiliares:
+
+- QuienEsQuien::Swap (QuienEsQuien &);
+
+- QuienEsQuien::esHoja()
+
+- Pregunta::operator=(const Pregunta &p)
+
+- QuienEsQuien::profundidad_total_hojas (bintree<Pregunta>::node nodo, int nivel, int &num_hojas)
+
+	Utilizamos &num_hojas para devolver el número de hojas que hay en el árbol
+	
+	Se resuelve de la siguiente manera:
+	
+		Empezamos con profundidad_total = 0
+		Si es hoja
+			Incrementamos profundidad_total con el nivel actual
+			Incrementamos el número de hojas en el árbol
+		Sino
+			Llamamos recursivamente a este método incrementando el nivel en 1, pasando el número de hojas y llamándolo para su nodo izquierda y para su nodo derecha
+			
+- QuienEsQuien::encuentra_personaje (const string &nombre,
+										bintree<Pregunta>::node nodo)
+
+	Este método encuentra un personaje por su nombre devolviendo el nodo en el que se encuentra
+	De no existir, devuelve un nodo nulo
+	
+	Se resuelve de la siguiente manera:
+	
+		Si el nombre coincide con el string del nodo siendo un personaje
+			Devolvemos el nodo
+		Sino
+			Si es no es una hoja
+				Llamamos recursivamente al método dándole el mismo nombre y el nodo hijo izquierdo al actual
+				
+				Si no lo hemos encontrado en la izquierda
+					Hacemos lo mismo pero con el nodo hijo derecha
+			Sino
+				No se encuentra

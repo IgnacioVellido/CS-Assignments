@@ -1,0 +1,9 @@
+#JSGF V1.0;
+
+grammar card_number;
+
+// 12 digits
+public <card_number> = <digit> <digit> <digit> <digit> <digit> <digit> 
+                        <digit> <digit> <digit> <digit> <digit> <digit>;
+
+<digit> = cero | uno | dos | trees | cuatro | cinco | seis | siete | ocho | nueve;

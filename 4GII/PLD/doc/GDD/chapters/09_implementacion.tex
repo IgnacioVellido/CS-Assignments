@@ -1,0 +1,18 @@
+\chapter{Implementación}
+\section{Metodología de desarrollo}
+Empezamos siguiendo una metodología parecida a Scrum: establecimos una serie de objetivos globales e íbamos estableciendo objetivos semanales, que a su vez influían en los globales. Sin embargo, nos dimos cuenta de que, al ser solo dos personas en el equipo y hablar casi todos los días por Telegram, no era necesario seguir una metodología Ágil en concreto. Simplemente, nos dividimos las tareas que teníamos que hacer desde ese momento hasta la entrega del proyecto y fuimos trabajando en ellas a nuestro ritmo. Cuando terminábamos una tarea, se lo decíamos a nuestro compañero y valorábamos el resultado entre los dos. En el caso de que se nos ocurrieran nuevas tareas que hacer (como solucionar un nuevo bug), lo hablábamos con el otro y lo añadíamos como nueva tarea a realizar.
+
+\section{Engine}
+% \textit{Una descripción detallada del engine que se está usando para desarrollar el juego. En todo caso, detallar la versión utilizada, su página web, si es un engine propio o de terceros, etc.}
+
+Se está utilizando el motor Godot en su versión 3.2, ya que es un motor de juegos sencillo de usar a la vez que completo. El lenguaje de programación usado es el lenguaje de scripting propio de Godot, GDScript. Hemos usado este lenguaje de programación porque es rápido de programar (se parece a Python, con el cuál ambos tenemos experiencia) y fácil de integrar con Godot.
+	
+\section{Tecnologías empleadas}
+Como repositorio para los archivos del juego, hemos usado Git y GitHub. Hemos decidido usar esta tecnología principalmente por dos razones:
+
+\begin{itemize}
+	\item \textbf{Seguridad}. Al tener un repositorio en GitHub, tenemos la certeza de que, en caso de que los repositorios locales en nuestros ordenadores se perdieran, siempre podremos recuperar los archivos del juego desde GitHub.
+	\item \textbf{Facilidad de desarrollo}. Gracias a esta tecnología, nos ha resultado sencillo trabajar los dos en el mismo proyecto. Simplemente, cada vez que uno realizaba un cambio, hacía \emph{push} a GitHub y el otro hacía \emph{pull} desde GitHub, para seguir trabajando en el proyecto.
+\end{itemize}
+
+Aparte, también hemos utilizado la opción que da GitHub (en la pestaña \emph{Projects}) para crear un tablero Kanban, donde se pueden añadir tarjetas en columnas indicando las tareas por hacer, en progreso y terminadas.

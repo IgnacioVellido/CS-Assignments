@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!-- Ejercicio 4, Práctica 1 -->
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Ignacio Vellido Expósito">
+    <title>La Librería - Tiendas</title>       
+    <link rel="stylesheet" href="site.css">   
+  </head>
+  <body>
+    <header> <!-- Encabezado -->      
+      <img src="./img/logos/logo.png" alt="Logo de La Librería"> <!-- Logo -->
+      <div id="nombre_eslogan">
+        <h1>La Librería</h1>
+        <p>Para los fans de la lectura</p>
+      </div>      
+    </header>
+
+    <nav> <!-- Menú de navegación -->
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="catalogue.html">Catálogo</a></li>
+        <li><a href="search.html">Búsqueda</a></li>
+        <li><a href="">Tiendas</a></li>
+        <li><a href="orders.html">Pedidos</a></li>
+      </ul>
+    </nav>
+    
+    <main>
+      <table class="tiendas">
+        <tbody>            
+            <tr>
+              <td class="tienda">Barcelona</td>
+              <td>
+                <img src="./img/tiendas/barcelona.jpg" alt="Barcelona" height="300">
+                <ul>
+                  <li>Park Güell, 08024, Barcelona</li>
+                  <li>+34 922 11 11 11</li>
+                  <li>lalibreria_barcelona@gmail.com</li>
+                </ul>                              
+              </td>
+            </tr>
+                          
+            <tr>
+              <td class="tienda" rowspan="2">Madrid</td>
+              <td>
+                <img src="./img/tiendas/madrid1.jpg" alt="Madrid" height="300">
+                <ul>
+                  <li>Av. de Concha Espina, 1, 28036, Madrid</li>
+                  <li>+34 900 01 10 11</li>
+                  <li>lalibreria_madrid@gmail.com</li>
+                </ul>                
+              </td>
+            </tr>
+
+            <tr>
+              <td class="tienda">
+                <img src="./img/tiendas/madrid2.jpg" alt="Madrid" height="300">
+                <ul>
+                  <li>Calle de Floridablanca, S/N, 28071, Madrid</li>
+                  <li>+34 913 90 60 00 </li>
+                  <li>lalibreria_madrid@gmail.com</li>
+                </ul>                
+              </td>              
+            </tr>
+        </tbody>        
+      </table>
+    </main>
+
+    <aside> <!-- Barra lateral -->
+      <div id="mas-vendidos">
+        <h4>Más vendidos</h4>
+        <ul>
+          <li>El Señor de los Anillos</li>
+          <li>El Principito</li>
+          <li>Harry Potter y la Piedra Filosofal</li>
+        </ul>
+      </div>
+
+      <div id="mas-populares">
+        <h4>Más populares</h4>
+        <ul>
+          <li>J. R. R. Tolkien</li>
+          <li>J. K. Rowling</li>
+          <li>Agatha Christie</li>
+        </ul>
+      </div>
+    </aside>
+
+    <footer> <!-- Pie de página -->
+      <div id="tiendas">
+        <ul>
+          <li>Barcelona
+            <ul>
+              <li>Park Güell, 08024, Barcelona</li>
+            </ul>
+          </li>
+          <li>Madrid
+            <ul>
+              <li>Av. de Concha Espina, 1, 28036, Madrid</li>
+              <li>Calle de Floridablanca, S/N, 28071, Madrid</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div id="contacto">
+        <!-- Esta ajustado el tamaño por visibilidad -->
+        <img src="./img/logos/mail.png" alt="Logo dirección de correo" width="20" height="20">
+        <p>lalibreria@gmail.com</p>
+        <img src="./img/logos/twitter.png" alt="Logo de Twitter" width="20" height="20">
+        <img src="./img/logos/youtube.png" alt="Logo de Youtube" width="20" height="20">
+        <img src="./img/logos/facebook.png" alt="Logo de Facebook" width="20" height="20">
+      </div>
+
+      <div id="informacion">
+        <ul>
+          <li><a href="contact">Contacto</a></li>
+          <li><a href="aboutus">Sobre nosotros</a></li>
+          <li><a href="map">Mapa del sitio</a></li>
+        </ul>
+      </div>
+    </footer>
+  </body>
+</html>

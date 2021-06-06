@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Theme of Agrual.ogg-d4533a421ccef7cff62d426ca03b3fea.oggstr"
+
+[deps]
+
+source_file="res://Audio/Soundtrack/Theme of Agrual.ogg"
+dest_files=[ "res://.import/Theme of Agrual.ogg-d4533a421ccef7cff62d426ca03b3fea.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

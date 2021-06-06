@@ -1,0 +1,9 @@
+1 - Jugadores Equipo 1
+2 - Jugadores Equipo 2
+3 - Suelo y obstáculos
+4 - Proyectiles del equipo 1
+5 - Proyectiles del equipo 2
+6 - Proyectiles "hook" del equipo 1
+7 - Proyectiles "hook" del equipo 2
+8 - Hada
+9 - Area de efecto

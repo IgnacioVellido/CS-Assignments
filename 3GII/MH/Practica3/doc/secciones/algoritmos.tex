@@ -1,0 +1,690 @@
+\section{Algoritmos}
+
+% Descripción en pseudocódigo de la estructura del método de búsqueda y de todas aquellas operaciones relevantes de cada algoritmo. Este contenido, específico a cada algoritmo se detallará en los correspondientes guiones de prácticas. El pseudocódigo deberá forzosamente reflejar la implementación/ el desarrollo realizados y no ser una descripción genérica extraída de las transparencias de clase o de cualquier otra fuente. La descripción de cada algoritmo no deberá ocupar más de 2 páginas.
+% Para esta primera práctica se incluirá la descripción en pseudocódigo del método de exploración del entorno, el operador de generación de vecino y la generación de soluciones aleatorias empleadas en el algoritmo de BL.
+% f) Descripción en pseudocódigo de los algoritmos de comparación.
+% g) Breve explicación del procedimiento considerado para desarrollar la práctica: implementación a partir del código proporcionado en prácticas o a partir de cualquier otro, o uso de un framework de metaheurísticas concreto. Inclusión de un pequeño manual de usuario describiendo el proceso para que el profesor de prácticas pueda replicarlo.
+
+Todos los algoritmos se han implementado a mano en el lenguaje Python con la ayuda de los framework Scikit-Learn y Numpy. En algunos casos se ha seguido código de terceros (de StackOverflow) para la resolución de pequeños problemas (mejor forma de cálcular distancias, cómo generar permutaciones de arrays, etc.), y sólamente tras la comprobación de su correctitud. 
+Adicionalmente, el cálculo de los centroides se ha hecho a partir del módulo \textit{NearestCentroid} de Scikit. \\
+
+Para la ejecución del código es necesario tener instalado Python en su versión 3, y se puede ejecutar de la siguiente manera:
+\begin{lstlisting}[language=bash]
+    $python main.py [-h] -a A -p P [-s S] [-ss SS]
+
+    >Argumentos:
+        -h, --help  Mensaje de ayuda con esta descripcion
+        -a A        Algoritmo a utilizar (copkm, bl, copkm2)
+        -p P        Problema a ejecutar (iris10, ecoli20...)
+        -s S        Archivo que contiene la semilla
+        -ss SS      Valor de la semilla    
+\end{lstlisting}
+
+\vspace{\baselineskip}
+
+Adicionalmente, es necesario tener incluido Numpy, Scikit-Learn y Matplotlib en el entorno de Python donde se ejecute.
+
+\vspace{\baselineskip}
+
+La generación de soluciones aleatorias, común para todos los algoritmos, hace uso de la librería Numpy y genera un vector aleatorio relleno con posibles clústers. Este proceso se llama repetidamente hasta que la solución es válida (no deja ningún clúster vacío). \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwRepeat{Do}{do}{while}
+    \KwIn{Tamaño de la solucion, numero de clusters}    
+        \Do{solution no es válida} {
+            solution = X donde $\bigtriangledown x_i \in X, 0 \leq x_i < numClust $ \;
+        }
+    \Return{solution}
+    \caption{Generación de soluciones aleatorias}
+\end{algorithm}
+
+\newpage
+
+% ==============================================================================
+
+\subsection{Greedy COPKM v1}
+El primer algoritmo con el que afrontamos PAR es la técnica \textit{Greedy COPKM}, variante de la versión Greedy clásica adaptada al problema PAR. \\
+
+El proceso que sigue el algoritmo es el siguiente: \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de datos, lista de restricciones}
+        solution $=$ solución aleatoria \;
+        indexes $=$ Conjunto de índices (uno por cada dato) \;
+        centroids $=$ Conjunto con los centroides de cada clúster \;
+        Barajar indexes \;
+        \While{solution cambie} {
+            actualSol $=$ solución vacía \;
+            \For{$i$ \textbf{in} indexes} {
+                inf $=$ máxima infeasibility posible \;
+                \ForEach{cluster valido} {
+                    newSol $=$ actualSol modificando el cluster del índice $i$ \;
+                    newInf $=$ infeasibility de newSol \;
+                    \uIf{newInf $<$ inf}{
+                        Almacenar como cluster posible \;
+                    }
+                    \uElseIf{newInf $<$ inf} {
+                        Añadir a la lista de clusters posibles \;
+                    }
+                }
+                distances $=$ Distancias de los elementos a cada cluster \;
+                actualSol se modifica con el cluster de los posibles con menor distancia \; 
+            }
+            solution $=$ actualSol \;
+        }
+    \Return{solution, centroids}
+    \caption{Algoritmo COPKM}
+\end{algorithm}
+
+% ------------------------------------------------------------------------------
+
+\newpage
+
+\subsection{Búsqueda Local}
+
+La generación de vecinos se separa en dos pasos. Puesto que creamos un vecindario virtual (de forma compacta) como pares índice-cluster, al inicio del proceso BL se genera todo el posible vecindario, que corresponde a una permutación del número de elementos del problema con el número de clústers.
+Una vez generado esta lista inmutable de pares, en cada iteración se seleccionan aquellos que sean válidos en la solución actual. En este caso un vecino es válido cuando no deja ningún clúster vacío y no pertenece a la solución actual. \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de vecinos virtuales posibles, en forma de lista de pares, solution}
+        vecindario $=$ listaVecinosVirtuales \;
+        \For{$v$ \textbf{in} vecindario} {
+            soluciónVecina = Solución producida aplicando el vecino $v$ \;
+            Eliminar $v$ de $vecindario$ si soluciónVecina deja algún cluster vacío o es igual que solution \;
+        }
+    \Return{vecindario}
+    \caption{Generación de vecinos}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+El proceso de búsqueda queda de la siguiente manera: \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de datos, lista de restricciones}    
+        solution $=$ Solución aleatoria \;
+        centroids $=$ Conjunto con los centroides de cada clúster \;
+        neighborhood $=$ Permutación con todos los vecinos virtuales posibles \;
+        evaluations $=$ 0 \;
+        cost $=$ Valor de la función objetivo para la solución actual \;
+        \While{solution cambie \textbf{and} $evaluations < 100\ 000$} {
+            neigh $=$ Vecinos virtuales válidos para la solution actual \;
+            \For{$n$ \textbf{in} neigh} {
+                evaluations++ \;
+                newSolution $=$ Solución aplicando el vecino $n$ \;
+                newCentroids $=$ Centroides de $newSolution$ \;
+                newCost $=$ Valor de la función objetivo para newSolution \;
+                \If{newCost $<$ cost} {
+                    cost $=$ newCost \;
+                    solution $=$ newSolution \;
+                    Saltar a la siguiente iteración del bucle \textbf{while} \;
+                }
+            }
+        }
+    \Return{solution, centroids}
+    \caption{Proceso de búsqueda}
+\end{algorithm}
+
+\newpage
+
+% ==============================================================================
+
+\subsection{Greedy COPKM v2}
+
+Puesto que COPKM deshecha la solución de la iteración anterior y solo actualiza en base a los nuevos centroides, haciendo que en ocasiones la infeasibility aumente y el algoritmo cicle, se decide modificar el código para no desperdiciar los resultados anteriores. \\
+
+En términos de programación, el único cambio es no comenzar con una solución vacía en cada iteración y calcular la infeasibility no hasta el índice actual sino con toda. \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de datos, lista de restricciones}
+        solution $=$ Solución aleatoria \;
+        indexes $=$ Conjunto de índices (uno por cada dato) \;
+        centroids $=$ Conjunto con los centroides de cada clúster \;
+        Barajar indexes \;
+        \While{solution cambie} {
+            \For{$i$ \textbf{in} indexes} {
+                inf $=$ infeasibility de la solución actual \;
+                \ForEach{cluster valido} {
+                    newSol $=$ solution modificando el cluster del índice $i$ \;
+                    newInf $=$ infeasibility de newSol \;
+                    \uIf{newInf $<$ inf}{
+                        Almacenar como cluster posible \;
+                    }
+                    \uElseIf{newInf $<$ inf} {
+                        Añadir a la lista de clusters posibles \;
+                    }
+                }
+                distances $=$ Distancias de los elementos a cada cluster \;
+                solution se modifica con el cluster de los posibles con menor distancia \; 
+            }
+        }
+    \Return{solution, centroids}
+    \caption{Algoritmo COPKM v2}
+\end{algorithm}
+
+\newpage
+
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+
+\subsection{Algoritmos Genéticos}
+
+Dentro de los algoritmos genéticos nos encontramos con 4 variantes diferentes: dos elitistas y dos estacionarias. En común estos algoritmos se caracterizan por seguir el esquema selección-cruce-mutación-reemplazamiento, implementado siguiendo el siguiente proceso: \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de datos, lista de restricciones}
+        population $=$ Población inicial de soluciones aleatorias válidas (ordenada en base al coste) \;
+        ev $=$ Número de evaluaciones inicial \;
+        numT $=$ Número de veces a aplicar torneo binario \;
+        \While{ev $< 100000$} {
+            newPopulation $=$ Población obtenida aplicando torneo binario numT veces \;
+            Recombinar newPopulation \;
+            Mutar newPopulation \;
+            Aplicar esquema de reemplazamiento \;
+            Evaluar población \;
+            ev $+=$ Tamaño de la población \;            
+        }
+    \Return{Mejor solución de la población, centroids}
+    \caption{Implementación abstracta de los algoritmos genéticos}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+La recombinación y la mutación se aplica un número determinado de veces (dependiente del algoritmo concreto) para reducir el coste computacional que añade la generación de números aleatorios. \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwFor{RepTimes}{repeat}{times}{end}
+    \KwIn{population, numT: Número de veces a aplicar el torneo}    
+        newPopulation = [] \;
+        \RepTimes{numT} {
+            Seleccionar dos cromosomas aleatorios de population \;
+            best $=$ Cromosoma con menor coste de los dos \;
+            Añadir best a newPopulation \;
+        }
+    \Return{newPopulation}
+    \caption{Torneo binario}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{chromosome}
+        \While{exista clúster vacío en chromosome} {
+            Añadir clústers restantes a posiciones aleatorias de chromosome \;
+        }
+    \Return{chromosome}
+    \caption{Reparación de cromosomas}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwRepeat{Do}{do}{while}
+    \KwIn{chromosome}        
+        \Do{exista clúster vacío en chromosome} {
+            Modificar clúster de posición aleatoria \;
+        }
+    \Return{Mejor solución de la población, centroids}
+    \caption{Operador de mutación}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{parent1, parent2}
+        n $=$ Longitud de un cromosoma \;
+        indexes $=$ Array con $n/2$ índices aleatorios \;
+        child $=$ parent1 \;
+        child[indexes] $=$ parent2[indexes] \;
+    \Return{child}
+    \caption{Cruce uniforme}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{parent1, parent2}
+        index $=$ Posición aleatoria \;
+        n $=$ Longitud de un cromosoma \;
+        Asignar a child $n/2$ clústers de un padre y $n/2$ del otro a partir de index \;
+    \Return{child}
+    \caption{Cruce por segmento fijo}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+Los hiperparámetros usados son: población de 50 cromosomas; probabilidad de cruce del 0,7 en las variantes elitistas y del 1 en las estacionarias; probabilidad de mutación del 0,001; 100.000 evaluaciones de la función objetivo como criterio de parada.
+
+\subsubsection{Variantes Elitistas}
+
+Las variantes elitistas generan una nueva población en cada iteración del algoritmo mediante el torneo binario. Esta población sustituye totalmente a la anterior, pero antes se comprueba si el mejor cromosoma ha sobrevivido en la iteración. En caso de que no lo haya hecho, se sustituye por el peor de la nueva población.
+
+\subsubsection{Variantes Estacionarias}
+
+Las variantes estacionarias solo eligen dos padres mediante torneo binario, siendo estos los que sufren el proceso evolutivo. Al final de la solución sustituyen a los peores cromosomas de la población, independientemente de que sean mejores o peores que ellos.
+
+\newpage
+
+% ==============================================================================
+
+\subsection{Algoritmos Meméticos}
+
+Tras la mutación, optimizamos cromosomas de la población mediante una búsqueda local suave. Aplicada cada 10 iteraciones a un porcentaje específico de la población (dependiente del algoritmo). \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{population: Población a optimizar}
+        n $=$ Longitud de un cromosoma \;
+        maxErrors $= n/2 * 0.1$ \;
+        \For{chrom \textbf{in} population} {
+            indexes $=$ Conjunto de índices aleatorios \;
+            errors $=$ 0 \;
+            improving $=$ True \;
+
+            \For{i \textbf{in} indexes} {
+                \If{!improving \textbf{and} errors $>=$ maxErrors}{
+                    break \;
+                }
+
+                improving $=$ False \;
+                cost $=$ Coste del cromosoma chrom \;
+
+                \For{c \textbf{in} nuevos clústers posibles} {
+                    newCost $=$ Coste asignando \textit{c} a chrom \;
+                    \If{newCost $<$ cost}{
+                        improving $=$ True \;
+                        Asignar c a chrom \;
+                        cost $=$ newCost \;
+                    }    
+                }
+
+                \If{!improving}{
+                    errors++\;
+                }
+            }
+        }
+    \caption{Optimización mediante Búsqueda Local suave}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+Como vemos en la primera página de \textit{Experimentación}, el algoritmo AGG-UN es el que tiene mejor valor de agregado en media. Es por tanto con este esquema genético bajo el que se implementan los algoritmos meméticos. \\
+Contamos con 3 variantes de estos algoritmos, que difieren en la población que recibe. Estos tipos son:
+
+\begin{enumerate}
+    \item AM-(10,1.0): Se optimiza cada cromosoma de la población.
+    \item AM-(10,0.1): Se optimiza un 10\% de la población.
+    \item AM-(10,0.1mej): Se optimiza el 10\% con mejor coste.
+\end{enumerate}
+
+Para todas las subvariantes se utilizan los mismos hiperparámetros: población de 10 cromosomas; probabilidad de cruce de 0,7 y de mutación de 0,001. El número máximo de evaluaciones permitidas es, al igual que en los genéticos, de 100.000.
+
+% =============================================================================================================================================================================
+% =============================================================================================================================================================================
+
+\subsection{Enfriamiento Simulado}
+
+El cálculo de la temperatura sigue el esquema de Cauchy modificado, introduciendo un parámetro $\beta$ el cuál nos asegura que la temperatura descienda de forma que en la última iteración del algoritmo se alcance el valor mínimo preestablecido. 
+
+\vspace{\baselineskip}
+
+Viendo los resultados obtenidos, y tras algunas pruebas (más detalles en el apartado \textit{Conclusiones}), no se considera necesario modificarlo por un esquema proporcional.
+
+\vspace{\baselineskip}
+
+% Viendo los resultados obtenidos, y tras algunas pruebas (más detalles en el apartado \textit{Conclusiones}), no se considera necesario modificarlo por un esquema proporcional, pues aunque al principio el descenso es alto resulta suficiente para evitar los mínimos locales y hacer coverger en mejores soluciones. Unas pequeñas pruebas con el esquema proporcional corroboran que no es necesario aplicarlo.
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{initialTemperature, minTemperature, maxAnnealing}
+        $\beta = \frac{initialTemperature\;-\;minTemperature}{maxAnnealing\;*\;initialTemperature\;*\;minTemperature}$ \;
+    \Return{$\beta$}
+    \caption{Cálculo del parámetro $\beta$}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{actualCost}
+        $\mu = \phi = 0.3$ \;
+        temperature $= \frac{\mu\;*\;actualCost}{- ln(\phi)}$ \;
+    \Return{temperature}
+    \caption{Cálculo de la temperatura inicial}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{temperature, $\beta$}
+        % newTemperature $=$ temperature $/$ ($1 + \beta$ * temperature) \;
+        newTemperature $=$ $\frac{temperature}{(1\;+\;\beta\;*\;temperature)}$ \;
+    \Return{newTemperature}
+    \caption{Esquema de enfriamiento}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+Para el criterio de Metrópolis generamos un número flotante aleatorio en el rango [0,1], siguiendo una distribución de probabilidad uniforme. Para el cálculo de la exponencial, se elimina el signo negativo de la fórmula inicial puesto que estamos tratando con un problema de minimización.
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{actualCost, newCost, temperature}
+        diff $=$ actualCost - newCost \;
+        rand $=$ Valor aleatorio en rango [0,1] \;
+        valid $=$ diff $>$ $10^{-4}$ \textbf{or} rand $<$ $\;e^{\frac{diff}{temperature}}$ \;
+    \Return{valid: Boolean}
+    \caption{Criterio de Metrópolis}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+Para la generación de vecinos, cambiamos aleatoriamente un clúster de la solución, asegurándonos de que ningún clúster quede vacío.
+
+\vspace{2mm}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwRepeat{Do}{do}{while}
+    \KwIn{solution, número de clusters}    
+        \Do{newSolution no es válida} {
+            newSolution $=$ solution \;
+            pos $=$ Posición aleatoria dentro del tamaño de la solución \;
+            clust $=$ Clúster aleatorio distinto de solution[pos] \;
+            newSolution[pos] = clust \;
+        }
+    \Return{newSolution}
+    \caption{Generación de vecinos}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+Con estas funciones, el algoritmo de enfriamiento simulado queda de la siguiente manera:
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwFor{RepTimes}{repeat}{times}{end}
+    \KwIn{Conjunto de datos, lista de restricciones}
+        iterations $= 100000$ \;
+        minTemperature $= 10^{-3}$ \;
+        maxAnnealing $\approx \frac{iterations}{maxNeighbors}$ \;
+        $\beta =$ beta(minTemperature, maxAnnealing) \;
+        \BlankLine \BlankLine
+        bestSolution $=$ actualSolution $=$ Solución aleatoria \;
+        bestCost $=$ actualCost $=$ cost(actualSolution) \;
+        temperature $=$ initialTemperature(actualCost) \;
+        \BlankLine \BlankLine
+        \RepTimes{maxAnnealing} {
+            successes $=$ $0$ \;
+            \RepTimes{maxNeighbors} {
+                newSolution $=$ generateNeighbor(actualSolution) \;
+                newCost $=$ cost(newSolution) \;
+                \BlankLine \BlankLine
+                \If{metrop(actualCost, newCost, temperature)} {
+                    successes++ \;
+                    actualCost $=$ newCost \;
+                    actualSolution $=$ newSolution \;
+                    \BlankLine \BlankLine
+                    \If{bestCost $>$ actualCost} {
+                        bestCost $=$ actualCost \;
+                        bestSolution $=$ actualSolution \;
+                    }
+                }
+                \BlankLine \BlankLine
+                \If{successes $>=$ maxSuccesses} {
+                    \textbf{break} \;
+                }
+            }
+            \BlankLine \BlankLine
+            \If{successes $==$ $0$} {
+                \textbf{break} \;
+            }
+            \BlankLine \BlankLine
+            temperature $=$ anneal(temperature, $\beta$) \;
+        }
+    \Return{bestSolution}
+    \caption{Proceso de búsqueda en ES}
+\end{algorithm}
+
+\newpage
+
+% =================================================================================================
+
+\subsection{Búsqueda Multiarranque Básica}
+
+La generación de vecinos, al igual que en la variante ILS, sigue el esquema mostrado previamente para la Búsqueda Local clásica (usando un vecindario virtual).
+
+El proceso de búsqueda BMB introduce un nuevo bucle que cubre al algoritmo BL, lanzándolo un número predeterminado de veces y quedándose con la mejor de las soluciones obtenidas.
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwFor{RepTimes}{repeat}{times}{end}
+    \KwIn{Conjunto de datos, lista de restricciones}
+        executions $= 10$ \;
+        \BlankLine \BlankLine
+        bestSolution $=$ None \;
+        bestCost $= +\infty$ \;
+        \BlankLine \BlankLine
+        neighborhood $=$ Permutación con todos los vecinos virtuales posibles \;
+        \BlankLine \BlankLine
+        \RepTimes{executions} {
+            solution $=$ Solución aleatoria \;
+            centroids $=$ Conjunto con los centroides de cada clúster \;
+            cost $=$ Valor de la función objetivo para la solución actual \;
+            evaluations $=$ 0 \;
+            \BlankLine \BlankLine
+            \While{solution cambie \textbf{and} $evaluations < 10\,000$} {
+                neigh $=$ Vecinos virtuales válidos para la solución actual \;
+                \For{$n$ \textbf{in} neigh} {
+                    evaluations++ \;
+                    newSolution $=$ Solución aplicando el vecino $n$ \;
+                    newCentroids $=$ Centroides de $newSolution$ \;
+                    newCost $=$ Valor de la función objetivo para newSolution \;
+                    \BlankLine \BlankLine
+                    \If{newCost $<$ cost} {
+                        cost $=$ newCost \;
+                        solution $=$ newSolution \;
+                        Saltar a la siguiente iteración del bucle \textbf{while} \;
+                    }
+                }
+            }
+            \BlankLine \BlankLine
+            \If{bestCost $>$ cost} {
+                bestCost $=$ cost \;
+                bestSolution $=$ solution \;
+            }
+        }
+    \Return{bestSolution}
+    \caption{Proceso de búsqueda en BMB}
+\end{algorithm}
+
+\newpage
+
+% =================================================================================================
+
+\subsection{Búsqueda Local Reiterada}
+
+Este algoritmo sigue un esquema similar a BMB, pero se aplica una mutación a la mejor solución obtenida hasta el momento y se reutiliza como punto de partida del algoritmo BL.
+
+
+Se realiza una mutación por segmento fijo, asignando valores aleatorios a cada posición que muta. Es por tanto necesario aplicar una reparación en la solución en caso de que esta ya no sea válida. La forma de hacerlo sigue el mismo esquema que en los algoritmos genéticos.
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{solution}
+        \While{exista clúster vacío en solution} {
+            Añadir clústers restantes a posiciones aleatorias de solution \;
+        }
+    \Return{solution}
+    \caption{Reparación de la solución}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{solution}
+        index $=$ Posición aleatoria \;
+        n $=$ Longitud de la solución \;
+        Asignar a child $n/2$ clústers de solution y $n/2$ clústers aleatorios a partir de index \;
+    \Return{child}
+    \caption{Mutación por segmento fijo}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwFor{RepTimes}{repeat}{times}{end}
+    \KwIn{Conjunto de datos, lista de restricciones}
+        executions $= 10$ \;
+        \BlankLine \BlankLine
+        bestSolution $=$ None \;
+        bestCost $= +\infty$ \;
+        solution $=$ Solución aleatoria \;
+        \BlankLine \BlankLine
+        neighborhood $=$ Permutación con todos los vecinos virtuales posibles \;
+        \BlankLine \BlankLine
+        \RepTimes{executions} {
+            \tcc{Mutar - - - - - - - - - - - - - - - - - - - - - - - - - -}
+            mutate(bestSolution) \;
+            repair(bestSolution) \;
+            \BlankLine \BlankLine
+            \tcc{Preparar siguiente iteración  - - - - - - - - - - - - - -}
+            solution $=$ bestSolution \;
+            cost $=$ bestCost $=$ Coste de bestSolution \;
+            \BlankLine \BlankLine
+            \tcc{Llamada al algoritmo de BL - - - - - - - - - - - - - - - -}
+            centroids $=$ Conjunto con los centroides de cada clúster \;
+            evaluations $=$ 0 \;
+            \BlankLine \BlankLine
+            \While{solution cambie \textbf{and} $evaluations < 10\,000$} {
+                neigh $=$ Vecinos virtuales válidos para la solución actual \;
+                \For{$n$ \textbf{in} neigh} {
+                    evaluations++ \;
+                    newSolution $=$ Solución aplicando el vecino $n$ \;
+                    newCentroids $=$ Centroides de $newSolution$ \;
+                    newCost $=$ Valor de la función objetivo para newSolution \;
+                    \BlankLine \BlankLine
+                    \If{newCost $<$ cost} {
+                        cost $=$ newCost \;
+                        solution $=$ newSolution \;
+                        Saltar a la siguiente iteración del bucle \textbf{while} \;
+                    }
+                }
+            }
+            \BlankLine \BlankLine
+            \tcc{Comprobar si la solución mejora - - - - - - - - - - - - -}
+            \If{bestCost $>$ cost} {
+                bestCost $=$ cost \;
+                bestSolution $=$ solution \;
+            }
+        }
+    \Return{bestSolution}
+    \caption{Proceso de búsqueda en ILS}
+\end{algorithm}
+
+\newpage
+
+% =================================================================================================
+
+\subsection{Algoritmo Híbrido ILS-ES}
+
+El algoritmo híbrido simplemente sustituye la inclusión de la BL por una llamada al algoritmo ES. El operador de mutación y de reparación se mantienen de la misma forma, y la inicialización queda de la siguiente manera:
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+        executions $= 10$ \;
+        iterations $= 10000$ \;
+        minTemperature $= 10^{-3}$ \;
+        maxAnnealing $\approx \frac{iterations}{maxNeighbors}$ \;
+        $\beta =$ beta(minTemperature, maxAnnealing) \;
+    \caption{Inicialización del algoritmo ILS-ES}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+Y el proceso de búsqueda sigue el siguiente pseudocódigo:
+
+\vspace{1mm}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwFor{RepTimes}{repeat}{times}{end}
+    \KwIn{Conjunto de datos, lista de restricciones}
+        trueBestSolution $=$ bestSolution $=$ actualSolution $=$ Solución aleatoria \;
+        \BlankLine \BlankLine
+        \RepTimes{executions} {
+            \tcc{Mutar - - - - - - - - - - - - - - - - - - - - - - - - - -}
+            mutate(trueBestSolution) \;
+            repair(trueBestSolution) \;
+            \BlankLine \BlankLine
+            \tcc{Preparar siguiente iteración  - - - - - - - - - - - - - -}
+            actualSolution $=$ bestSolution $=$ trueBestSolution\;
+            actualCost $=$ bestCost $=$ trueBestCost $=$ Coste de trueBestSolution\;
+            \BlankLine \BlankLine
+            \tcc{Reiniciamos temperatura y llamamos a ES - - - - - - - - -}
+            temperature $=$ initialTemperature(actualCost) \;
+            $\beta =$ beta(temperature, minTemperature, maxAnnealing) \;
+            \BlankLine \BlankLine
+            \RepTimes{maxAnnealing} {
+                successes $=$ $0$ \;
+                \RepTimes{maxNeighbors} {
+                    newSolution $=$ generateNeighbor(actualSolution) \;
+                    newCost $=$ cost(newSolution) \;
+                    \BlankLine \BlankLine
+                    \If{metrop(actualCost, newCost, temperature)} {
+                        successes++ \;
+                        actualCost $=$ newCost \;
+                        actualSolution $=$ newSolution \;
+
+                        \If{bestCost $>$ actualCost} {
+                            bestCost $=$ actualCost \;
+                            bestSolution $=$ actualSolution \;
+                        }
+                    }
+
+                    \If{successes $>=$ maxSuccesses} {
+                        \textbf{break} \;
+                    }
+                }
+                \If{successes $==$ $0$} {
+                    \textbf{break} \;
+                }
+
+                temperature $=$ anneal(temperature, $\beta$) \;
+            }
+            \BlankLine \BlankLine
+            \tcc{Comprobar si hay mejora (bestSolution contiene la mejor solución de la llamada a ES, trueBestSolution la mejor en general)}
+            \If{trueBestCost $>$ bestCost} {
+                trueBestCost $=$ bestCost \;
+                trueBestSolution $=$ bestSolution \;
+            }
+        }
+    \Return{trueBestSolution}
+    \caption{Proceso de búsqueda en ILS-ES}
+\end{algorithm}

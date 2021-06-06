@@ -1,0 +1,16 @@
+[debug] Acquiring lock on file E:\Nacho\Desktop\GitHub\UGR-NTP\Practica3\project\target\.sbt-compilation-infos\practica3-compile\.sbt-idea-lock ...
+[error] E:\Nacho\Desktop\GitHub\UGR-NTP\Practica3\src\main\scala\Lista\Lista.scala:132:11: not found: value folRight
+[error]           folRight(cola, funcion(neutro, cabeza))(funcion)
+[error]           ^
+[error] E:\Nacho\Desktop\GitHub\UGR-NTP\Practica3\src\main\scala\Lista\Lista.scala:132:34: type mismatch;
+[error]  found   : neutro.type (with underlying type B)
+[error]  required: A
+[error]           folRight(cola, funcion(neutro, cabeza))(funcion)
+[error]                                  ^
+[error] E:\Nacho\Desktop\GitHub\UGR-NTP\Practica3\src\main\scala\Lista\Lista.scala:132:42: type mismatch;
+[error]  found   : cabeza.type (with underlying type A)
+[error]  required: B
+[error]           folRight(cola, funcion(neutro, cabeza))(funcion)
+[error]                                          ^
+[error] three errors found
+[debug] Releasing lock on file E:\Nacho\Desktop\GitHub\UGR-NTP\Practica3\project\target\.sbt-compilation-infos\practica3-compile\.sbt-idea-lock.

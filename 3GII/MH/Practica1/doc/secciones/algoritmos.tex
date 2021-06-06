@@ -1,0 +1,169 @@
+\section{Algoritmos}
+
+% Descripción en pseudocódigo de la estructura del método de búsqueda y de todas aquellas operaciones relevantes de cada algoritmo. Este contenido, específico a cada algoritmo se detallará en los correspondientes guiones de prácticas. El pseudocódigo deberá forzosamente reflejar la implementación/ el desarrollo realizados y no ser una descripción genérica extraída de las transparencias de clase o de cualquier otra fuente. La descripción de cada algoritmo no deberá ocupar más de 2 páginas.
+% Para esta primera práctica se incluirá la descripción en pseudocódigo del método de exploración del entorno, el operador de generación de vecino y la generación de soluciones aleatorias empleadas en el algoritmo de BL.
+% f) Descripción en pseudocódigo de los algoritmos de comparación.
+% g) Breve explicación del procedimiento considerado para desarrollar la práctica: implementación a partir del código proporcionado en prácticas o a partir de cualquier otro, o uso de un framework de metaheurísticas concreto. Inclusión de un pequeño manual de usuario describiendo el proceso para que el profesor de prácticas pueda replicarlo.
+
+Todos los algoritmos se han implementado a mano en el lenguaje Python con la ayuda de los framework Scikit-Learn y Numpy. En algunos casos se ha seguido código de terceros (de StackOverflow) para la resolución de pequeños problemas (mejor forma de cálcular distancias, cómo generar permutaciones de arrays, etc.), y sólamente tras la comprobación de su correctitud. 
+Adicionalmente, el cálculo de los centroides se ha hecho a partir del módulo \textit{NearestCentroid} de Scikit. \\
+
+Para la ejecución del código es necesario tener instalado Python en su versión 3, y se puede ejecutar de la siguiente manera:
+\begin{lstlisting}[language=bash]
+    $python main.py [-h] -a A -p P [-s S] [-ss SS]
+
+    >Argumentos:
+        -h, --help  Mensaje de ayuda con esta descripcion
+        -a A        Algoritmo a utilizar (copkm, bl, copkm2)
+        -p P        Problema a ejecutar (iris10, ecoli20...)
+        -s S        Archivo que contiene la semilla
+        -ss SS      Valor de la semilla    
+\end{lstlisting}
+
+\vspace{\baselineskip}
+
+Adicionalmente, es necesario tener incluido Numpy, Scikit-Learn y Matplotlib en el entorno de Python donde se ejecute.
+
+\newpage
+
+% ==============================================================================
+
+\subsection{Greedy COPKM v1}
+El primer algoritmo con el que afrontamos PAR es la técnica \textit{Greedy COPKM}, variante de la versión Greedy clásica adaptada al problema PAR. \\
+
+El proceso que sigue el algoritmo es el siguiente: \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de datos, lista de restricciones}
+        solution $=$ solución aleatoria \;
+        indexes $=$ Conjunto de índices (uno por cada dato) \;
+        centroids $=$ Conjunto con los centroides de cada clúster \;
+        Barajar indexes \;
+        \While{solution cambie} {
+            actualSol $=$ solución vacía \;
+            \For{$i$ \textbf{in} indexes} {
+                inf $=$ máxima infeasibility posible \;
+                \ForEach{cluster valido} {
+                    newSol $=$ actualSol modificando el cluster del índice $i$ \;
+                    newInf $=$ infeasibility de newSol \;
+                    \uIf{newInf $<$ inf}{
+                        Almacenar como cluster posible \;
+                    }
+                    \uElseIf{newInf $<$ inf} {
+                        Añadir a la lista de clusters posibles \;
+                    }
+                }
+                distances $=$ Distancias de los elementos a cada cluster \;
+                actualSol se modifica con el cluster de los posibles con menor distancia \; 
+            }
+            solution $=$ actualSol \;
+        }
+    \Return{solution, centroids}
+    \caption{Algoritmo COPKM}
+\end{algorithm}
+
+% ------------------------------------------------------------------------------
+
+\newpage
+
+\subsection{Búsqueda Local}
+
+La generación de vecinos se separa en dos pasos. Puesto que creamos un vecindario virtual (de forma compacta) como pares índice-cluster, al inicio del proceso BL se genera todo el posible vecindario, que corresponde a una permutación del número de elementos del problema con el número de clústers.
+Una vez generado esta lista inmutable de pares, en cada iteración se seleccionan aquellos que sean válidos en la solución actual. En este caso un vecino es válido cuando no deja ningún clúster vacío y no pertenece a la solución actual. \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de vecinos virtuales posibles, en forma de lista de pares, solution}
+        vecindario $=$ listaVecinosVirtuales \;
+        \For{$v$ \textbf{in} vecindario} {
+            soluciónVecina = Solución producida aplicando el vecino $v$ \;
+            Eliminar $v$ de $vecindario$ si soluciónVecina deja algún cluster vacío o es igual que solution \;
+        }
+    \Return{vecindario}
+    \caption{Generación de vecinos}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+La generación de soluciones aleatorias hace uso de la librería Numpy y genera un vector aleatorio relleno con posibles clústers. Este proceso se llama repetidamente hasta que la solución es válida (no deja ningún clúster vacío). \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwRepeat{Do}{do}{while}
+    \KwIn{Tamaño de la solucion, numero de clusters}    
+        \Do{solution no es válida} {
+            solution = X donde $\bigtriangledown x_i \in X, 0 \leq x_i < numClust $ \;
+        }
+    \Return{solution}
+    \caption{Generación de soluciones aleatorias}
+\end{algorithm}
+
+% \vspace{\baselineskip}
+\newpage
+
+Con estos dos algoritmos el proceso de búsqueda queda de la siguiente manera: \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de datos, lista de restricciones}    
+        solution $=$ Solución aleatoria \;
+        centroids $=$ Conjunto con los centroides de cada clúster \;
+        neighborhood $=$ Permutación con todos los vecinos virtuales posibles \;
+        evaluations $=$ 0 \;
+        cost $=$ Valor de la función objetivo para la solución actual \;
+        \While{solution cambie \textbf{and} $evaluations < 100\ 000$} {
+            neigh $=$ Vecinos virtuales válidos para la solution actual \;
+            \For{$n$ \textbf{in} neigh} {
+                evaluations++ \;
+                newSolution $=$ Solución aplicando el vecino $n$ \;
+                newCentroids $=$ Centroides de $newSolution$ \;
+                newCost $=$ Valor de la función objetivo para newSolution \;
+                \If{newCost $<$ cost} {
+                    cost $=$ newCost \;
+                    solution $=$ newSolution \;
+                    Saltar a la siguiente iteración del bucle \textbf{while} \;
+                }
+            }
+        }
+    \Return{solution, centroids}
+    \caption{Proceso de búsqueda}
+\end{algorithm}
+
+\newpage
+
+% ==============================================================================
+
+\subsection{Greedy COPKM v2}
+
+Puesto que COPKM deshecha la solución de la iteración anterior y solo actualiza en base a los nuevos centroides, haciendo que en ocasiones la infeasibility aumente y el algoritmo cicle, se decide modificar el código para no desperdiciar los resultados anteriores. \\
+
+En términos de programación, el único cambio es no comenzar con una solución vacía en cada iteración y calcular la infeasibility no hasta el índice actual sino con toda. \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de datos, lista de restricciones}
+        solution $=$ Solución aleatoria \;
+        indexes $=$ Conjunto de índices (uno por cada dato) \;
+        centroids $=$ Conjunto con los centroides de cada clúster \;
+        Barajar indexes \;
+        \While{solution cambie} {
+            \For{$i$ \textbf{in} indexes} {
+                inf $=$ infeasibility de la solución actual \;
+                \ForEach{cluster valido} {
+                    newSol $=$ solution modificando el cluster del índice $i$ \;
+                    newInf $=$ infeasibility de newSol \;
+                    \uIf{newInf $<$ inf}{
+                        Almacenar como cluster posible \;
+                    }
+                    \uElseIf{newInf $<$ inf} {
+                        Añadir a la lista de clusters posibles \;
+                    }
+                }
+                distances $=$ Distancias de los elementos a cada cluster \;
+                solution se modifica con el cluster de los posibles con menor distancia \; 
+            }
+        }
+    \Return{solution, centroids}
+    \caption{Algoritmo COPKM v2}
+\end{algorithm}

@@ -1,0 +1,5 @@
+Ignacio Vellido Expósito
+
+Extra:
+  - Clase Esfera ahora recibe un parámetro "grados" (entre 0 y 180) para pintar figuras más
+  complejas (pulsando tecla 'Y' genera "esfera" de 123º).

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<vxml xmlns="http://www.w3.org/2001/vxml" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:schemaLocation="http://www.w3.org/2001/vxml 
+      http://www.w3.org/TR/voicexml20/vxml.xsd" 
+      version="2.1">
+    <form>
+        <block>
+            Welcome to the Alhambra tickets service. 
+        </block>
+
+        <!-- ############################################################### -->
+        <!-- Asking for help -->
+        <link event="help"> 
+            <grammar src="help.grammar"/>
+        </link>
+
+        <!-- ############################################################### -->
+        <link event="cancel"> 
+            <grammar src="cancel.grammar"/>
+        </link>
+
+        <catch event="cancel">
+            <reprompt/>
+            <goto nextitem="confirm_cancel"/>
+        </catch>
+
+        <!-- ############################################################### -->
+        <!-- Getting the user request -->
+        <field name="mode">
+            <grammar src="user_need.grammar"/>
+            <prompt>Is there anything we can help you?</prompt>
+
+            <catch event="help">
+                <prompt>You can buy a generic ticket or ask about pricing and routes.</prompt>
+            </catch>
+
+            <filled>
+                <if cond="mode=='true'">                                    
+                    <!-- Go to information -->
+                    <goto next="./information.vxml"/>
+                <else/>
+                    <!-- Go to payment -->
+                    <prompt>You are going to buy a generic Alhambra ticket.</prompt>
+                    <goto next="./payment.vxml"/>
+                </if>
+            </filled>
+        </field>        
+        <!-- ############################################################### -->
+    </form>
+</vxml>

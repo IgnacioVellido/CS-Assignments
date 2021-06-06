@@ -1,0 +1,141 @@
+{% extends "view/html/base.html" %}
+
+{% block Main %}
+
+<!-- Parameters:
+Derived from new-user
+  name
+  surname
+  email
+  get_password()
+  get_password_check()
+  phoneNumber
+  state
+  kind: Rol -->
+
+<form action="new-user.php" class="main-block" method="POST">
+  <h1 class="main-title">Nuevo usuario</h1>
+
+  <div class="form-block">
+    <div class="form-group row">
+      <label for="profilepic" class="col-sm-1">Foto</label>
+      <div class="col-sm-4">
+        {% if user.profilepic is defined %}        
+          <img  class="profilepic"  src="{{ new-user.profilepic }}">
+        {% endif %}
+      </div>
+      <div class="col-sm-7 row">
+        <label for="profilepic" class="custom-file-label">Seleccionar archivo</label>
+        <input type="file" class="custom-file-input" name="profilepic">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="name" class="col-sm-3">Nombre</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="name"
+                  {% if new-user.name is defined %}
+                    value="{{new-user.name}}"
+                  {% endif %}
+        >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="surname" class="col-sm-3">Apellidos</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="surname"
+                  {% if new-user.surname is defined %}
+                    value="{{new-user.surname}}"
+                  {% endif %}
+        >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="email" class="col-sm-3">Email</label>
+      <div class="col-sm-9">
+        <input type="email" class="form-control" name="email"
+                  {% if new-user.email is defined %}
+                    value="{{new-user.email}}"
+                  {% endif %}
+        >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="password" class="col-sm-3">Clave</label>
+      <div class="col-sm-5">
+        <input type="password" class="form-control" name="password"
+                  {% if new-user.get_password() is defined %}
+                    value="{{new-user.get_password()}}"
+                  {% endif %}
+        >
+      </div>
+      <div class="col-sm-4">
+        <input type="password" class="form-control" name="password-check"
+                  {% if new-user.get_password_check() is defined %}
+                    value="{{new-user.get_password_check()}}"
+                  {% endif %}
+        >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="address" class="col-sm-3">Dirección</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="address"
+                  {% if new-user.mailAddress is defined %}
+                    value="{{new-user.mailAddress}}"
+                  {% endif %}
+        >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="telephone" class="col-sm-3">Teléfono</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="telephone"                
+                  {% if new-user.phoneNumber is defined %}
+                    value="{{new-user.phoneNumber}}"
+                  {% endif %}                      
+        >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="rol" class="col-sm-3">Rol</label>
+      <div class="col-sm-9">
+        <select class="form-control form-control-sm" name="rol">
+          <option>Colaborador</option>
+          <option
+            {% if new-user.kind is defined %}
+              {% if new-user.kind == "admin" %}
+                selected
+              {% endif %}
+            {% endif %}
+          >Administrador</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="status" class="col-sm-3">Estado</label>
+      <div class="col-sm-9">
+        <select class="form-control form-control-sm" name="status">
+          <option>Activo</option>
+          <option
+            {% if new-user.state is defined %}
+              {% if new-user.state == "inactive" %}
+                selected
+              {% endif %}
+            {% endif %}
+          >Inactivo</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <button class="btn"><i class="fas fa-user-plus"> Crear usuario</i></button>
+</form>
+
+{% endblock %}

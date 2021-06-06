@@ -1,0 +1,69 @@
+make[1]: Entering directory '/mnt/68A80B78A80B43D2/Ubuntu/Desktop/TSI-2'
+if [ 0 -eq 0 ];	then \
+	Metric-FF/ff -p Ejercicios/ -o Ej3dominio.pddl -f Ej3problema2.pddl;	\
+else	\
+	Metric-FF/ff -p Ejercicios/ -o Ej3dominio.pddl -f Ej3problema2.pddl -O -g 1 -h 1;	\
+fi;
+
+ff: parsing domain file
+domain 'EJERCICIO-3' defined
+ ... done.
+ff: parsing problem file
+problem 'EJERCICIO-3-PRUEBA_PRECIPICIO' defined
+ ... done.
+
+
+
+no optimization required. skipping criterion.
+
+
+warning: var quantification of ?O2 overwrites previous declaration
+
+
+warning: var quantification of ?O2 overwrites previous declaration
+
+
+warning: var quantification of ?O2 overwrites previous declaration
+
+
+warning: parameter ?O of op IR_OESTE_AGUA has unknown or empty type BIKINI. skipping op
+warning: parameter ?O of op IR_SUR_AGUA has unknown or empty type BIKINI. skipping op
+warning: parameter ?O of op IR_ESTE_AGUA has unknown or empty type BIKINI. skipping op
+warning: parameter ?O of op IR_NORTE_AGUA has unknown or empty type BIKINI. skipping op
+warning: parameter ?O of op IR_OESTE_BOSQUE has unknown or empty type ZAPATILLA. skipping op
+warning: parameter ?O of op IR_SUR_BOSQUE has unknown or empty type ZAPATILLA. skipping op
+warning: parameter ?O of op IR_ESTE_BOSQUE has unknown or empty type ZAPATILLA. skipping op
+warning: parameter ?O of op IR_NORTE_BOSQUE has unknown or empty type ZAPATILLA. skipping op
+no metric specified. plan length assumed.
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is EHC, if that fails then  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+Cueing down from goal distance:    5 into depth [1]
+                                   4            [1]
+                                   3            [1]
+                                   2            [1]
+                                   1            [1]
+                                   0            
+
+ff: found legal plan as follows
+
+step    0: IR_NORTE JUGADOR_1 ZONA_1 ZONA_2
+        1: GIRAR-DERECHA JUGADOR_1 N
+        2: IR_ESTE JUGADOR_1 ZONA_2 ZONA_3
+        3: GIRAR-DERECHA JUGADOR_1 E
+        4: IR_SUR JUGADOR_1 ZONA_3 ZONA_4
+     		Coste Total: 0.00
+
+
+time spent:    0.00 seconds instantiating 1241 easy, 0 hard action templates
+               0.00 seconds reachability analysis, yielding 32 facts and 14 actions
+               0.00 seconds creating final representation with 8 relevant facts, 1 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 6 states, to a max depth of 1
+               0.00 seconds total time
+
+make[1]: Leaving directory '/mnt/68A80B78A80B43D2/Ubuntu/Desktop/TSI-2'

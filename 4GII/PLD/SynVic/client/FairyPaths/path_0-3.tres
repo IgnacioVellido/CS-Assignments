@@ -1,0 +1,7 @@
+[gd_resource type="Curve3D" format=2]
+
+[resource]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, 0, -4, 6, 0, 4, 21, 0, 2, -5, 0, -4, 5, 0, 4, 22.7445, 0, 30.4628, 0, 0, 0, 0, 0, 0, 49, 0, 30 ),
+"tilts": PoolRealArray( 0, 0, 0, 0 )
+}

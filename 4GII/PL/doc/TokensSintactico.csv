@@ -1,0 +1,40 @@
+Token,Patrón,Atributos,Identificador
+IDENTIFICADOR,( ('_' [a-zA-Z0-9]+) | ([a-zA-Z][a-zA-Z0-9]*) ),,256
+CONSTANTE,('true' | 'false' | \'[^\']*\' | ('+' | '-')? [0-9]+ ('.' [0-9]+)?,,257
+OP_OR,'||',,258
+OP_AND,'&&',,259
+OP_EXOR,'^',,260
+OP_IGUALDAD,'==' | '!=', 0:'==' 1:'!=', 261
+OP_RELACION,'<' | '>' | '<=' | '>=', 0:'<' 1:'>' 2:'<=' 3:'>=', 262
+OP_ADITIVIO,'+' | '-', 0:'+' 1:'-', 263
+OP_MULTIPLICATIVO,'*' | '/' | '%', 0:'*' 1: '/' 2:'%', 264
+OP_UNARIO, '!' | '#' | '?', 0: '!' 1: '#' 2: '?',265
+OP_TERNARIO1,'++',,266
+OP_TERNARIO2BINARIO,'@',,267
+OP_BINARIO,'--' | '**', 0:'--' 1: '**' ,268
+PYC,';',,269
+CORIZQ,'[',,270
+CORDCH,']',,271
+PARDCH,')',,272
+PARIZQ,'(',,273
+LLAVEIZQ,'{',,274
+LLAVEDCH,'}',,275
+SCANF,'scanf',,276
+PRINT,'print',,277
+AVANRETRO,'<<' | '>>',0: '<<' 1: '>>',278
+SWITCH,'switch',,279
+BREAK,'break',,280
+CASE,'case',,281
+DEFAULT,'default',,282
+TIPO,'int' | 'char' | 'bool' | 'float', 0:'int' 1:'char' 2:'bool' 3:'float',283
+ASIGN,'=',,284
+LISTOF,'list of',,285
+RETURNCOMIENZO,'return' | '$',0: return 1: '$',286
+ELSE,'else',,287
+IF,'if',,288
+WHILE,'while',,289
+MAIN,'main',,290
+VARIABLES,'Variables',,291
+COMA,"','",,292
+CADENA, \[^\]*\ ,,293
+DOSPUNTOS,':',,294

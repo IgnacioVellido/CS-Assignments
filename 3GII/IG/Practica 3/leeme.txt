@@ -1,0 +1,7 @@
+Ignacio Vellido Expósito
+
+Teclas:
+    T           - Mostrar objeto jerárquico
+    De F1 a F6  - Mover las diferentes partes del objeto
+    F7          - Activar animación
+    F8          - Desactivar animación

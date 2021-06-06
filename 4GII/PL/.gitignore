@@ -1,0 +1,11 @@
+flex/lexico
+flex/lex.yy.c
+*.exe
+*.o
+flex/prueba
+flex/y.tab.c
+flex/y.tab.h
+flex/y.output
+.vscode/settings.json
+flex/.fuse_hidden000004b500000003
+flex/core

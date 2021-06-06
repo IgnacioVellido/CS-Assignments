@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<vxml version="2.1" xml:lang="pt-PT">
+    <form id="get_tickets_info">
+        <block>Temos uma grande variedade de bilhetes para venda</block>
+
+        <!-- ############################################################### -->
+        <!-- Asking for help -->
+        <link event="help"> 
+            <grammar src="help.grammar"/>
+        </link>
+
+        <!-- ############################################################### -->
+        <field name="route">
+            <grammar src="routes.grammar"/>
+            <prompt>Que área você gostaria de visitar?</prompt>            
+            <catch event="help">
+                <prompt>
+                    Temos rotas para o Palácio, Generalife e uma 
+                    oferta especial para todo o museu.
+                </prompt>
+            </catch>
+            <filled>
+                <if cond="route=='palace'">
+                    <assign name="route" expr="'para o palácio'"/>
+                    <goto nextitem="palace"/>
+                <elseif cond="route=='generalife'"/>
+                    <assign name="route" expr="'para o generalife'"/>                    
+                    <goto nextitem="generalife"/>
+                <else/>
+                    <assign name="route" expr="'para tudo'"/>
+                    <goto nextitem="full"/>
+                </if>
+            </filled>
+        </field>
+
+        <!-- ############################################################### -->
+        <!-- Tell routes info -->            
+        <field name="palace">
+            <grammar src="route_information_palace.grammar"/>
+            <prompt>
+                O que você gostaria de saber sobre os bilhetes para Palácio de Carlos quinto?
+            </prompt>
+            <catch event="help">
+                <prompt>
+                    Temos informações sobre o monumento e os preços dos bilhetes, 
+                    ou você pode comprar diretamente um bilhete para o palácio.
+                </prompt>
+            </catch>
+            <filled>
+                <if cond="palace=='buy'">                    
+                    <goto nextitem="confirm"/>
+                <elseif cond="palace=='price'"/>
+                    O preço de um bilhete para o palácio é de noventa euros.
+                <else/> <!-- Information -->
+                    Símbolo da vitória do cristianismo sobre o Islã. 
+                    Com seu design curioso, foi uma revolução no design do Alhambra, 
+                    tanto em sua estrutura interna quanto em suas conexões com a cidade
+                </if>
+                <clear namelist="palace"/>
+                <goto nextitem="palace"/>
+            </filled>            
+        </field>
+
+        <field name="generalife">
+            <grammar src="route_information_generalife.grammar"/>
+            <prompt>
+                O que você gostaria de saber sobre os bilhetes Generalife?
+            </prompt>
+            <catch event="help">
+                <prompt>
+                    Temos informações sobre o monumento e os preços de bilhetes, 
+                    ou você pode comprar diretamente um bilhete para o Generalife.
+                </prompt>
+            </catch>
+            <filled>
+                <if cond="generalife=='buy'">                    
+                    <goto nextitem="confirm"/>
+                <elseif cond="generalife=='price'"/>
+                    O preço de um bilhete para o Generalife é de nove euros.
+                <else/> <!-- Information -->
+                    O Generalife era o palácio de verão dos governadores de Nasrid.
+                    Seus maravilhosos jardins fazem dele uma 
+                    obrigação aqueles novos turistas em Alhambra.
+                </if>
+                <clear namelist="generalife"/>
+                <goto nextitem="generalife"/>
+            </filled>            
+        </field>
+
+        <field name="full">
+            <grammar src="route_information_full.grammar"/>
+            <prompt>
+                O que você gostaria de saber sobre os bilhetes para toda a Alhambra?
+            </prompt>
+            <catch event="help">
+                <prompt>
+                    Temos informações sobre o monumento e os preços dos bilhetes, 
+                    ou você pode comprar diretamente um bilhete para todo o percurso.
+                </prompt>
+            </catch>
+            <filled>
+                <if cond="full=='buy'">                    
+                    <goto nextitem="confirm"/>
+                <elseif cond="full=='price'"/>
+                    O preço de um bilhete completo é de noventa e nove euros.
+                <else/> <!-- Information -->
+                    O pacote completo permite que você visite todos os cantos da Alhambra.
+                </if>
+                <clear namelist="full"/>
+                <goto nextitem="full"/>
+            </filled>            
+        </field>
+
+        <!-- ############################################################### -->
+        <!-- Confirmation -->
+        <field name="confirm">
+            <grammar src="boolean.grammar"/>
+            <prompt>
+                Quer um bilhete <value expr="route"/>.
+                É correto?
+            </prompt>
+            <filled>
+                <if cond="confirm.bool=='true'">
+                    procedendo ao pagamento.
+                    <goto next="./payment.vxml"/>
+                </if>
+                <clear namelist="route palace generalife full"/>
+            </filled>
+        </field>
+        <!-- ############################################################### -->
+        <!-- For cancel -->
+        <field name="confirm_cancel">
+            <grammar src="boolean.grammar"/>
+            <prompt>Tem certeza de que deseja cancelar a operação?</prompt>
+            <filled>
+                <if cond="confirm_cancel.bool=='true'">
+                    <!-- Asking to go back -->
+                    <goto nextitem="go_back"/>
+                <else/>
+                    De acordo.
+                    <clear namelist="confirm_cancel"/>
+                </if>
+            </filled>
+        </field>
+
+        <field name="go_back">
+            <grammar src="boolean.grammar"/>
+            <prompt>Você precisa de mais alguma coisa?</prompt>
+            <filled>
+                <if cond="go_back.bool=='true'">
+                    <goto next="./index.vxml"/>
+                <else/>
+                    De acordo, adeus.
+                    <disconnect/>
+                </if>
+            </filled>
+        </field>
+    </form>
+</vxml>

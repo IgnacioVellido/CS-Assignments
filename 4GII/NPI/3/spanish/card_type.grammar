@@ -1,0 +1,5 @@
+#JSGF V1.0;
+
+grammar card_type;
+
+public <card_type> = visa | amex | master card | american express;

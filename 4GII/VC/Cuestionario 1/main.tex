@@ -1,0 +1,236 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Wenneker Assignment
+% LaTeX Template
+% Version 2.0 (12/1/2019)
+%
+% This template originates from:
+% http://www.LaTeXTemplates.com
+%
+% Authors:
+% Vel (vel@LaTeXTemplates.com)
+% Frits Wenneker
+%
+% License:
+% CC BYNCSA 3.0 (http://creativecommons.org/licenses/byncsa/3.0/)
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%
+
+\documentclass[11pt]{scrartcl} % Font size
+
+\input{structure.tex} % Include the file specifying the document structure and custom commands
+
+%
+%	TITLE SECTION
+%
+
+\title{	
+	\normalfont\normalsize	
+	\rule{\linewidth}{0.5pt}\\ % Thin top horizontal rule
+	\vspace{20pt} % Whitespace
+	{\huge Cuestionario de Teoría - 1}\\ % The assignment title
+	\vspace{12pt} % Whitespace
+	\rule{\linewidth}{2pt}\\ % Thick bottom horizontal rule
+	\vspace{12pt} % Whitespace
+}
+
+\author{\LARGE Ignacio Vellido Expósito} % Your name
+
+\date{\normalsize\today} % Today's date (\today) or a custom date
+
+\begin{document}
+
+\maketitle % Print the title
+
+\subsection{Diga en una sola frase cuál cree que es el objetivo principal de la 
+Visión por Computador.\newline Diga también cuál es la principal propiedad de las 
+imágenes de cara a la creación algoritmos que la procesen.}
+
+El objetivo principal es intentar ser capaz de procesar imágenes de forma igual
+o mejor que el ser humano.\newline
+
+Las imágenes terminan siendo cuantificaciones de la intensidad de luz, y esto se
+puede asociar a una función. Esta función puede ser procesada por algoritmos
+para diferentes usos.
+
+\subsection{Expresar las diferencias y semejanzas entre las operaciones de 
+correlación y convolución.\newline Dar una interpretación de cada una de ellas que en 
+el contexto de uso en visión por computador.}
+
+Como semejanza, ambas son técnicas de aplicado de máscaras a una imagen.
+Además, con filtros lineales y gracias a la invariante de traslación, la salida 
+no depende de la máscara, sino de la región en la que se aplica.\newline
+	 
+Respecto a sus diferencias, en correlación la máscara se aplica directamente, 
+mientras que en convolución esta se invierte (por filas y columnas) previamente.
+
+Esto hace que la correlación tenga propiedades adicionales de mayor utilidad de
+cara a la visión por computador.
+En caso de una máscara simétrica, ambas operaciones realizan el mismo cálculo.\newline
+
+También se puede ver que la correlación se asemeja a la búsqueda de un determinado
+modelo, mientras que la correlación corresponde a un filtrado.
+
+\newpage
+
+\subsection{¿Cuál es la diferencia “esencial” entre el filtro de convolución y 
+el de mediana? Justificar la respuesta.}
+
+Que el filtro de convolución aplica un cálculo sobre el vecindario de un píxel,
+y sustituye su valor por el resultado.\newline
+
+En cambio, la mediana no añade un nuevo valor como resultado de una operación, 
+sino que selecciona un
+píxel del vecindario (el situado en la mediana en una ordenación) y se lo asigna.
+
+\subsection{Identifique el “mecanismo concreto” que usa un filtro de máscara 
+para transformar una imagen.}
+
+Un filtro de máscara realiza una operación sobre una zona local al píxel, no sobre
+una parte global de la imagen.\newline
+
+Esto se debe a que existe una relación entre regiones de píxeles que acaban
+transmitiendo una cierta información en la imagen.
+
+% (Localidad, usan información local y no global) La extracción de información a
+% partir del vecindario de píxeles (no es correlación ni convolución, hay filtros
+% de máscara no lineales)
+
+\subsection{¿De qué depende que una máscara de convolución pueda ser 
+implementada por convoluciones 1D? Justificar la respuesta.}
+
+De que la máscara pueda descomponerse en vectores 1D, de forma que uno se
+aplique por filas y otro por columnas. Esta propiedad es dependiente de
+la máscara en concreto.\newline
+
+Para saber si la máscara es separable se puede realizar su descomposición en 
+valores singulares y comprobar si el primer valor singular es distinto de cero.
+
+% \begin{equation}
+% 	K = \sum_i \sigma_i u_iv_i^T
+% \end{equation}
+
+\subsection{Identificar las diferencias y consecuencias desde el punto de
+vista teórico y de la implementación entre:\newline
+a) Primero alisar la imagen y después calcular las derivadas sobre la imagen 
+alisada\newline
+b) Primero calcular las imágenes derivadas y después alisar dichas imágenes.\newline
+Justificar los argumentos.}
+
+Con a) conseguimos los detalles de una imagen suavizada, y con b) suavizamos
+los detalles de una imagen normal.\newline
+
+Esto se debe a que con a) eliminamos frecuencias altas de la imagen y luego 
+mediante derivadas cogemos los detalles (bordes de objetos, también frecuencias altas) 
+de la imagen resultado,
+mientras que con b) el proceso es al contrario, obteniendo un resultado 
+completamente distinto.
+
+\subsection{Identifique las funciones de las que podemos extraer pesos
+correctos para implementar de forma eficiente la primera derivada de una
+imagen.\newline Suponer alisamiento Gaussiano.}
+
+% Núcleos de la convolución separables por filas y columnas
+% pag117
+
+Podemos obtener los pesos tomando las derivadas de la función:
+\begin{equation}
+	G(x, y, \sigma) = \frac{1}{2\pi\sigma^2} e^{-\frac{x^2+y^2}{2\sigma^2}}
+\end{equation}
+
+\subsection{Identifique las funciones de las que podemos extraer pesos correctos
+para implementar de forma eficiente la Laplaciana de una imagen.\newline Suponer
+alisamiento Gaussiano.}
+
+% Núcleos de la convolución separables por filas y columnas
+
+Podemos obtener los pesos de una Laplaciana de Gaussiana a partir de la función:
+\begin{equation}
+	\nabla^2 G(x, y, \sigma) = 
+	(\frac{x^2+y^2}{\sigma^4} - \frac{2}{\sigma^2}) * G(x, y, \sigma)
+\end{equation}
+
+\subsection{Suponga que le piden implementar de forma eficiente un algoritmo
+para el cálculo de la derivada de primer orden sobre una imagen usando
+alisamiento Gaussiano.\newline
+Enumere y explique los pasos necesarios para llevarlo a cabo.}
+
+Pregunta no contestada.
+
+
+\subsection{Identifique semejanzas y diferencias entre la pirámide gaussiana y
+el espacio de escalas de una imagen, ¿cuándo usar una u otra? Justificar los 
+argumentos.}
+
+% La Laplaciana se puede aproximar como diferencia de Gaussianas
+
+La pirámide es un método que nos permite disminuir el tamaño de una imagen sin 
+pérdida de información, mientras que el espacio de escalas aplica filtros en 
+cada octava y genera las diferencias entre pares de ellos.\newline
+
+El espacio de escalas es preferible por tener un menor coste computacional, pero
+no es una aproximación perfecta y por tanto se pierde exactitud.
+
+\subsection{¿Bajo qué condiciones podemos garantizar una perfecta reconstrucción
+de una imagen a partir de su pirámide Laplaciana? Dar argumentos y discutir las
+opciones que considere necesario.}
+
+Siempre que en la costrucción de la pirámide se haya realizado un muestreo 
+suficiente de la imagen (es decir, 
+como mínimo al doble de la frecuencia de entrada), y que en la última capa se
+hayan almacenado las frecuencias bajas residuales.
+
+\subsection{¿Cuáles son las contribuciones más relevantes del algoritmo de Canny
+al cálculo de los contornos sobre una imagen?\newline¿Existe alguna conexión entre las
+máscaras de Sobel y el algoritmo de Canny?\newline Justificar la respuesta}
+
+Canny aporta el uso de algoritmos de histéresis a la detección de bordes.\newline
+
+Las máscaras de Sobel son máscaras de primera derivada con alisamiento que nos 
+indican los cambios bruscos en los píxeles. Estos cambios corresponden a los 
+detalles en la imagen, y entre ellos también se suelen encontrar los bordes.
+
+\newpage
+
+\subsection{Identificar pros y contras de kmedias como mecanismo para crear un
+vocabulario visual a partir del cual poder caracterizar patrones.\newline
+¿Qué ganamos y que perdemos?\newline Justificar los argumentos}
+
+Kmedias es un mecanismo más simple y rápido que técnicas de machine learning,
+aunque la elección del número de clústeres puede hacer variar los resultados obtenidos.\newline
+
+Es un método que funciona bien cuando se tienen muchos datos y están mayoritariamente
+agrupados.
+
+% • Pros
+% – Simple and fast
+% – (Always) converges to a local minimum of the error function
+% – Available implementations (e.g., in Matlab)
+% •Cons
+% –Need to pick K
+% –Sensitive to initialization
+% –Only finds “spherical”
+% clusters
+% –Sensitive to outliers
+
+\subsection{Identifique pros y contras del modelo de “Bolsa de Palabras” como
+mecanismo para caracterizar el contenido de una imagen. ¿Qué ganamos y que
+perdemos?\newline Justificar los argumentos.}
+
+Es un método que funciona bien para un conjunto suficientemente grande de imágenes,
+pero la elección del tamaño del vocabulario acarrea un problema, ya que un número 
+pequeño puede no ser suficiente para caracterizar el contenido, y uno muy grande
+puede ser demasiado costoso computacionalmente.
+
+\subsection{Suponga que dispone de un conjunto de imágenes de dos tipos de
+clases bien diferenciadas. Suponga que conoce como implementar de forma
+eficiente el cálculo de las derivadas hasta el orden N de la imagen. Describa
+como crear un algoritmo que permita diferenciar, con garantías, imágenes de
+ambas clases. Justificar cada uno de los pasos que proponga.}
+
+Pregunta no contestada.
+
+\end{document}

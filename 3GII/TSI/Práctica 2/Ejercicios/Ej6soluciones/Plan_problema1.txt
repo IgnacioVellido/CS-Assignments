@@ -1,0 +1,59 @@
+make[1]: Entering directory '/mnt/68A80B78A80B43D2/Ubuntu/Desktop/TSI-2'
+if [ 0 -eq 0 ];	then \
+	Metric-FF/ff -p Ejercicios/ -o Ej6dominio.pddl -f Ej6problema1.pddl;	\
+else	\
+	Metric-FF/ff -p Ejercicios/ -o Ej6dominio.pddl -f Ej6problema1.pddl -O -g 1 -h 1;	\
+fi;
+
+ff: parsing domain file
+domain 'EJERCICIO-6' defined
+ ... done.
+ff: parsing problem file
+problem 'EJERCICIO-6-APARTADO_B' defined
+ ... done.
+
+
+
+no optimization required. skipping criterion.
+
+
+no metric specified. plan length assumed.
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is EHC, if that fails then  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+Cueing down from goal distance:    4 into depth [1][2][3][4][5][6][7][8][9][10]
+                                   3            [1]
+                                   2            [1]
+                                   1            [1]
+                                   0            
+
+ff: found legal plan as follows
+
+step    0: COGER JUGADOR_1 ZONA_1 MANZANA_1
+        1: ENTREGAR JUGADOR_1 ZONA_1 MANZANA_1 BRUJA_1
+        2: IR_SUR JUGADOR_2 ZONA_1 ZONA_6
+        3: GIRAR-DERECHA JUGADOR_2 S
+        4: GIRAR-DERECHA JUGADOR_2 O
+        5: COGER JUGADOR_2 ZONA_6 ZAPATILLA_1
+        6: IR_NORTE JUGADOR_2 ZONA_6 ZONA_1
+        7: GIRAR-DERECHA JUGADOR_2 N
+        8: IR_ESTE_BOSQUE JUGADOR_2 ZONA_1 ZONA_2 ZAPATILLA_1
+        9: ENTREGAR JUGADOR_2 ZONA_2 ZAPATILLA_1 PROFESOR_1
+       10: COGER JUGADOR_2 ZONA_2 ORO_2
+       11: IR_ESTE JUGADOR_2 ZONA_2 ZONA_3
+       12: ENTREGAR JUGADOR_2 ZONA_3 ORO_2 PRINCIPE_1
+     		Coste Total: 0.00
+
+
+time spent:    0.00 seconds instantiating 1156 easy, 288 hard action templates
+               0.00 seconds reachability analysis, yielding 402 facts and 1278 actions
+               0.00 seconds creating final representation with 402 relevant facts, 14 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 76 states, to a max depth of 10
+               0.00 seconds total time
+
+make[1]: Leaving directory '/mnt/68A80B78A80B43D2/Ubuntu/Desktop/TSI-2'

@@ -1,0 +1,6 @@
+(clear)
+(load "CicloControlado.clp")
+(load "CasaInteligente.clp")
+(load "simulaciondatos.clp")
+(reset)
+(run)

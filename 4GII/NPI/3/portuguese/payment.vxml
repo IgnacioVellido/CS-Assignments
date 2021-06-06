@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<vxml version="2.1" xml:lang="pt-PT">
+    <form id="get_card_info">
+        <block>Precisamos do tipo e número do seu cartão e da data de validade.</block>
+
+        <!-- ############################################################### -->
+        <!-- To cancel in any moment -->
+        <link event="cancel"> 
+            <grammar src="cancel.grammar"/>
+        </link>
+
+        <catch event="cancel">
+            <reprompt/>
+            <goto nextitem="confirm_cancel"/>
+        </catch>
+
+        <!-- To ask for help -->
+        <link event="help"> 
+            <grammar src="help.grammar"/>
+        </link>
+        <!-- ############################################################### -->
+
+        <field name="card_type">
+            <grammar src="card_type.grammar"/>
+            <prompt>Que tipo de cartão você tem?</prompt>
+            <catch event="help">
+                <prompt>
+                    Digamos que você Visa, Mastercard ou American Express.
+                </prompt>
+            </catch>
+        </field>
+
+        <!-- ############################################################### -->
+        <!-- Card number -->
+        <field name="card_num">
+            <grammar src="card_number.grammar"/>
+            <prompt>Qual é o número do seu cartão?</prompt>
+            <catch event="help">
+                <prompt>
+                    Diga os 12 dígitos do número do cartão separadamente.
+                </prompt>
+            </catch>
+        </field>
+        <!-- ############################################################### -->
+
+        <!-- ############################################################### -->
+        <!-- Expiry date -->
+        <field name="expiry_date">
+            <grammar src="expiration_date.grammar"/>
+            <prompt>Qual é a data de validade?</prompt>
+            <catch event="help">
+                <prompt>
+                    Diga a data de validade, por exemplo, um dois zero um ou dezembro zero um.
+                </prompt>
+            </catch>            
+        </field>
+        <!-- ############################################################### -->
+
+        <!-- ############################################################### -->
+        <!-- Confirmation -->
+        <field name="confirm">
+            <grammar src="boolean.grammar"/>
+            <prompt>
+                Você disse que um cartão de tipo <value expr="card_type"/>, 
+                com número <value expr="card_num"/>, 
+                e vencimento em <value expr="expiry_date"/>.
+                É correto?
+            </prompt>
+            <filled>
+                <if cond="confirm.bool=='true'">
+                    Obrigado por sua compra.
+
+                    <!-- Asking to go back -->
+                    <goto nextitem="go_back"/>
+                </if>
+                <clear namelist="card_type card_num expiry_date confirm"/>
+            </filled>
+        </field>
+        <!-- ############################################################### -->
+
+        <!-- ############################################################### -->
+        <field name="confirm_cancel">
+            <grammar src="boolean.grammar"/>
+            <prompt>Tem certeza de que deseja cancelar a operação?</prompt>
+            <filled>
+                <if cond="confirm_cancel.bool=='true'">
+                    <!-- Asking to go back -->
+                    <goto nextitem="go_back"/>
+                <else/>
+                    De acordo.
+                    <clear namelist="confirm_cancel"/>
+                </if>
+            </filled>
+        </field>
+        <!-- ############################################################### -->
+
+        <!-- ############################################################### -->
+        <!-- Go back to the beginning? -->
+        <field name="go_back">
+            <grammar src="boolean.grammar"/>
+            <prompt>Você precisa de mais alguma coisa?</prompt>
+            <filled>
+                <if cond="go_back.bool=='true'">
+                    <goto next="./index.vxml"/>
+                <else/>
+                    Tudo bem, vejo você mais tarde.
+                    <disconnect/>
+                </if>
+            </filled>
+        </field>
+        <!-- ############################################################### -->
+    </form>
+</vxml>

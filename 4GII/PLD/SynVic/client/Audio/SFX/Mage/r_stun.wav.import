@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/r_stun.wav-c7b78c6036c7a511d8e8cbf90f63ba1a.sample"
+
+[deps]
+
+source_file="res://Audio/SFX/Mage/r_stun.wav"
+dest_files=[ "res://.import/r_stun.wav-c7b78c6036c7a511d8e8cbf90f63ba1a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

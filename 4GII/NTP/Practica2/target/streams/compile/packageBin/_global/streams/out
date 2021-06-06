@@ -1,0 +1,9 @@
+[debug] Packaging E:\Nacho\Desktop\GitHub\UGR-NTP\Practica2\target\scala-2.12\practica2_2.12-0.1.jar ...
+[debug] Input file mappings:
+[debug] 	triangulo
+[debug] 	  E:\Nacho\Desktop\GitHub\UGR-NTP\Practica2\target\scala-2.12\classes\triangulo
+[debug] 	triangulo\Main$.class
+[debug] 	  E:\Nacho\Desktop\GitHub\UGR-NTP\Practica2\target\scala-2.12\classes\triangulo\Main$.class
+[debug] 	triangulo\Main.class
+[debug] 	  E:\Nacho\Desktop\GitHub\UGR-NTP\Practica2\target\scala-2.12\classes\triangulo\Main.class
+[debug] Done packaging.

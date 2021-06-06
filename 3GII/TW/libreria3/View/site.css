@@ -1,0 +1,580 @@
+/* Estructura general */
+
+/* Fondo que se ajusta al tamaño de la pantalla */
+html { 
+  background: url(img/fondo/fondo.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#wrap {  
+  width: 1200px;
+  margin: auto;  
+
+  display: grid;      
+  grid-template-columns: 40% 40% auto;
+  grid-template-rows: auto;
+  grid-column-gap: 1%;
+  grid-row-gap: 1%;    
+  grid-template-areas:
+  "header header header"
+  "nav nav nav"
+  "main main aside"
+  "footer footer footer";   
+}
+
+/* Enlaces */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* Formularios */
+form {
+  display: flex;
+  flex-direction: column;  
+  margin: 10px auto 10px auto;  
+  width: 75%;
+}
+
+label {
+  margin: 10px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  display: flex;
+}
+
+label>input {
+  margin: 0 0;
+}
+
+label>p {
+  margin-top: 0;
+  margin-bottom: 0;
+  width: 25%;
+}
+
+input[type=text], select, textarea, input[type=email], input[type=password], input[type=number], input[type=month] {
+  width: 100%;
+}
+
+.form-title {
+  text-align: center;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+#forms {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: rgb(146, 5, 5);
+}
+/* , input[-moz-read-only] */
+input[readonly], textarea[readonly] {
+  color: white;
+  background-color: darkslategrey;
+}
+
+/* ----------------------------------------------- */
+/* Header */
+
+header {
+  grid-area: header;
+  background-color: rgba(255, 255, 255);
+
+  display: flex;  
+}
+
+header > img { 
+  margin-left: 30%;
+}
+
+#nombre_eslogan {   
+  margin-left: auto;
+  margin-right: 30%;
+}
+
+#nombre_eslogan>h1 {
+  margin-bottom: 0;
+
+  font-size: 35px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;  
+}
+
+#nombre_eslogan>p {
+  margin-top: 0;
+
+  font-size: 20px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/* ----------------------------------------------- */
+/* Nav */
+
+nav {
+  grid-area: nav;
+  background-color: white;    
+
+  display: flex;  
+  padding: 0;
+}
+
+nav>a:hover {
+  background-color: rgba(0, 255, 255, 0.39);
+}
+
+nav>a {
+  flex-basis: 100%;
+  text-align: center;
+  border: 1px solid black;
+}
+
+/* ----------------------------------------------- */
+/* Main */
+
+main {
+  grid-area: main;
+  background-color: rgba(255, 255, 255, 0.8);  
+
+  display: flex;  
+  padding: 10px 10px;
+}
+
+/* ----------------------------------------------- */
+/* Aside */
+
+aside {
+  grid-area: aside;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px 0;
+  
+  display: flex;
+  flex-flow: column;  
+}
+
+.recomendaciones {
+  margin: auto;
+  width: 75%;
+  
+  text-align: center;  
+}
+
+.recomendaciones>h4 {
+  margin: auto;
+
+  font-size: 23px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;  
+}
+
+.recomendaciones>ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.recomendaciones>ul>li {
+  font-size: 18px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+/* ----------------------------------------------- */
+/* Footer */
+
+footer {
+  grid-area: footer;
+  background-color: rgba(255, 255, 255, 0.8);      
+
+  display: flex;
+  padding: 10px 0;
+}
+
+footer>div {
+  align-items: center;
+  justify-content: center;  
+
+  width: 33.3%;
+  margin: 10px 0;
+}
+
+/* Locales ---- */
+#tiendas {
+  margin: 0 80px;
+}
+
+#tiendas>ul {
+  padding: 0;
+  list-style-type: none;  
+}
+
+.ciudad {  
+  margin: 0;
+  margin-top: 10px;
+
+  font-weight: bold;    
+  font-size: 14px;    
+}
+
+.locales {
+  list-style-type: none;  
+  padding: 0;
+}
+
+/* Email y redes ---- */
+#contacto {
+  text-align: center;
+}
+
+#contacto img {
+  width: 20px;
+  height: 20px;
+}
+
+#email-y-logo {
+  display: flex;
+  margin: 20px 70px 29px 70px;  
+}
+
+#email-y-logo>p {
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#email-y-logo>img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#media {
+  display: flex;    
+}
+
+#media>img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Páginas adicionales ---- */
+#informacion {
+  text-align: center;
+}
+
+#informacion>ul {
+  list-style-type: none;  
+}
+
+#informacion>ul>li {
+  margin-top: 10px;
+}
+
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+/* index.html */
+
+#indx {
+  background-color: white;
+  flex-direction: column;  
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.evento {  
+  padding-bottom: 10px;
+  padding-top: 20px;
+  border-bottom: 4px solid crimson;  
+}
+
+.evento-cabecera {
+  display: flex;      
+}
+
+.evento-info {
+  display: flex;
+  width: 80%;  
+  flex-direction: column;  
+  margin-left: 15px;
+}
+
+/* Nombre del evento */
+.evento-info>h3 {
+  width: 100%;  
+  font-size: 35px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;    
+  margin-bottom: 0;  
+  margin-top: 0;
+}
+
+/* Datos del evento, por ahora solo la fecha */
+.evento-info>h5 {
+  font-size: 20px;  
+}
+
+.evento-cabecera>img {  
+  object-fit: cover;
+  width: 300px;  
+  height: 200px;  
+}
+
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+/* orders.html */
+
+#orders {
+  display: flex;
+  flex-direction: column;  
+}
+
+/* Descripción artículo ---- */
+#info-pedido {
+  display: flex;
+  flex-direction: column; 
+}
+
+#datos-libro {
+  display: flex;  
+} 
+
+#datos-libro>img {
+  object-fit: cover;  
+  width: 100px;
+  height: 150px;
+  padding: 10px;  
+}
+
+#datos-pedido {
+  width: 100%;
+}
+
+#datos-pedido>li{
+  display: flex;
+}
+
+#datos-pedido h4 {
+  width: 25%;
+}
+
+#datos-pedido p {
+  width: 100%; 
+}
+
+.categoria {
+  margin: 5px 10px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.valor {
+  margin: 5px;
+  color: green;
+  white-space: nowrap;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#descripcion-pedido {
+  margin: 10px;
+}
+
+#precio-pedido {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px;  
+
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#precio-pedido>p {  
+  margin: 0 0 0 10px;
+  color: green;
+}
+
+#precio-pedido>h4 {  
+  margin: 0;
+}
+
+#datos-libro>ul {
+  list-style-type: none;
+}
+
+/* Formulario del pedido ---- */
+button, input[type=submit] {
+  cursor: pointer;
+  transition-duration: 0.2s;
+  background-color: rgba(58, 161, 58, 0.705);  
+  border: none;
+
+  font-weight: bold;    
+  font-size: 15px;
+  text-decoration: none;
+  text-align: center;
+
+  padding: 10px 10px;
+  margin: 4px 2px;
+}
+
+button:hover, input[type=submit]:hover {
+  background-color: goldenrod;
+  color: white;
+}
+
+#form-orders {  
+  margin-left: 0;
+  margin-right: 0;
+  white-space: nowrap;
+  width: auto;
+}
+
+
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+/* stores.html */
+
+#stores ul {
+  list-style-type: none;
+}
+
+#tabla-tiendas {
+  width: 100%;    
+}
+
+#tabla-tiendas, td {
+  border: 1px solid black;
+}
+
+.tienda>img {
+  object-fit: cover;
+  width: 500px;
+  height: 300px;
+
+  display: block;
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nombre-ciudad {
+  text-align: center;
+  font-size: 20px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;    
+}
+
+.tienda>ul {
+  display: flex;
+  padding: 0;
+}
+
+.tienda>ul>li {
+  width: 33%;
+  margin: auto;  
+  text-align: center;
+}
+
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+/* catalogue.html */
+
+#catalogue {
+  display: flex;  
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.libro {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  width: 25%;
+  margin: 10px auto;
+}
+
+.libro>img {
+  object-fit: cover;  
+  width: 100px;
+  padding: 10px;
+  max-width: 100px;
+  max-height: 150px;  
+}
+
+.precio {
+  color: green;  
+}
+
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+/* search.html */
+
+#search>form {
+  margin: auto;
+}
+
+select {
+  text-align: center;
+  text-align-last: center;
+}
+
+.form-subtitle {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  width: 25%;
+  margin: 0;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+#precio>label {
+  margin-top: 0;
+  margin-bottom: 0;    
+}
+
+#precio {
+  margin-right: 0;
+}
+
+#precio>p {
+  height: 50%;
+  margin-right: 0;
+}
+
+.radio {
+  display: flex;
+}
+
+.radio-options {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.radio-options>label {
+  flex-direction: row;
+}
+
+.radio-text {
+  margin-left: 10px;
+  white-space: nowrap;  
+}
+
+/* ----------------------------------------------- */
+/* ------------------Query------------------------ */
+
+/* Movemos aside debajo en pantallas pequeñas. 
+   Hacemos que las recomendaciones se muestren
+   una al lado de otra                         */
+@media screen and (max-device-width: 600px) {  
+  #wrap {
+    grid-template-columns: auto auto;
+    grid-template-areas:
+      "header header"
+      "nav nav"
+      "main main"
+      "aside aside"
+      "footer footer";   
+  }
+
+  aside {
+    flex-flow: row;
+  }
+}

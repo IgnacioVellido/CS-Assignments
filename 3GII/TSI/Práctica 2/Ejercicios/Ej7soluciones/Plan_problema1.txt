@@ -1,0 +1,67 @@
+make[1]: Entering directory '/mnt/68A80B78A80B43D2/Ubuntu/Desktop/TSI-2'
+if [ 0 -eq 0 ];	then \
+	Metric-FF/ff -p Ejercicios/ -o Ej7dominio.pddl -f Ej7problema1.pddl;	\
+else	\
+	Metric-FF/ff -p Ejercicios/ -o Ej7dominio.pddl -f Ej7problema1.pddl -O -g 1 -h 1;	\
+fi;
+
+ff: parsing domain file
+domain 'EJERCICIO-7' defined
+ ... done.
+ff: parsing problem file
+problem 'EJERCICIO-7-APARTADO_B' defined
+ ... done.
+
+
+
+no optimization required. skipping criterion.
+
+
+no metric specified. plan length assumed.
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is EHC, if that fails then  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+Cueing down from goal distance:    5 into depth [1]
+                                   4            [1]
+                                   3            [1][2][3][4][5][6][7][8][9][10]
+                                   2            [1][2][3][4][5][6][7]
+                                   1            [1]
+                                   0            
+
+ff: found legal plan as follows
+
+step    0: COGER RECOGEDOR_2 ZONA_1 MANZANA_1
+        1: TRASPASAR_OBJETO RECOGEDOR_2 REPARTIDOR_1 MANZANA_1
+        2: TRASPASAR_OBJETO REPARTIDOR_1 REPARTIDOR_2 MANZANA_1
+        3: ENTREGAR REPARTIDOR_2 ZONA_1 MANZANA_1 BRUJA_1
+        4: IR_SUR RECOGEDOR_2 ZONA_1 ZONA_6
+        5: COGER RECOGEDOR_2 ZONA_6 ZAPATILLA_1
+        6: GIRAR-IZQUIERDA RECOGEDOR_1 S
+        7: TRASPASAR_OBJETO RECOGEDOR_2 RECOGEDOR_1 ZAPATILLA_1
+        8: IR_ESTE_BOSQUE RECOGEDOR_1 ZONA_1 ZONA_2 ZAPATILLA_1
+        9: TRASPASAR_OBJETO RECOGEDOR_1 REPARTIDOR_2 ZAPATILLA_1
+       10: COGER RECOGEDOR_1 ZONA_2 ORO_2
+       11: TRASPASAR_OBJETO RECOGEDOR_1 REPARTIDOR_1 ORO_2
+       12: ENTREGAR REPARTIDOR_1 ZONA_1 ORO_2 BRUJA_1
+       13: GIRAR-IZQUIERDA REPARTIDOR_2 S
+       14: IR_ESTE_BOSQUE REPARTIDOR_2 ZONA_1 ZONA_2 ZAPATILLA_1
+       15: COGER RECOGEDOR_1 ZONA_2 ORO_1
+       16: TRASPASAR_OBJETO REPARTIDOR_2 RECOGEDOR_2 ZAPATILLA_1
+       17: IR_ESTE REPARTIDOR_2 ZONA_2 ZONA_3
+       18: TRASPASAR_OBJETO RECOGEDOR_1 REPARTIDOR_2 ORO_1
+       19: ENTREGAR REPARTIDOR_2 ZONA_3 ORO_1 PRINCIPE_1
+     		Coste Total: 0.00
+
+
+time spent:    0.00 seconds instantiating 1372 easy, 576 hard action templates
+               0.00 seconds reachability analysis, yielding 534 facts and 1736 actions
+               0.01 seconds creating final representation with 534 relevant facts, 14 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.03 seconds searching, evaluating 691 states, to a max depth of 10
+               0.04 seconds total time
+
+make[1]: Leaving directory '/mnt/68A80B78A80B43D2/Ubuntu/Desktop/TSI-2'

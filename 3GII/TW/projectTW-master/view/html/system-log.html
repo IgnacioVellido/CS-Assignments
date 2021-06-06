@@ -1,0 +1,29 @@
+{% extends "/view/html/base.html" %}
+
+{% block Main %}
+
+<!-- Parameters:
+  systemLog: Array of events
+    get_date(): Date of the event
+    get_text(): Event information -->
+<section class="main-block">
+  <h1 class="main-title">Eventos del sistema</h1>
+  <table class="table table-striped table-light">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Fecha</th>
+        <th scope="col">Evento</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in systemLog %}
+      <tr>
+        <th scope="row">{{ event.date }}</th>
+        <td>{{ event.text }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+{% endblock %}

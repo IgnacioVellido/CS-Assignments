@@ -1,0 +1,191 @@
+\section{Conclusiones}
+
+% o Análisis de resultados. El análisis deberá estar orientado a justificar (según el comportamiento de cada algoritmo) los resultados obtenidos en lugar de realizar una mera “lectura” de las tablas. Se valorará la inclusión de otros elementos de comparación tales como gráficas de convergencia, boxplots, análisis comparativo de las soluciones obtenidas, representación gráfica de las soluciones, etc.
+
+A partir de las soluciones obtenidas, y con la ayuda de las gráficas del Anexo A, nos damos cuenta que los conjuntos de datos Iris y Rand son extremádamente fáciles. No solo no tienen apenas superposición (en el caso de Rand ninguna), sino que no existe desordenación de los datos y por tanto soluciones del estilo [0..1..2..] son de muy buena calidad. Esto resulta en que las técnicas greedy, las cuales ordenan los clústers posibles a la hora de elegir uno de ellos, encuentren óptimos en una o dos iteraciones (dependiendo de la ordenación que haga en ese caso). \\
+
+Seguidamente se realiza un análisis de los resultados de cada algoritmo, realizando comparativas entre ellos.
+
+\subsection{Greedy COPKM v1}
+
+Por un lado vemos que COPKM es un algoritmo bastante rápido y con muy buenas soluciones, donde salvo casos excepcionales encuentra la misma solución para Iris y Rand independientemente de la semilla.
+En estos conjuntos de datos, puesto que el algoritmo no tiene en cuenta las distancias intra-clúster, resulta obvio que aunque el valor de infeasibility sea cero la calidad de la solución no tiene por qué ser óptima, aunque viendo las gráficas del Anexo A parece que no se aleja mucho.
+
+Además, vemos que la cantidad de iteraciones que hace en los problemas es corta en comparación con los de BL, esto se debe a que en cada iteración reduce la infeasibility de más de un elemento, mientras que en BL solo se cambia un único valor.
+
+Por el comportamiento del algoritmo greedy vemos que se basa en mejorar la posición de los centroides para así fijar con mejor calidad los elementos a sus clústers. Pero la forma de hacerlo acarrea una desventaja, y es que no considera soluciones previas calculadas anteriormente. Esto hace que al seguir el mismo orden de índices en cada iteración los valores de infeasibility varían menos, puesto que hay que esperar a un elemento que tenga dos o más clústers posibles para poder actualizar en base al centroide.
+
+\subsection{Greedy COPKM v2}
+
+Añadiéndole la mejora al algoritmo greedy en COPKM v2, hacemos que se reutilice información de iteraciones anteriores, puesto que la infeasibility ya no se calcula únicamente con los elementos recién incluídos sino junto a los que ya estaban puestos (y a la espera de ser actualizados) en la iteración anterior.
+
+Se podría decir que COPKM v2 actúa de manera similar a las mutaciones presentes en los algoritmos genéticos, pero sin permitir empeorar la infeasibility. Esto hace que la convergencia sea aún más rápida y, además, evitemos ciclos (puesto que si ordenamos los clústers posibles siempre cogerá los mismos en caso de empate).
+
+Si nos fijamos en Ecoli, vemos que la calidad de las soluciones es mucho mejor, dónde especialmente supera a COPKM v1 es en tiempos de cómputo. El actualizar centroides y la solución en cada iteración facilita la decisión por una solución y la convergencia hacia un óptimo.
+
+Al igual que en COPKM v1, vemos que los algoritmos greedy se comportan de mejor manera cuanto más aumenta el número de restricciones, esto es porque la selección de un clúster afecta más al valor de infeasibility. 
+
+\subsection{Búsqueda Local}
+
+Observando los resultados de BL vemos que estos son bastante peores a los de los COPKMs. Esto se debe en teoría a dos motivos, la inicialización y al método de búsqueda en el espacio de soluciones.
+
+Respecto al primero, BL busca converger hacia un mínimo a partir de una solución inicial. Esto hace que la selección de esta inicialización sea relevante en la calidad de la solución final, puesto que resulta muy fácil converger hacia mínimos locales. Algoritmos mixtos que sean capaces de empeorar su solución en ciertos momentos pueden ayudar a salir de estos focos locales y dirigirse hacia mejores resultados. Puesto que en el algoritmo COPKM v1 no consideramos soluciones previas, resulta claro que esto pase y pueda encontrar soluciones de mejor calidad.
+
+Por otro lado, la exploración del espacio en BL tiene dos detalles. La selección de primero el mejor reduce el tiempo de cómputo pero también puede ocasionar el problema mencionado en el párrafo anterior. Un posible vecino puede desviar el resultado a un mínimo local de peor calidad. 
+
+Además, sabemos que la búsqueda local no se centra únicamente en la mejora de infeasibility, sino también en crear una solución con unos clústers bien diferenciados. Esto vienen dado por el valor $\lambda$, que en nuestro caso se ha inicializado a un valor pequeño. Las consecuencias de esta inicialización se aprecia en los valores de tasaC e infeasibility. Mientras que los greedy bajan mucho la infeasibility BL ataca en la tasaC para reducir el agregado (en greedy los valores de tasaC siguen siendo bajos en comparación con BL, pero esto es una consecuencia indirecta de los conjuntos de datos). \\
+
+Adicionalmente, aunque en el peor de los casos todos los algoritmos exploran el mismo tamaño de vecindario, los greedy ganan en velocidad en gran medida. Esto está causado por el tiempo perdido en la generación y evaluación de un nuevo vecino, además de la necesidad de comprobar las distancias para cada uno de ellos.
+
+Puesto que en BL el vecindario son todos los posibles cambios, a medida que mejora la solución debemos explorarlo más para encontrar uno que mejore (se aprecia en las gráficas de tiempo, donde para los greedy son más inestables pero crecen menos). Mientras exista, el tiempo entre iteraciones aumenta drásticamente para BL. Pero puesto que tratamos con números reales no podemos comparar directamente con $f'(s) < f(s)$. Es necesario que este $<$ lo sea por un margen concreto. Este margen también es influyente en la solución y, aunque por la definición del algoritmo debería ser lo más bajo posible, un valor más pequeño hace que sea más sencillo saltar hacia un vecino y alarga el tiempo de cómputo. \\
+
+Como se ha mencionado anteriormente, aunque por la forma de funcionar BL se piensa que es muy dependiente de la solución inicial, pues solo modificamos un elemento de la solución en cada iteración y no elegimos empeoramientos en ningún caso, en Ecoli no se da esta situación. Los valores de agregado acaban resultando muy similares independientemente de la semilla que se utilice. Esto se debe probablemente al pequeño número de evaluaciones en Ecoli. De esto último nos damos cuenta viendo las gráficas del valor de agregado por iteración, que nos indica que BL agota el número de evaluaciones permitido cuando aún podría seguir convergiendo. 
+
+Para Iris y Rand si se aprecia diferencia, más en el valor de infeasibility que en el de la tasaC.
+
+% =============================================================================================================================================================================
+% =============================================================================================================================================================================
+
+\subsection{Algoritmos Genéticos}
+
+Vemos que la calidad de las soluciones encontradas en media solo es comparable con las versiones COPKM, siendo AGG-UN la única que mejora a COPKM v2. Aún así, en el dataset más exigente (Ecoli), AGG-SF también supera a COPKM v2, debido a que la mejora de infeasibility no es tan relevante (principio por el que se regía el algoritmo greedy) como una buena separación en clústers. Se nota como la selección del valor de $\lambda$ es muy relevante para el funcionamiento de los algoritmos.
+
+Las variantes elitistas, pese a que pierden bastante en la calidad de los resultados, ganan mucho en velocidad, debido al mecanismo evolutivo sobre dos únicos padres.
+Observando las gráficas también se aprecia que en la mayoría de los casos los algoritmos AGG convergen bastante rápido, y solo en Ecoli es cuando se quedan cortos de evaluaciones.
+
+La simpleza de los datasets Iris y Rand se sigue apreciando en estos casos. El nuevo conjunto de datos (Newthyroid) tampoco genera muchas complicaciones a los algoritmos, pero se producen distintas soluciones y merece la pena compararlos en base a él. Este dataset, con el cuál se obtienen muy buenos resultados con COPKM v2, en este caso está más disputado con los algoritmos genéticos. \\
+
+Las variantes elitístas tienen la esperanza de que la población mejore como conjunto en cada iteración. Las estacionarias solo van modificando los peores cromosomas, y esto hace que la calidad media de la población casi nunca decremente. Por una parte está bien porque evita fluctuaciones en el valor medio de la función objetivo pero se queda bajo la suposición de que a partir de un cromosoma malo no puede producirse uno de muy buena calidad.
+Por otro lado estos dos últimos cromosomas en AGE pueden ser mejores que los nuevos, haciendo que empeore la calidad del conjunto. Aunque se puede suponer que la probabilidad de que esto ocurra repetidamente es baja.
+
+En general vemos que los AGE mantienen malas poblaciones durante más iteraciones, pues se debe iterar una mayor cantidad de veces para ir sacando los malos cromosomas de la población. \\
+% En términos de evaluaciones también difiere con los AGG, el torneo binario introduce aleatoriedad y, aunque en media todos los cromosomas se deben escoger con la misma cantidad de veces no implica que esto se de así. \\
+
+Por otra parte, la diferencia entre aplicar un cruce uniforme y otro por segmento fijo es notoria. Independientemente de la variante genética se aprecia una mejora importante del cruce uniforme frente al del segmento fijo, aunque cuando tratamos con el 20\% de restricciones esta diferencia se reduce.
+
+Por el funcionamiento de ambos operadores no da la sensación de que uno sea definitivamente mejor que otro, parece que está más relacionado con el tipo de problema con el que estamos tratando. Al estar particionando en clústers con restricciones existe mucha dependencia entre los elementos de la solución, pero no entre posiciones ordenadas sino ``aleatorias'' (un elemento puede tener restricciones con otro en cualquier posición, no necesariamente con los anteriores/posteriores). Esto aún así no aclara por qué existe tanta diferencia entre ambos operadores, puesto que bajo esa suposición el coger índices aleatorios de los cromosomas debería poder empeorar/mejorar lo mismo que seleccionando un segmento fijo de ellos.
+
+También se ve que los algoritmos de AGE tienen unos valores de infeasibility descomunales. No se encuentra ningún motivo claro para esto, aunque es posible que se deba a que la selección de dos padres, junto al bajo peso que tiene la infeasibility en la función objetivo, haga que se enfoque repetidamente en separar los elementos y en el número de evaluaciones establecido no de tiempo a converger (viendo las gráficas se nota que más evaluaciones deberían mejorar los resultados).
+
+\subsection{Algoritmos Meméticos}
+
+Sabemos que los algoritmos evolutivos son buenos exploradores, pues los operadores de cruce permiten moverse fácilmente en el espacio de búsqueda. También sabemos que son malos explotadores, puesto que la mutación ocurre con baja probabilidad y realiza cambios muy pequeños en la población. Es por esto por lo que una hibridación con técnicas de búsqueda local pueden mejorar la calidad de los resultados, ya que estas son muy buenas a la hora de explotar una solución.
+
+Aquí la clave reside en conseguir un buen balance entre evolucionar y optimizar la población, puesto que no queremos acabar en mínimos locales de baja calidad, pero tampoco queremos estar continuamente haciendo cambios drásticos en el espacio de búsqueda. Esto se regula con la frecuencia a la que se aplica el algoritmo de BL y modificando el conjunto de la población sobre el que se optimiza.
+
+Trabajar con la población entera implica mejorarla como conjunto, y esto tiene consecuencias mencionadas en el apartado anterior (la suposición de que a partir de una solución mala se pueden generar buenas).
+Coger un 10\% de la población indica que no desperdiciamos muchas evaluaciones en la optimización, y fomentamos más la exploración. Por otro lado, la selección de los mejores cromosomas pretende mejorar el elitismo y converger más rápido, puesto que estos cromosomas se acercan más rápidamente a sus mínimos. \\
+
+A partir de los resultados nos damos cuenta de dos detalles:
+\begin{itemize}
+    \item Los algoritmos meméticos funcionan en general mejor que los genéticos, pero no consiguen superar al mejor de ellos (AGG-UN). Esto se puede deber a que los hiperparámetros elegidos para los algoritmos meméticos (población de 10 y probabilidades de cruce y mutación 0,7 y 0,001) no sean los óptimos, y exista un desbalanceo entre exploración y optimización.
+    \item Por otro lado, vemos que optimizar la población al completo acaba obteniendo mejores resultados que aplicándola sobre una parte de ella. Esto se contrapone con la idea expuesta anteriormente de que malos elementos en la población pueden ayudar a generar soluciones de mejor calidad. 
+    
+    Una vez más quizás se deba a los hiperparámetros de los algoritmos, una población de 10 cromosomas es pequeña y un mal elemento influye en mayor medida. También es posible que esté influenciado por los conjuntos de datos. Ecoli y Newthyroid, los que mejor representan la calidad del algoritmo, nos muestran en la mayoría de casos de que, aunque peores, los valores de agregado son similares. 
+\end{itemize}
+
+% =============================================================================================================================================================================
+% =============================================================================================================================================================================
+
+\newpage
+
+\subsection{Enfriamiento Simulado}
+
+El algoritmo de ES obtiene resultados magníficos para todos los problemas, destacando especialmente en el más exigente computacionalmente (Ecoli). Probablemente ocasionado por la disminución de la temperatura, pues permite optimizar con intensidad una vez ha explorado el espacio inicial.
+
+Además, cuenta con los mejores tiempos de todos los algoritmos, superando con creces a los genéticos (aunque estos iteraban un número fijo de veces sin criterio de salida). A partir de las gráficas de costo y tiempo se aprecia la rápida convergencia de la que es capaz el algoritmo, teniendo una curva bastante prometedora.
+
+\vspace{\baselineskip}
+
+Se destaca la importancia del cálculo de la temperatura, pues existe el riego de que el tamaño del salto para salir de un óptimo local sea mucho mayor de lo que se pueda alcanzar con esa temperatura.
+Para ello podemos cambiar el enfriamiento de Cauchy por un cálculo proporcional, forzando a que se decremente más lentamente y permitiendo más exploración durante más iteraciones del algoritmo.
+
+Tal y como se muestra en la figura \ref{temperatura}, vemos que este cambio no resulta beneficioso, puesto que en el número de iteraciones que realiza no decrementa lo suficiente la temperatura.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.4\linewidth]{img/es/cost.png}
+        \vspace*{1mm}
+    \end{subfigure}%
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.55\linewidth]{img/es/ejecucion.png}
+    \end{subfigure}
+    \caption{Ejecución de ES con decremento de temperatura proporcional al 90\% para el problema Ecoli con la primera semilla.}
+    \label{temperatura}
+\end{figure}
+
+La selección del número de aciertos también es un hiperparámetro influyente. Este nos dice cuánto queremos explorar en el espacio de búsqueda actual antes de cambiar la temperatura e, indirectamente, reducir la probabilidad de buscar a través de soluciones peores a la actual.
+
+En principio se podría mantener este parámetro a un valor no muy alto puesto que ya introducimos exploración con la temperatura, sobre la cuál gira el proceso de búsqueda del algoritmo. Pese a ello, sería conveniente jugar con los valores de los dos parámetros y ajustarlos de la mejor manera a nuestro problema.
+
+\subsection{Búsqueda Multiarranque Básica}
+
+Vemos como el algoritmo BMB obtiene los peores resultados de todas las pruebas realizadas. Estos resultados se pueden considerar esperables, puesto que en lo que se especializa BL es en la optimización, y al reducir en un 10\% el número de iteraciones no consigue alcanzar nunca el óptimo hacia el que se dirige. Este hecho también queda reflejado en las gráficas, viendo que el valor del coste no se estabiliza al terminar las llamadas al algoritmo.
+
+Si consideráramos usar el mismo número de iteraciones que BL, aunque sería computacionalmente aún más exigente, tendría más probabilidades de obtener mejores resultados, puesto que al ser multiarranque introduce un poco más de exploración que el algoritmo básico.
+
+\vspace{\baselineskip}
+
+Las gráficas también nos muestran que cada reinicio no aporta prácticamente nada, y la calidad de la solución al terminar la BL no varía en gran medida respecto a las otras iteraciones. El espacio de búsqueda es tan amplio que acertar con la solución inicial, además de improbable, es inviable.
+
+\subsection{Búsqueda Local Reiterada}
+
+El algoritmo ILS parte de la idea del multiarranque anterior pero no descarta las soluciones obtenidas en llamadas anteriores. Para cubrir la falta de exploración que se origina con esto, se aplica una mutación sobre la mejor solución obtenida hasta el momento antes de seguir explotándola.
+
+\vspace{\baselineskip}
+
+A partir de las gráficas vemos que el operador de mutación, en este caso el ``segmento fijo'', es muy influyente en el proceso de búsqueda. Se aprecia como tras cada mutación la solución empeora en gran medida, y el valor final obtenido tras la llamada a BL no consigue mejorar significativamente al de la solución anterior. Vuelve a quedar patente la relación entre los elementos de la solución y el efecto en el valor de infeasibility obtenido.
+
+Pese a ello, vemos como los valores de agregado medios acaban siendo mejores que BMB, aunque siguen por encima de los obtenidos en BL. Una vez más, la cantidad de exploración introducida no es suficiente para contrarrestar la falta de iteraciones que se necesitan.
+
+\vspace{\baselineskip}
+
+Sabemos que el criterio de aceptación del ``mejor'' fomenta la intensificación sobre la diversificación. Si se usara otro criterio que contrapone la idea, como es mantener la última solución encontrada (tal y como se menciona en las diapositivas), aunque introduzcamos exploración tampoco debería ser suficiente puesto que la mutación altera demasiado la solución. Se podría combinar con un operador de mutación más débil, pero nos acabaríamos acercando demasiado a la BL clásica, la cuál sabemos que no obtiene buenos resultados.
+
+\vspace{\baselineskip}
+
+Comparando las gráficas de costes con las de BMB, vemos que pese a que la mutación hace que suba el valor de agregado, en problemas como Newthyroid ayuda a converger de forma más rápida. Por lo tanto, se puede decir que es una mejora respecto a BMB. A veces los empeoramientos tras mutar, sobre todo en Ecoli, son grandes, pero sigue convergiendo correctamente.
+
+También se aprecia como la primera llamada a BL se mantiene durante más evaluaciones, llegando en numerosas ocasiones a salir antes de agotarlas. Esto nos muestra la viabilidad para esquivar los óptimos locales que en una BL clásica acabaríamos estancados.
+
+\subsection{Algoritmo Híbrido ILS-ES}
+
+El algoritmo híbrido sustituye la llamada a BL dentro de ILS por la de ES, un proceso que sabemos que obtiene mejores resultados. Para mantener un coste computacional comparable, se reduce el número de saltos para alcanzar la temperatura mínima.
+Esto ocasiona que nos centremos en un espacio de búsqueda concreto aún más rápidamente y, viendo que el esquema de Cauchy (con enfriamiento rápido) obtenía buenos resultados, a primera vista no parece una mala idea.
+
+\vspace{\baselineskip}
+
+Respecto a ES los resultados son peores, salvo en Ecoli de 20\% de restricciones. Podemos concluir en general que el algoritmo ES ya tiene una buena cantidad de exploración de por sí y no es necesario introducir más mediante ILS.
+
+\vspace{\baselineskip}
+
+Las gráficas nos dicen que el agregado decrementa muy rápido (se recuerda que cada punto hace referencia a un enfriamiento de la temperatura). Salvo en Ecoli, casi todas las ejecuciones de ES acaban obteniendo mínimos de coste similar. En Ecoli se aprecia cómo la ejecución de ILS favorece a que se obtenga un óptimo de mayor calidad, aunque se ve que no resulta suficiente para superar a ES de por sí solo.
+
+% También nos dice que aparentemente la mutación afecta más que ILS con BL, puesto que los costes al inicio de cada llamada son similares. Los motivos de esto no se terminan de comprender.
+
+\vspace{\baselineskip}
+
+El reinicio de la temperatura hace que el mecanismo intesificación-diversifiación sea oscilatorio, lo que en principio conduce a una estrategia de búsqueda más efectiva. Esto debería ser así puesto que ya no tenemos únicamente un amplio espacio de búsqueda al principio para ir convergiendo hacia un óptimo, sino que cada cierto tiempo podemos movernos hacia otro espacio que pueda resultar más prometedor. Este razonamiento, pese a ello, no se ve justificado en los resultados.
+
+\vspace{\baselineskip}
+
+Por otra parte, se destaca la forma de penalizar la infeasibility en Ecoli de 10\%. Podemos deducir que, puesto a que la función objetivo (por el valor de $\lambda$) favorece la buena separación en clústers, la reducción del infeasibility se realiza en las últimas etapas de la optimización. Para ILS-ES, como se ha reducido de manera importante el número de iteraciones que realiza, estos valores de infeasiblity se mantienen grandes al acabar cada llamada, obteniendo en todos los casos soluciones peores que con el algoritmo de ES base. 
+
+En el resto de problemas no se aprecia esta situación, puesto que es capaz de converger y optimizar más rápidamente. Vemos que ambos algoritmos obtienen valores muy similares en estos casos.
+
+% \newpage
+
+\subsection{Conclusiones adicionales}
+
+A partir de todos los resultados obtenidos en las prácticas, sacamos unas ideas claras:
+\begin{itemize}
+    \item Los problemas sencillos (Iris y Rand), aunque no nos sirvan para comparar los mejores algoritmos, ayudan a destacar aquellos que se comportan de peor manera.
+    
+    \item En general, en los cuatro problemas con los que se ha trabajado (y sin generalizar al resto de problemas), se obtienen mejores resultados cuando predomina la diversificación sobre la intensificación. Los algoritmos nos muestran que se pueden obtener óptimos de buena calidad rápidamente, pero no existen muchos dentro del espacio de búsqueda. Esto se aprecia en mayor medida viendo los resultados de BL y BMB.
+    
+    \item Pese a lo dicho en el punto anterior, se destaca la importancia de tener un buen balance entre exploración y optimización. Esto queda claro tras ver que los algoritmos genéticos y el ES obtienen los mejores resultados, pues son los que tienen un gran grado explorativo pero centrándose en una optimización fuerte una vez pasa una etapa inicial.
+    Este balance hace que, tras dar grandes saltos iniciales en el espacio de búsqueda, sean capaces de focalizarse fuertemente en una zona local y obtener el mejor óptimo posible.
+\end{itemize}

@@ -1,0 +1,5 @@
+#JSGF V1.0;
+
+grammar help;
+
+public <help> = [por favor] [necesito] ayuda | explica | no entiendo | repite;

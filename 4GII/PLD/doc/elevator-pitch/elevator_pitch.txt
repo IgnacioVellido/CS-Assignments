@@ -1,0 +1,28 @@
+Lo podemos exponer uno solo o entre los dos, pero en este caso hacer el cambio de forma fluida.
+
+------
+Esquema
+
+Frase catch.
+Explicación del funcionamiento.
+Queremos que el juego sea tanto para jugadores casual como hardcore, en un rango de edades entre 15-25 años. Modelo de negocio y resto
+de funcionalidades desde esta perspectiva casual vs hardcore.
+
+------
+Imagina un MOBA 2v2 donde debes formar equipo con un jugador que no conoces de nada y explotar al máximo las sinergias entre vuestros
+personajes para conseguir la victoria.
+
+El funcionamiento sería el siguiente: el jugador elige el personaje con el que quiere jugar esa partida y accede a una sala con otros 
+tres jugadores al azar. Entonces cada jugador vota para elegir su compañero de equipo según las habilidades de los personajes de los demás,
+buscando una estrategia que le permita explotar las sinergias de su personaje con el de su compañero y contrarrestar las del equipo contrario
+para así alcanzar la victoria. Cada mapa tiene asociado un objetivo diferente, así que la estrategia elegida debe ser teniendo en mente este objetivo en concreto. Entonces, pasa a jugar una partida 2v2 que es dinámica y no durá más de 15 minutos.
+
+Nuestro público objetivo son jugadores de entre 15 y 30 años. A diferencia de la mayoría de MOBAs, queremos atraer tanto a jugadores
+casuals como jugadores hardcore. Para atraer a los jugadores casuals, vamos a establecer un modelo de negocio Free-to-Play con microtransacciones, para que cualquier jugador al que le interese nuestro juego pueda probarlo. Esto unido al hecho de que las partidas
+son cortas, cada una diferente de la anterior y hasta cierto punto caóticas, va a hacer nuestro juego más accesible e interesante
+para este tipo de jugadores que otros MOBA. Para los jugadores hardcore, vamos a establecer un ecosistema competitivo de partidas
+clasificatorias. Así, estos jugadores de gran habilidad podrán jugar partidas más serias con jugadores de igual habilidad que ellos. Además,
+vamos a crear un sistema de logros por cada personaje, permitiendo a los jugadores que quieran que se especialicen y se vuelvan
+maestros de un personaje. Por último, las microtransacciones van a estar limitadas a aspectos estéticos del juego, siguiendo
+la fórmula de éxito de otros MOBA, ya que no queremos que enturbien el ambiente competitivo del juego y se convierta en un Pay-To-Win.
+

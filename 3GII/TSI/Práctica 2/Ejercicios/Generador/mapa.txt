@@ -1,0 +1,7 @@
+numero de zonas:7
+bolsillo:[bruja1:4 princesa1:5]
+puntos_totales:15
+puntos_jugador:[player1:2 player2:7]
+V -> z1[bruja1-Bruja oro1-Oro][Piedra]=10=z3[player2-Player][Arena]=5=z6[zapatilla1-Zapatilla][Piedra]
+H -> z2[player1-Player][Piedra]=10=z3[bikini1-Bikini][Bosque]=5=z4[manzana1-Manzana][Piedra]
+H -> z5[oscar1-Oscar][Piedra]=10=z4[player3-Player][Piedra]=5=z7[princesa1-Princesa][Agua]

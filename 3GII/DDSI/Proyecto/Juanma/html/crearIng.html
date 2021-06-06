@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<!-- Bootstrap, quitar para volver a puro HTML -->
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<!-- Fuente -->
+		<link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+		<link href="./estilo.css" rel="stylesheet"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="cabecera"></div>
+		<script src="lecturaCabecera.js"></script>
+		
+		<!-- Contenido de la página -->
+		<div class="p-3 text-white">
+			<p class="font-weight-bold text-center Merriweather h3">Registrar ingreso</p>
+
+			<h5>Introduzca los datos del ingreso</h5>
+			<form action="http://localhost:8083/1000" method="get">
+				<div class="form-group">
+					<label for="nombre">Código identificador del gestor</label>
+					<input class="form-control" id="CodGest" type="text" name="CodGest"/><br/>
+
+				  <label for="dni">Código identificador de la entidad</label>
+			 		<input class="form-control" id="CodEnt" type="text" name="CodEnt"/><br/>
+
+				 <label for="direccion">Fecha</label>
+		 		 <input class="form-control" id="Fecha" type="text" name="Fecha"/><br/>
+
+				 <label for="telefono">Importe</label>
+				 <input class="form-control" id="Importe" type="text" name="Importe"/><br/>
+				</div>
+				<button type="submit" class="btn btn-primary" value="Enviar">Enviar</button>
+			</form>
+	</body>
+</html>

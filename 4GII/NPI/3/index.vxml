@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<vxml version="2.1">
+    <!-- ############################################################### -->
+    <menu>
+        <property name="inputmodes" value="voice dtmf"/>
+        <prompt xml:lang="en-US">
+            To speak in english, key 1. 
+        </prompt>
+        <prompt xml:lang="es-ES">
+            Para hablar en castellano, pulse 2.
+        </prompt>
+        <!-- <prompt xml:lang="it-IT"> DOESN'T NOT WORK
+            Per parlare in italiano, premi 3.
+        </prompt> -->
+        <prompt xml:lang="pt-PT">                
+            Para falar em português, pressione 3.
+        </prompt>
+        <prompt xml:lang="fr-FR">
+            Pour parler en français, appuyez sur 4.
+        </prompt>
+
+        <choice dtmf="1" next="./english/index.vxml"/>
+        <choice dtmf="2" next="./spanish/index.vxml"/>
+        <choice dtmf="3" next="./portuguese/index.vxml"/>
+        <choice dtmf="4" next="./french/index.vxml"/>
+    </menu>
+</vxml>

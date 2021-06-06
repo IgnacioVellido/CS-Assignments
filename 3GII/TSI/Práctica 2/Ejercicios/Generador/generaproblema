@@ -1,0 +1,670 @@
+"Ignacio Vellido Expósito"
+
+# Para expresiones regulares
+import re
+
+# Para los argumentos del programa
+import sys
+
+# SI NO ENCUENTRA LÍNEA PONER TIPO JUGADOR EN VEZ DE REPARTIDOR
+
+#------------------------------------------------------------------------------
+
+def PrintParteSuperior(salida):
+  string = "(define (problem EJERCICIO-GENERADO) (:domain EJERCICIO-7)\n \
+\t(:objects\n \
+\t\tbosque agua precipicio arena piedra - terreno\n \
+\t\tn s e o - orientacion\n\n"
+
+  salida.write(string)
+
+#------------------------------------------------------------------------------
+
+# Defiminos las zonas
+def PrintNumZonas(salida, num):
+  strZonas = "\t\t"
+  for i in range(num):
+    strZonas += "zona_" + str(i+1) + " "
+
+  strZonas += "- zona\n"
+  salida.write(strZonas)
+
+#------------------------------------------------------------------------------
+
+def PrintPuntosInicialJugador(salida, p):
+  string = "\n\t\t(= (puntos-jugador " + p + ") 0)"
+
+  salida.write(string)
+
+#------------------------------------------------------------------------------
+
+# Se imprime goal, se cierran paréntesis
+def PrintGoal(salida):
+  string = "\n\n\t\t(= (puntos-totales) 0)\
+\n\t\t(= (coste-total) 0)\n\t) \
+\n\t(:goal (and"
+
+  salida.write(string)
+
+#------------------------------------------------------------------------------
+
+# Se imprime goal, se cierran paréntesis
+def PrintParteInferior(salida):
+  string = "\
+\n\t\t\t\t\t)\
+\n\t)\
+\n\n\t(:metric minimize (coste-total))  \
+\n)"
+
+  salida.write(string)
+
+#------------------------------------------------------------------------------
+
+def PrintInit(salida):
+  string = "\n\t)\n \
+\n\t(:init"
+
+  salida.write(string)
+
+
+#------------------------------------------------------------------------------
+
+# A lo mejor hay que poner espacios entre el guión
+def PrintObject(salida, o):
+  o = o.split("-")
+  string = "\n\t\t" + o[0] + " - " + o[1][0].lower() + o[1][1::] + "\n"
+
+  salida.write(string)
+
+
+#------------------------------------------------------------------------------
+
+def GetCaminoVertical(identificadores, costes):
+  string = ""
+  
+  # Recorremos hasta una menos del final
+  for i in range(len(identificadores)-1):
+    string += "\n\t\t(camino zona_" + str(identificadores[i]) + \
+                  " zona_" + str(identificadores[i+1]) + " n)"
+    
+    string += "\n\t\t(= (coste-camino zona_" + str(identificadores[i]) + \
+                  " zona_" + str(identificadores[i+1]) + " ) " + costes[i] + ")"    
+    
+    string += "\n\t\t(camino zona_" + str(identificadores[i+1]) + \
+                  " zona_" + str(identificadores[i]) + " s)"
+    
+    string += "\n\t\t(= (coste-camino zona_" + str(identificadores[i+1]) + \
+              " zona_" + str(identificadores[i]) + " ) " + costes[i] + ")"
+
+
+  return string
+
+
+def GetCaminoHorizontal(identificadores, costes):
+  string = ""
+  
+  # Recorremos hasta una menos del final
+  for i in range(len(identificadores)-1):
+    string += "\n\t\t(camino zona_" + str(identificadores[i]) + \
+                  " zona_" + str(identificadores[i+1]) + " o)"
+    
+    string += "\n\t\t(= (coste-camino zona_" + str(identificadores[i]) + \
+                  " zona_" + str(identificadores[i+1]) + " ) " + costes[i] + ")"
+    
+    string += "\n\t\t(camino zona_" + str(identificadores[i+1]) + \
+                  " zona_" + str(identificadores[i]) + " e)"
+
+    string += "\n\t\t(= (coste-camino zona_" + str(identificadores[i+1]) + \
+                  " zona_" + str(identificadores[i]) + " ) " + costes[i] + ")"
+
+  return string
+
+#------------------------------------------------------------------------------
+
+def PrintTerreno(salida, terreno, identificador):
+  string = "\n\t\t(tipo_zona zona_" + identificador + " " + terreno[0].lower() + terreno[1:] + ")"
+  
+  salida.write(string)
+
+#------------------------------------------------------------------------------
+
+def PrintBolsillo(salida, bolsillo):
+  string = "\n\n\t\t(= (bolsillo-actual " + b[0] + ") 0)\n \
+\t\t(= (bolsillo-maximo " + b[0] + ") " + b[1] + ")"
+  
+  salida.write(string)
+
+#------------------------------------------------------------------------------
+
+def PrintPuntosTotales(salida, puntos):
+  string = "\n\t\t\t\t\t\t\t(>= (puntos-totales) " + puntos + ")"
+  
+  
+  salida.write(string)
+
+#------------------------------------------------------------------------------
+
+def PrintPuntosJugador(salida, puntos):
+  string = "\n\t\t\t\t\t\t\t(>= (puntos-jugador " + puntos[0] + ") " + puntos[1] + ")"
+  
+  salida.write(string)
+
+#------------------------------------------------------------------------------
+
+def PrintPosElemento(salida, e):
+  e = e.split("-")
+  e[1] = e[1].lower()
+  
+  if "player" in e[1]:  
+    string = "\
+\n\t\t(posicion_jugador " + e[0] + " zona_" + e[2] + ") \
+\n\t\t(orientacion " + e[0] + " n)"
+  
+  elif "bruja" in e[1] or "leonardo" in e[1] or \
+        "profesor" in e[1] or "principe" in e[1] or \
+        "princesa" in e[1]:          
+    string = "\
+\n\t\t(posicion_personaje " + e[0] + " zona_" + e[2] + ")"
+
+  else:
+    string = "\
+\n\t\t(posicion_objeto " + e[0] + " zona_" + e[2] + ")"
+  
+  salida.write(string)
+
+
+#------------------------------------------------------------------------------
+
+def PrintPuntosObjeto(salida, o, personajes):
+  o = o.split("-")
+  o[1] = o[1][0].lower() + o[1][1:]     
+  
+  puntos = ""
+  personaje = ""  
+  
+  if "oscar" in o[1]:
+    for p in personajes:
+      p = p.split("-")
+      p[1] = p[1].lower()
+      
+      if "leonardo" in p[1]:
+        personaje = p[0]
+        puntos = "10"
+      elif "princesa" in p[1]:
+        personaje = p[0]
+        puntos = "5"
+      elif "bruja" in p[1]:
+        personaje = p[0]
+        puntos = "5"
+      elif "profesor" in p[1]:
+        personaje = p[0]
+        puntos = "5"
+      elif "principe" in p[1]:
+        personaje = p[0]
+        puntos = "5"        
+      else:
+        puntos = "0"
+        
+      string = "\n\t\t\
+(= (conseguir-puntos " + o[0] + " " + personaje + ") " + puntos + ")"
+
+      salida.write(string)                
+        
+  elif "rosa" in o[1]:
+      p = p.split("-")
+      p[1] = p[1].lower()
+      
+      if "leonardo" in p[1]:
+        personaje = p[0]
+        puntos = "1"
+      elif "princesa" in p[1]:
+        personaje = p[0]
+        puntos = "10"
+      elif "bruja" in p[1]:
+        personaje = p[0]
+        puntos = "5"
+      elif "profesor" in p[1]:
+        personaje = p[0]
+        puntos = "4"
+      elif "principe" in p[1]:
+        personaje = p[0]
+        puntos = "3"        
+      else:
+        puntos = "0"
+        
+      string = "\n\t\t\
+(= (conseguir-puntos " + o[0] + " " + personaje + ") " + puntos + ")"
+
+      salida.write(string)                
+        
+  elif "manzana" in o[1]:
+    for p in personajes:
+      p = p.split("-")
+      p[1] = p[1].lower() 
+      
+      if "leonardo" in p[1]:
+        personaje = p[0]
+        puntos = "3"
+      elif "princesa" in p[1]:
+        personaje = p[0]
+        puntos = "1"
+      elif "bruja" in p[1]:
+        personaje = p[0]
+        puntos = "10"
+      elif "profesor" in p[1]:
+        personaje = p[0]
+        puntos = "4"
+      elif "principe" in p[1]:
+        personaje = p[0]
+        puntos = "4"        
+      else:
+        puntos = "0"
+        
+      string = "\n\t\t\
+(= (conseguir-puntos " + o[0] + " " + personaje + ") " + puntos + ")"
+
+      salida.write(string)                
+        
+  elif "algoritmo" in o[1]:
+    for p in personajes:
+      p = p.split("-")
+      p[1] = p[1].lower()
+      
+      if "leonardo" in p[1]:
+        personaje = p[0]
+        puntos = "4"
+      elif "princesa" in p[1]:
+        personaje = p[0]
+        puntos = "3"
+      elif "bruja" in p[1]:
+        personaje = p[0]
+        puntos = "1"
+      elif "profesor" in p[1]:
+        personaje = p[0]
+        puntos = "10"
+      elif "principe" in p[1]:
+        personaje = p[0]
+        puntos = "5"        
+      else:
+        puntos = "0"
+        
+      string = "\n\t\t\
+(= (conseguir-puntos " + o[0] + " " + personaje + ") " + puntos + ")"
+
+      salida.write(string)        
+      
+  elif "oro" in o[1]:
+    for p in personajes:
+      p = p.split("-")
+      p[1] = p[1].lower()
+      
+      if "leonardo" in p[1]:
+        personaje = p[0]
+        puntos = "5"
+      elif "princesa" in p[1]:
+        personaje = p[0]
+        puntos = "4"
+      elif "bruja" in p[1]:
+        personaje = p[0]
+        puntos = "3"
+      elif "profesor" in p[1]:
+        personaje = p[0]
+        puntos = "1"
+      elif "principe" in p[1]:
+        personaje = p[0]
+        puntos = "10"        
+      else:
+        puntos = "0"
+
+      string = "\n\t\t\
+(= (conseguir-puntos " + o[0] + " " + personaje + ") " + puntos + ")"
+      
+  elif "bikini" in o[1]:
+    for p in personajes:
+      p = p.split("-")      
+      personaje = p[0]
+      puntos = "0"
+
+      string = "\n\t\t\
+(= (conseguir-puntos " + o[0] + " " + personaje + ") " + puntos + ")"
+
+  elif "zapatilla" in o[1]:
+    for p in personajes:
+      p = p.split("-")      
+      personaje = p[0]
+      puntos = "0"
+
+      string = "\n\t\t\
+(= (conseguir-puntos " + o[0] + " " + personaje + ") " + puntos + ")"
+
+      salida.write(string)        
+        
+#------------------------------------------------------------------------------
+
+def PrintString(salida, string):
+  salida.write(string)
+
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+
+name_salida = "problem.pddl"
+name_entrada = "mapa.txt"
+
+if len(sys.argv) == 3:
+  name_salida = sys.argv[2]
+  name_entrada = sys.argv[1]
+
+else:
+  print("No se han pasado argumentos o se ha pasado un número incorrecto de ellos")
+  exit()
+
+# Abrimos el archivo de salida
+salida = open(name_salida, "w")
+
+# Abrimos el archivo y lo separamos en líneas
+entrada = open(name_entrada)
+lines = [line.rstrip('\n') for line in entrada]
+
+# Inicializamos las variables que necesitamos
+caminos = []
+terrenos = []
+
+bolsillos = []
+
+puntos_totales = 0
+puntos_jugador = []
+puntos_objeto = []
+
+elementos = []
+jug = []
+per = []
+obj = [] 
+
+rec = []
+rep = []
+
+zon = 0
+
+pos_obj = []
+
+"""
+Guardar personajes, objetos y jugadores (todo lo que haya dentro de los [])
+y lo separamos según lo que sea. Ya después se mandan a cada función para que
+imprima lo que le toque
+"""
+
+
+for i, line in enumerate(lines):
+  if "numero de zonas" in line:      
+    zon = int(line.replace('numero de zonas:',''))
+        
+  elif "bolsillo" in line:  # Bolsillo
+    line = line.replace('bolsillo:', '')
+    line = line.strip('[]')
+    line = line.split(' ')
+    
+    for b in line:
+      b = b.split(':')
+      bolsillos.append(b)
+    
+  elif "puntos_totales" in line:  # Puntos totales
+    puntos_totales = line.replace('puntos_totales:','')
+
+  elif "puntos_jugador" in line:  # Puntos por jugador
+    line = line.replace('puntos_jugador:', '')
+    line = line.strip('[]')
+    line = line.split(' ')
+    
+    for p in line:
+      p = p.split(':')            
+      rep.append(p[0])
+      puntos_jugador.append(p)      
+    
+  else:  # Caminos
+    if line:  # Si no vacía      
+      if (line[0] == 'V'):  # Zonas en vertical
+        line = line.replace('V -> ', '')
+        zonas = line.split('=')
+        
+        identificadores = []
+        costes = []
+        
+        for zona in zonas:
+          if (zona[0] == 'z'): # Si se determina una zona y no el coste de un camino
+            regex = "[0-9]+\["
+            m = re.findall(regex, zona)   
+            m = m[0]
+            id_zona = m[0:-1]
+            identificadores.append(int(m[0:-1]))
+            
+            # Cogemos los objetos dentro de cada zona
+            regex = "\[*[^\[]*\]"            
+            m = re.findall(regex, zona)            
+                
+            # Si se ha encontrado algo
+            if m:
+              objetos = m[0]
+              objetos = objetos.strip('[]')
+              
+              # Habría que separar en &
+              if objetos:
+                things = objetos.split(" ")
+                for objetos in things:
+                  elementos.append(objetos)                
+                  pos_obj.append(objetos + "-" + id_zona)
+                  puntos_objeto.append(objetos)
+                  
+                  if "player" in objetos:                  
+                    jug.append(objetos)
+                    o = objetos.split("-")
+                  
+                    en_rep = False
+
+                    for r in rep:
+                      if o[0] in r:
+                        en_rep = True
+
+                    if not en_rep:
+                      rec.append(o[0])
+
+
+                  elif "bruja" in objetos or "leonardo" in objetos or \
+                      "profesor" in objetos or "principe" in objetos or \
+                      "princesa" in objetos:          
+                    per.append(objetos)
+                  else:
+                    obj.append(objetos)                  
+              
+              terreno = m[1]
+              terreno = terreno.strip('[]')              
+              terrenos.append(terreno + "-" + zona[1])
+              
+          else:
+            costes.append(zona)
+        
+        # Debe imprimirse después de init
+        caminos.append(GetCaminoVertical(identificadores, costes))
+
+      else: # Zonas en horizontal
+        line = line.replace('H -> ', '')
+        zonas = line.split('=')
+        
+        identificadores = []
+        costes = []
+        
+        for zona in zonas:
+          if (zona[0] == 'z'): # Si se determina una zona y no el coste de un camino
+            regex = "[0-9]+\["
+            m = re.findall(regex, zona)   
+            m = m[0]
+            id_zona = m[0:-1]
+            identificadores.append(int(m[0:-1]))
+            
+            # Cogemos los objetos dentro de cada zona
+            regex = "\[*[^\[]*\]"            
+            m = re.findall(regex, zona)            
+        
+            
+            # Si se ha encontrado algo
+            if m:
+              objetos = m[0]
+              objetos = objetos.strip('[]')
+              
+              # Habría que separar en &
+              if objetos:
+                things = objetos.split(" ")
+                for objetos in things:
+                  elementos.append(objetos)                
+                  pos_obj.append(objetos + "-" + id_zona)
+                  puntos_objeto.append(objetos)
+                  
+                  if "player" in objetos:                  
+                    jug.append(objetos)
+                    o = objetos.split("-")
+                  
+                    en_rep = False
+
+                    for r in rep:
+                      if o[0] in r:
+                        en_rep = True
+
+                    if not en_rep:
+                      rec.append(o[0])
+
+
+                  elif "bruja" in objetos or "leonardo" in objetos or \
+                      "profesor" in objetos or "principe" in objetos or \
+                      "princesa" in objetos:          
+                    per.append(objetos)
+                  else:
+                    obj.append(objetos)      
+              
+              terreno = m[1]
+              terreno = terreno.strip('[]')              
+              terrenos.append(terreno + "-" + zona[1])
+              
+          else:
+            costes.append(zona)
+        
+        # Debe imprimirse después de init
+        caminos.append(GetCaminoHorizontal(identificadores, costes))
+
+
+
+"""
+Cosas que imprimir:
+- Cabecera superior  
+- Definición de objetos junto al tipo
+  - Incluyendo terrenos y orientación por defecto
+- Init
+  - Posición y orientación de los personajes
+  - Posición de los objetos
+  - Caminos
+    - Coste total y coste por camino
+  - Terrenos de las zonas
+  - Puntos totales = 0 y los de cada personaje = 0
+  - Tabla de puntos por objeto y personaje
+  - Bolsillo inicial = 0 de cada personaje, bolsillo máximo
+- Goal
+  - Puntos a alcanzar en total
+  - Puntos mínimos de cada jugador
+- Cabecera inferior  
+"""
+print("--------------------")
+print("Personajes: \t\t", per)
+print("Objetos: \t\t", obj)
+print("Jugadores: \t\t", jug)
+print("Recogedores: \t\t", rec)
+print("Repartidores: \t\t", rep)
+print("Número de zonas: \t", zon)
+print("Identificadores de zona:", identificadores)
+print("Posición elementos: \t", pos_obj)
+print("Elementos: \t\t", elementos)
+
+# Una vez que tenemos los datos necesarios imprimimos en el archivo de salida
+PrintParteSuperior(salida)
+PrintNumZonas(salida, zon)
+
+# Definición de objetos
+for e in elementos:
+  if "player" not in e: # Quitar si sí se definen los jugadores por el mapa
+    PrintObject(salida, e)
+
+# Definición de jugadores
+if rep:
+  for r in rec:
+    PrintString(salida, "\n\t\t" + r + " - recogedor")
+  for r in rep:
+    PrintString(salida, "\n\t\t" + r + " - repartidor")    
+
+else:
+  for j in jug:
+    j = j.split("-")
+    PrintString(salida, "\n\t\t" + j[0] + " - jugador")
+
+##########
+
+PrintInit(salida)
+
+# Posición de elementos
+for j in pos_obj:
+  PrintPosElemento(salida, j)
+
+
+PrintString(salida, "\n")
+  
+
+# Tipos de terreno
+terrenos = list(set(terrenos))
+print("Terrenos: ", terrenos)
+
+for t in terrenos:
+  a = t.split("-")  
+  PrintTerreno(salida, a[0], a[1])
+  
+PrintString(salida, "\n")
+  
+# Caminos y coste entre ellos
+for c in caminos:
+  PrintString(salida, c)
+
+# Tamaño de los bolsillos
+for b in bolsillos:
+  PrintBolsillo(salida, b)
+
+PrintString(salida, "\n")
+
+# Tabla de puntos
+for p in obj:
+  PrintPuntosObjeto(salida, p, per)
+
+PrintString(salida, "\n")
+
+# Puntos iniciales de los repartidores
+if rep:
+  for r in rep:
+    PrintPuntosInicialJugador(salida, r)
+else:
+  for r in jug:
+    r = r.split("-")
+    PrintPuntosInicialJugador(salida, r[0])
+
+
+##########
+
+PrintGoal(salida)
+
+PrintPuntosTotales(salida, puntos_totales)
+
+for p in puntos_jugador:
+  PrintPuntosJugador(salida, p)
+
+##########
+
+PrintParteInferior(salida)
+
+
+# Cerramos los archivos
+entrada.close()
+salida.close()

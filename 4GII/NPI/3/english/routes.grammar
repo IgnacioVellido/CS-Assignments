@@ -1,0 +1,11 @@
+#JSGF V1.0;
+
+grammar routes;
+
+public <routes> = <palace> {route = 'palace';}
+                | <generalife> {route = 'generalife';}
+                | <full> [Alhambra] {route = 'full';};
+
+<palace> = palace | charles;
+<generalife> = generalife | gardens;
+<full> = full | all | complete;

@@ -1,0 +1,14 @@
+#JSGF V1.0;
+
+grammar route_information_generalife;
+
+public <route_information_generalife> 
+    = [<polite>] <buy> [<polite>] {generalife = 'buy';}
+    | [<polite>] <price> [<polite>] {generalife = 'price';}
+    | [<polite>] <information> [<polite>] {generalife = 'info';};
+
+<buy> = pagar | comprar | pagamento ;
+<price> = preço | custo | [quanto] vale | preços;
+<information> = informação | info | [diz] [me diga] mais;
+
+<polite> = por favor | poderia [dizer] [me dizer] | se importaria [dizer] [me dizer];

@@ -1,0 +1,408 @@
+\section{HS para el problema PAR}
+
+Todos los algoritmos se han implementado a mano en el lenguaje Python con la ayuda de los frameworks Scikit-Learn y Numpy. Adicionalmente, el cálculo de los centroides se ha hecho a partir del módulo \textit{NearestCentroid} de Scikit. \\
+
+Para la ejecución del código es necesario tener instalado Python en su versión 3, y se puede ejecutar de la siguiente manera:
+\begin{lstlisting}[language=bash]
+    $python main.py [-h] -a A -p P [-s S] [-ss SS]
+
+    >Argumentos:
+        -h, --help  Mensaje de ayuda con esta descripcion
+        -a A        Algoritmo a utilizar (hs, hs-ls, hs-ls-v2)
+        -p P        Problema a ejecutar (iris10, ecoli20...)
+        -s S        Archivo que contiene la semilla
+        -ss SS      Valor de la semilla    
+\end{lstlisting}
+
+\vspace{\baselineskip}
+
+Adicionalmente, es necesario tener incluido Numpy, Scikit-Learn y Matplotlib en el entorno de Python donde se ejecute.
+
+\newpage
+
+\subsection{Descripción del problema}
+% Breve descripción/formulación del problema (máximo 1 página). Podrá incluirse el mismo contenido repetido en todas las prácticas presentadas por el estudiante.
+
+El Problema del Agrupamiento (PA) es un problema clásico de aprendizaje no supervisado, que consiste agrupar una serie de instancias en un número concreto de clústers de forma lógica. En estas prácticas añadimos restricciones al problema convirtiéndolo en el \textbf{Problema del Agrupamiento con Restricciones} (PAR), una variante NP-Completa semi-supervisada de PA. \\
+
+En PAR por tanto se debe agrupar una serie de datos en un número predefinido de clústers, teniendo que contener cada clúster como mínimo un elemento.
+Además, tenemos dos tipos de restricciones, asociadas a pares de elementos:
+\begin{itemize}
+    \item Must-Link (ML): Ambos elementos deben pertenecer al mismo clúster.
+    \item Cannot-Link (CL): Ambos elementos deben pertenecer a distintos clústers.
+\end{itemize}
+
+A la hora de implementar los algoritmos se considerarán estas restricciones como débiles, es decir, serán relevantes a la hora de determinar la calidad de la solución pero no la consideración de si una posible solución lo es. \\
+
+Trabajaremos con 4 instancias del problema:
+\begin{enumerate}
+    \item \textbf{Iris}: Características de tres tipos de flor de Iris. Contiene 3 clases y 4 dimensiones.
+    \item \textbf{Ecoli}: Características de células. 8 clases y 7 dimensiones.
+    \item \textbf{Rand}: Conjunto de datos artificial de dos dimensiones formado por 3 clústers y 2 dimensiones.
+    \item \textbf{Newthyroid}: Glándulas tiroides de 2015 pacientes. 3 clases y 2 dimensiones
+\end{enumerate}
+
+% ==============================================================================
+% ==============================================================================
+
+\subsection{Consideraciones previas}
+% Breve descripción de la aplicación de los algoritmos empleados al problema (máximo 4 páginas): Todas las consideraciones comunes a los distintos algoritmos se describirán en este apartado, que será previo a la descripción de los algoritmos específicos. Incluirá por ejemplo la descripción del esquema de representación de soluciones y la descripción en pseudocódigo (no código) de la función objetivo y los operadores comunes.
+
+\subsubsection{Función objetivo}
+
+La función objetivo en el problema PAR se calcula en base a la fórmula:
+
+\begin{equation}
+    f = \overline{C} + (infeasibility * \lambda)
+\end{equation}
+
+Siendo:
+
+\begin{equation}
+    \lambda = \frac{\max \{d_i \in D\}}{|R|} \quad tal\ que \ D = Distancias
+\end{equation}
+
+\begin{equation}
+    infeasibility = \sum_{i=0}^{|ML|} \mathds{1}(h_{C}(\overrightarrow{ML_{[i,1]}}) \neq (h_{C}(\overrightarrow{ML_{[i,2]}}) + \sum_{i=0}^{|CL|} \mathds{1}(h_{C}(\overrightarrow{CL_{[i,1]}}) = (h_{C}(\overrightarrow{CL_{[i,2]}})
+\end{equation}
+
+\begin{equation}
+    \overline{C} = \frac{1}{k} \sum_{c_{i}\in C} || \overrightarrow{x_j} - \overrightarrow{u_j} ||_{2}
+\end{equation}
+
+Que es calculada en pseudocódigo: \\
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+        C $=$ Distancia media intra-cluster \;
+        $\lambda =$ Distancia máxima en el conjunto de datos / nº de restricciones  \;
+        inf $=$ Nº restricciones no cumplidas \;
+    \Return{C + ($\lambda *$ inf)}
+    \caption{Función objetivo}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de datos, solucion, centroides}
+        Separar conjunto de datos según su cluster \;
+        \For{particion del conjunto de datos} {
+            Calcular distancia media de sus elementos al centroide correspondiente \;
+        }        
+    \Return{C}
+    \caption{Distancia media intra-cluster}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKw{KwInFor}{in}
+    \KwIn{s: solución}
+        inf $=$ 0 \;
+        \For{r \textbf{in} $lista\_restricciones$} {
+            \uIf{r $=$ ML \textbf{and} $s[r[0]] \neq s[r[1]]$} {
+                inf++ \;
+            }            
+            \uElseIf{r $=$ CL \textbf{and} $s[r[0]] = s[r[1]]$} {
+                    inf++ \;
+            }
+        }
+    \Return{inf}
+    \caption{Infeasibility}
+\end{algorithm}
+
+\subsubsection{Representación de la solución}
+
+Una solución se representa como un vector de igual longitud que el conjunto de datos, indicando en cada casilla el clúster al que pertenece el elemento i-ésimo. Adicionalmente, es necesario que cada clúster cuente como mínimo con un elemento.
+
+
+\subsubsection{Generación de soluciones aleatorias}
+
+La generación de soluciones aleatorias, común para todos los algoritmos, hace uso de la librería Numpy y genera un vector aleatorio relleno con posibles clústers. Este proceso se llama repetidamente hasta que la solución es válida (no deja ningún clúster vacío).
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwRepeat{Do}{do}{while}
+    \KwIn{Tamaño de la solucion, numero de clusters}    
+        \Do{solution no es válida} {
+            solution = X donde $\bigtriangledown x_i \in X, 0 \leq x_i < numClust $ \;
+        }
+    \Return{solution}
+    \caption{Generación de soluciones aleatorias}
+\end{algorithm}
+
+
+\subsection{Adaptación de HS al problema}
+
+Como para nuestro problema estamos trabajando con variables discretas (identificadores de clústers), necesitamos adaptar el proceso de refinamiento de tono. 
+
+El algoritmo define el parámetro \textit{bw} como la cantidad de ajuste a aplicar a una nota, tanto por encima como por debajo. Esto es así ya que se asume que si una nota aporta positivamente al coste de la solución, valores cercanos tendrán un aporte similar. Puesto que en el problema PAR no se define relación alguna entre los clústers, no importa cuál cojamos (ya sea el anterior, el siguiente, u otro cualquiera) que todos podrían alterar la solución de la misma manera.
+
+\vspace{\baselineskip}
+
+Tras unas pequeñas pruebas, decidimos para nuestro problema los siguientes valores de los parámetros:
+
+\begin{itemize}
+    \item HMCR $=$ 0.75
+    
+    \textbf{Recomendado por la literatura}. Queremos que sea lo suficientemente alto para que optimize las armonías de la HM, pero sin olvidarse de explorar el espacio de búsqueda.
+
+    \item hms $=$ 12
+    
+    \textbf{Recomendado por la literatura}. Este valor parece lo suficientemente grande para considerar un buen número de armonías.
+
+    \item PAR $=$ 0.7
+    
+    \textbf{Recomendado por la literatura}. Es importante optimizar las armonías que se van obteniendo, pero un valor muy alto generará cambios demasiados bruscos en la solución.
+
+    \item bw $=$ Cualquier clúster diferente del actual
+    
+    Como se ha indicado previamente, este parámetro está más enfocado a problemas con variables continuas. En nuestro caso, al tratar con discretas, cogeremos todo el rango posible de clústers sin contar el actual.
+
+    \item maxIteraciones $=$ 50 000
+    
+    Se ha comprobado que es un valor más que suficiente para que el algoritmo se estabilice en una solución. Para ahorrar costes computacionales, el algoritmo puede acabar antes si en 3000 iteraciones no ha entrado ninguna armonía nueva en la HM.
+\end{itemize}
+
+\newpage
+
+De esta manera, el pseudocódigo que sigue el algoritmo es:
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de datos, lista de restricciones}
+        Iniciar parámetros \;
+        Inicializar HM con armonías aleatorias \;
+        Ordenar HM en base al coste \;
+        \While{no se haya alcanzado el número máximo de iteraciones} {
+            \tcc{Improvisar nueva armonía - - - - - - - - - - - - - - - -}
+            newHarmony $=$ armonía vacía \;
+            \For{cada elemento \textbf{i} de la solución} {
+                rand $=$ valor aleatorio en rango [0,1] \;
+                
+                \uIf{rand $<$ HMCR}{
+                    note $=$ Nota \textbf{i} de una armonía aleatoria en la HM \;
+                    rand $=$ valor aleatorio en rango [0,1] \;
+                
+                    \If{rand $<$ PAR}{
+                        note $=$ ajusteDeTono(note) \;
+                    }
+                }
+                \uElse {
+                    note $=$ Elegir un clúster aleatorio \;
+                }
+
+                Añadir note a newHarmony \;
+            }
+            \If{newHarmony no es válida (algún cluster vacío)}{
+                Reparar newHarmony \;
+            }
+            \tcc{Evaluar - - - - - - - - - - - - - - - - - - - - - - - -}
+            cost = coste de newHarmony \;
+            \If{coste peor armonía en la HM $>$ cost}{
+                Sustituir pero armonía por newHarmony junto a su coste \;
+                Ordenar HM \;
+            }
+        }
+        solution $=$ Mejor armonía en la HM \;
+    \Return{solution}
+    \caption{Algoritmo HS}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{oldNote, numClust}
+    newNote $=$ valor aleatorio en el rango [0,numClust] distinto de oldNote\;
+    \Return{newNote}
+    \caption{Ajuste de tono}
+\end{algorithm}
+
+\newpage
+
+\subsection{Hibridización memética HS-LS}
+
+Esperamos que al tener predefinidos unos parámetros fijos la optimización no sea suficiente para converger hacia un óptimo (más tarde corroborado en el apartado \textit{Experimentación}), por lo que se decide reducir el número de ejecuciones que realiza HS a 10000 y a aplicar una búsqueda local a la salida obtenida. El resto de hiperparámetros se mantienen a los mismos valores.
+
+\vspace{\baselineskip}
+
+El algoritmo quedaría de la siguiente manera:
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de datos, lista de restricciones}
+        Iniciar parámetros \;
+        Inicializar HM con armonías aleatorias \;
+        Ordenar HM en base al coste \;
+        \While{no se haya alcanzado el número máximo de iteraciones} {
+            \tcc{Improvisar nueva armonía - - - - - - - - - - - - - - - -}
+            newHarmony $=$ armonía vacía \;
+            \For{cada elemento \textbf{i} de la solución} {
+                rand $=$ valor aleatorio en rango [0,1] \;
+                
+                \uIf{rand $<$ HMCR}{
+                    note $=$ Nota \textbf{i} de una armonía aleatoria en la HM \;
+                    rand $=$ valor aleatorio en rango [0,1] \;
+                
+                    \If{rand $<$ PAR}{
+                        note $=$ ajusteDeTono(note) \;
+                    }
+                }
+                \uElse {
+                    note $=$ Elegir un clúster aleatorio \;
+                }
+
+                Añadir note a newHarmony \;
+            }
+            \If{newHarmony no es válida (algún cluster vacío)}{
+                Reparar newHarmony \;
+            }
+            \tcc{Evaluar - - - - - - - - - - - - - - - - - - - - - - - -}
+            cost = coste de newHarmony \;
+            \If{coste peor armonía en la HM $>$ cost}{
+                Sustituir pero armonía por newHarmony junto a su coste \;
+                Ordenar HM \;
+            }
+        }
+        solution $=$ Mejor armonía en la HM \;
+        \tcc{Optimizar la solución con LS - - - - - - - - - - - - - - -}
+        solution $=$ localSearch() \;
+    \Return{solution}
+    \caption{Algoritmo memético HS-LS}
+\end{algorithm}
+
+\newpage
+
+El algoritmo de Búsqueda Local utilizado es el de la primera práctica adaptando sus parámetros, y siguiendo el pseudocódigo:
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de vecinos virtuales posibles, en forma de lista de pares, solution}
+        vecindario $=$ listaVecinosVirtuales \;
+        \For{$v$ \textbf{in} vecindario} {
+            soluciónVecina = Solución producida aplicando el vecino $v$ \;
+            Eliminar $v$ de $vecindario$ si soluciónVecina deja algún cluster vacío o es igual que solution \;
+        }
+    \Return{vecindario}
+    \caption{Generación de vecinos}
+\end{algorithm}
+
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de datos, lista de restricciones}    
+        solution $=$ Solución aleatoria \;
+        centroids $=$ Conjunto con los centroides de cada clúster \;
+        neighborhood $=$ Permutación con todos los vecinos virtuales posibles \;
+        evaluations $=$ 0 \;
+        cost $=$ Valor de la función objetivo para la solución actual \;
+        \While{solution cambie \textbf{and} $evaluations < 10\ 000$} {
+            neigh $=$ Vecinos virtuales válidos para la solution actual \;
+            \For{$n$ \textbf{in} neigh} {
+                evaluations++ \;
+                newSolution $=$ Solución aplicando el vecino $n$ \;
+                newCentroids $=$ Centroides de $newSolution$ \;
+                newCost $=$ Valor de la función objetivo para newSolution \;
+                \If{newCost $<$ cost} {
+                    cost $=$ newCost \;
+                    solution $=$ newSolution \;
+                    Saltar a la siguiente iteración del bucle \textbf{while} \;
+                }
+            }
+        }
+    \Return{solution, centroids}
+    \caption{Algoritmo de Búsqueda Local}
+\end{algorithm}
+
+\newpage
+
+\subsection{Mejoras a la hibridización memética}
+
+De entre todas las mejoras propuestas en la sección anterior, se opta por incluir un modelo de parámetros adaptativos dentro de la hibridización memética. Esperamos así que haya una mayor exploración inicial con HS y la solución encontrada sea más prometedora.
+
+\vspace{\baselineskip}
+
+La fórmulas de adaptación de parámetros son las recomendadas en \cite{hs4}, que siguen las fórmulas:
+\begin{equation}
+    PAR_i = PAR_{min} + \frac{PAR_{max} - PAR_{min}}{maxIteraciones} * (maxIteraciones - i)
+\end{equation}
+
+\vspace{\baselineskip}
+
+\begin{equation}
+    HMCR_i = HMCR_{min} + \frac{HMCR_{max} - HMCR_{min}}{maxIteraciones} * i
+\end{equation}
+
+\vspace{\baselineskip}
+
+El objetivo es reducir PAR al ritmo que se incrementa HMCR. Con esto se pretende que la cantidad de exploración sea mayor en las primeras etapas del algoritmo y decremente progresivamente hacia sus iteraciones finales, concentrándose en explotar las armonías existentes en la HM.
+
+\vspace{\baselineskip}
+
+En base a los resultados obtenidos anteriormente, los hiperparámetros se modifican de la siguiente forma:
+\begin{itemize}
+    \item PAR $=$ valores en el rango [0.01, 0.99]
+    \item HMCR $=$ valores en el rango [0.5, 0.95]
+    \item maxIteraciones de la búsqueda local $=$ 30 000
+\end{itemize}
+
+\newpage
+
+El algoritmo queda de la siguiente manera:
+\vspace{\baselineskip}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwIn{Conjunto de datos, lista de restricciones}
+        Iniciar parámetros \;
+        Inicializar HM con armonías aleatorias \;
+        Ordenar HM en base al coste \;
+        \While{no se haya alcanzado el número máximo de iteraciones} {
+            \tcc{Improvisar nueva armonía - - - - - - - - - - - - - - - -}
+            newHarmony $=$ armonía vacía \;
+            \For{cada elemento \textbf{i} de la solución} {
+                rand $=$ valor aleatorio en rango [0,1] \;
+                
+                \uIf{rand $<$ HMCR}{
+                    note $=$ Nota \textbf{i} de una armonía aleatoria en la HM \;
+                    rand $=$ valor aleatorio en rango [0,1] \;
+                
+                    \If{rand $<$ PAR}{
+                        note $=$ ajusteDeTono(note) \;
+                    }
+                }
+                \uElse {
+                    note $=$ Elegir un clúster aleatorio \;
+                }
+
+                Añadir note a newHarmony \;
+            }
+            \If{newHarmony no es válida (algún cluster vacío)}{
+                Reparar newHarmony \;
+            }
+            \tcc{Evaluar - - - - - - - - - - - - - - - - - - - - - - - -}
+            cost = coste de newHarmony \;
+            \If{coste peor armonía en la HM $>$ cost}{
+                Sustituir pero armonía por newHarmony junto a su coste \;
+                Ordenar HM \;
+            }
+            \tcc{Ajustar hiperparámetros - - - - - - - - - - - - - - - -}
+            PAR $=$ adaptarPAR(PAR) \;
+            HMCR $=$ adaptarHMCR(HMCR) \;
+        }
+        solution $=$ Mejor armonía en la HM \;
+        \tcc{Optimizar la solución con LS - - - - - - - - - - - - - - -}
+        solution $=$ localSearch() \;
+    \Return{solution}
+    \caption{Algoritmo memético HS-LS con parámetros adaptativos}
+\end{algorithm}

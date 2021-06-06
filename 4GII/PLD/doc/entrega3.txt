@@ -1,0 +1,36 @@
+--------------------------------------------------------------------------------
+¿Qué se ha implementado ya?
+--------------------------------------------------------------------------------
+
+Menú principal; lobby (con sistema de votación); 2 personajes; 2 modos de juegos (cada uno en un mapa diferente). Todo con funcionalidad en red.
+Más detalles en el diario de trabajo.
+
+Siguen existiendo bugs, probablemente relacionados con el envío de mensajes del networking.
+
+--------------------------------------------------------------------------------
+¿Qué recursos de aprendizaje (tutoriales, libros,...) se han consultado? (Aportar referencias bibliográficas o url)
+--------------------------------------------------------------------------------
+
+Documentación oficial: https://docs.godotengine.org/en/stable/index.html
+Foro oficial de Godot: https://godotengine.org/qa/questions
+Algunas veces el subreddit de Godot: https://www.reddit.com/r/godot/
+
+Tutoriales: https://www.youtube.com/playlist?list=PLhqJJNjsQ7KF0o0ke_CA2QlqK8BxQNSFS
+
+Concretamente, para el networking:
+Documentación: https://docs.godotengine.org/en/stable/tutorials/networking/index.html
+Tutorial: https://gitlab.com/menip/godot-multiplayer-tutorials
+Tutorial: https://www.youtube.com/watch?v=JuRhRhJ2914&feature=emb_title
+Ejemplos oficiales: https://github.com/godotengine/godot-demo-projects/tree/master/networking
+
+--------------------------------------------------------------------------------
+¿Qué problemas han surgido (si es el caso)?
+--------------------------------------------------------------------------------
+
+El principal problema no ha sido de implementación sino relacionado con el equipo. Al principio, éramos cuatro personas: dos programadores y dos artistas. Sin embargo, debido a las circunstancias del Covid, al final no han podido ayudarnos en el proyecto. Debido a esto, no hemos implementado todavía nada del arte del juego (usamos algunos placeholders) y creemos que vamos a tener dificultades para desarrollar nosotros esta parte.
+
+En general, han surgido varios bugs. Por ejemplo, al aumentar la velocidad del movimiento del personaje vi que, usando el nodo de Navigation, el personaje se quedaba "pillado" al final del camino y nunca terminaba. Después de estar varias horas intentando solucionarlo, vi que simplemente tenía que aumentar un valor de umbral que usaba para recorrer el camino del PathFinding.
+
+La conectividad cliente-servidor y la separación de responsabilidades ha sido un problema constante. Evitar la duplicidad de cálculo y de envío de mensajes ha resultado complicado de resolver (aunque seguimos con bugs).
+
+Se ha usado la funcionalidad RTC que proporciona Godot, pero tras investigar el funcionamiento de otros juegos del género, se considera que de cara a mejorar la latencia y la carga en red habría sido más oportuno enviar todo el estado del juego (modo delta) en un único mensaje cada cierto intervalo de tiempo. Se desconoce si Godot soporta este tipo de conectividad o sería necesario utilizar algún framework externo.

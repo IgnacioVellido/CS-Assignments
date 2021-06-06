@@ -1,0 +1,40 @@
+\documentclass[14pt,a4paper]{book}
+\usepackage[spanish,es-nodecimaldot]{babel}	% Utilizar español
+\usepackage[utf8]{inputenc}					% Caracteres UTF-8
+\usepackage{graphicx}						% Imagenes
+\usepackage[hidelinks]{hyperref}			% Poner enlaces sin marcarlos en rojo
+\usepackage{fancyhdr}						% Modificar encabezados y pies de pagina
+\usepackage{float}							% Insertar figuras
+\usepackage[textwidth=390pt]{geometry}		% Anchura de la pagina
+\usepackage[nottoc]{tocbibind}				% Referencias (no incluir num pagina indice en Indice)
+\usepackage{enumitem}						% Permitir enumerate con distintos simbolos
+\usepackage[T1]{fontenc}					% Usar textsc en sections
+\usepackage{amsmath}						% Símbolos matemáticos
+
+\usepackage[table,xcdraw]{xcolor}
+\setlength\headheight{26pt} 
+\pagestyle{fancy}
+\rhead{}
+
+% Comandos para poner el nombre de la asignatura
+\newcommand{\asignatura}{Metaheurística}
+\newcommand{\autor}{Carlos Nuñez Molina \\ Ignacio Vellido Expósito}
+\newcommand{\titulo}{SynVic}
+\newcommand{\subtitulo}{Propuesta}
+
+\begin{document}
+    \pagenumbering{gobble}
+    \input{portada/portada}
+
+    % ==============================================================================
+
+    \input{chapters/descripcion}
+    \input{chapters/analisis_de_mercado}
+
+    \setlength{\parskip}{1em}
+    
+    % ==============================================================================
+\end{document}
+
+
+\end{document}

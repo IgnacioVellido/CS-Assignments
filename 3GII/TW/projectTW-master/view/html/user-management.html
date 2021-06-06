@@ -1,0 +1,60 @@
+{% extends "/view/html/base.html" %}
+
+{% block Main %}
+
+<!-- To include links in the buttons -->
+
+<!-- Parameters:
+users: Array
+  name
+  email
+  mailingAddress
+  phoneNumber
+  kind: Rol
+  status -->
+
+<section class="main-block">
+  <h1 class="main-title">Usuarios</h1>
+
+  <table class="table table-striped table-light">
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <th scope="row">
+          <img class="profilepic" src="{{ user.photo }}" alt="Foto de perfil de {{ user.name }}">
+        </th>
+        <td>
+          <div class="users-details row">
+            <dl class="row">
+              <dt class="col-sm-3">Usuario</dt>
+              <dd class="col-sm-8">{{ user.name }} {{ user.surname }}</dd>
+
+              <dt class="col-sm-3">Email</dt>
+              <dd class="col-sm-8">{{ user.email }}</dd>
+
+              <dt class="col-sm-3">Direccion</dt>
+              <dd class="col-sm-8">{{ user.mailingAddress }}</dd>
+            </dl>
+            <dl class="row">
+              <dt class="col-sm-5">Teléfono</dt>
+              <dd class="col-sm-7">{{ user.phoneNumber }}</dd>
+
+              <dt class="col-sm-5">Rol</dt>
+              <dd class="col-sm-7">{{ user.kind }}</dd>
+
+              <dt class="col-sm-5">Estado</dt>
+              <dd class="col-sm-7">Activo</dd>
+            </dl>
+          </div>
+        </td>
+        <td>
+          <button class="btn" title="Editar"><i class="far fa-edit"></i></button>
+          <button class="btn" title="Eliminar"><i class="far fa-trash-alt"></i></button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+{% endblock %}

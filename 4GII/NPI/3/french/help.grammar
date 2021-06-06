@@ -1,0 +1,6 @@
+#JSGF V1.0;
+
+grammar help;
+
+public <help> = [s'il vous plaît] [s'il te plaît] [j'ai besoin] aide | expliquer 
+| explication | je ne comprends pas | repetez;

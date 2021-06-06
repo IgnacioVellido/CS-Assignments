@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/e_cast.wav-3ad81b10bd4573cfa93afa5c6a77231d.sample"
+
+[deps]
+
+source_file="res://Audio/SFX/Mage/e_cast.wav"
+dest_files=[ "res://.import/e_cast.wav-3ad81b10bd4573cfa93afa5c6a77231d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

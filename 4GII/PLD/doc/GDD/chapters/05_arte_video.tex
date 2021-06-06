@@ -1,0 +1,37 @@
+\chapter{Arte y vídeo}
+
+% ==============================================================================
+
+\section{Objetivos}
+% \textit{¿Qué se espera conseguir con el estilo del arte elegido? Por ejemplo, ¿se elige modelar en low poly para reducir presupuesto o meramente por cuestiones estéticas ya que esta muy relacionado con la temática del juego?}
+
+El objetivo principal es utilizar un estilo artístico 3D parecido al de otros MOBA pero que sea lo más claro posible, de forma que no se distraiga al jugador con detalles.
+
+También se pretende que el arte sea autodescriptivo, es decir, que a partir del modelo de un objeto este sea fácilmente reconocible y diferenciable del resto y que, incluso si un jugador nunca ha visto ese objeto antes, pueda hacerse una idea de lo que es a partir de su apariencia.
+
+\vspace{\baselineskip}
+
+Por la característica rápida del juego, se busca que haya contraste en los colores, de forma que se pueda diferenciar con claridad qué modelos hay en pantalla. Dotar a cada modelo de pocos colores (2 o 3 gamas) y remarcando los contornos debería ser una manera para conseguirlo fácilmente.
+
+\vspace{\baselineskip}
+
+Todo esto no solo se aplica a personajes y entornos, sino al diseño de los efectos y las interfaces que contenga el juego. Respecto al primero, será suficiente con mostrar que el efecto ha ocurrido, sin recurrir a ninguna manera vistosa de mostrarlo (por ejemplo, al impactar una habilidad o un golpe, el efecto debería ser lo menos disruptivo visualmente posible). En la medida de lo posible, evitar de la dependencia de los efectos de sonido, se pretende que el juego sea autodescriptivo sin necesidad de usar audio.
+
+\section{GUI}
+% \textit{Ventanas, punteros, marcadores, íconos, botones, menús, etc. Todos estos elementos deben recogerse en esta sección, con una descripción de para que se utilizan y una representación gráfica de ellas. }
+El diseño de la GUI cumplirá lo mencionado anteriormente. Será simple (incluso minimalista) y muy descriptiva, mostrando al jugador de manera rápida y sencilla la información que necesite, sin distraerlo con detalles innecesarios.
+	
+\section{Decorados}
+% \textit{Decorados de terreno, texturas, skyboxes, fondos, tiles... Todos estos elementos deben recogerse en esta sección, con una descripción de para que se utilizan y una representación gráfica de ellas. }
+    
+Se utilizará una cámara isométrica que no se puede rotar, por lo que no se verán las caras "traseras" de los decorados. A pesar de esto, los obstáculos y decorados, al igual que los personajes, serán 3D.
+
+Respecto a los fondos, se usarán skyboxes de la temática del escenario. Por ejemplo, para el escenario del modo Capture que está ambientado en un bosque, el skybox representará un bosque. Por ahora, como placeholders, los fondos son simplemente de un color plano, de acuerdo a la temática del escenario.
+
+\section{Personajes y Habilidades}
+% \textit{Animaciones de enemigos y jugadores (sprites o modelos), objetos, armas, power-ups, etc. Todos estos elementos deben recogerse en esta sección, con una descripción de para que se utilizan y una representación gráfica de ellas. }
+Los modelos de los personajes serán 3D, como el resto de modelos. Tal y como hemos mencionado, estos modelos serán simples, usando pocos colores y sin tener demasiados detalles, para no distraer a los jugadores del gameplay. A pesar de su simpleza, debe ser fácil diferenciar un personaje de otro. Para ello, los modelos deben ser "eficaces", es decir, ser capaces de transmitir la "esencia" del personaje de forma directa y sencilla, sin tener que usar detalles. Como cada personaje se basa en una idea sencilla (por ejemplo, la ingeniera es una mujer, pequeña, que usa diversas armas y pistolas mucho más grandes que ella), el modelo debe centrarse en estos aspectos, transmitiendo al jugador la idea en la que se basa el personaje. De esta forma, conseguiremos que los modelos sean a la vez sencillos y autodescriptivos.
+
+\vspace{\baselineskip}
+
+Los efectos de las habilidades también seguirán esta filosofía del minimalismo, aún más si cabe. Intentaremos no abusar de los efectos y solo usarlos cuando sean necesarios para mostrar algún tipo de información al usuario. Por ejemplo, los usamos en la ulti del mago (aunque, en este momento del desarrollo, usamos un círculo en vez de un sistema de partículas) para mostrar el rango de acción de su habilidad y permitir a los jugadores enemigos que escapen de dicha área. Cuando usemos efectos, intentaremos que sean simples para que no abrumen al jugador ni lo distraigan de la acción.

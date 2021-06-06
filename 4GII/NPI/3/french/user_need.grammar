@@ -1,0 +1,11 @@
+#JSGF V1.0;
+
+grammar user_need;
+
+public <user_need> = [<polite>] <information> {mode = 'true';}
+                    | [<polite>] <payment>;
+
+<information> = [dis moi] informations [S'il vous plait] | itinéraire | itinéraires | prix;
+<payment> = (payer | acheter | paiement | vente) [S'il vous plait] | générique;
+
+<polite> = S'il vous plait | pourrait [dire] | pourriez-vous me dire;

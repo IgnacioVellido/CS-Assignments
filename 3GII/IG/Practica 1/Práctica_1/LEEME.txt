@@ -1,0 +1,6 @@
+Ignacio Vellido Expósito
+
+Añadidos:
+- Cambios en la escena en base a las teclas (de objeto y modo)
+- Objeto octaedro
+- Modo ajedrez con colores difuminados

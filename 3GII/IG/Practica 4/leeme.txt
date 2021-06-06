@@ -1,0 +1,12 @@
+Ignacio Vellido Expósito
+
+Teclas:
+    T           - Mostrar objeto jerárquico
+    De F1 a F6  - Mover las diferentes partes del objeto
+    F7          - Activar animación objeto y rotación automática de la 2ª luz
+    F8          - Desactivar animación
+    I		    - Rotar luz
+    U           - Cambiar color de luz rotativa
+    Y           - Rotar por distintos materiales
+    J           - Activar segunda luz
+    K           - Desactivar segunda luz

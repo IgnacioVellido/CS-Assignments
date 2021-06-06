@@ -1,0 +1,62 @@
+{% extends "/view/html/base.html" %}
+
+{% block Main %}
+
+<!-- Parameters: From new-incident
+get_name()
+get_description()
+get_location()
+get_key_words() -->
+
+<form action="new-incident.php" class="main-block" method="GET">
+  <h1 class="main-title">Nueva incidencia</h1>
+
+  <div class="form-block">
+    <div class="form-group row">
+      <label for="name" class="col-sm-3">Título</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="name" {% if new-incident.get_name() is defined %}
+          value="{{new-incident.get_name()}}" {% endif %}>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="description" class="col-sm-3">Descripción</label>
+      <div class="col-sm-9">
+        <textarea class="form-control" id="description" rows="5">
+          {% if new-incident.get_description() is defined %}
+            {{new-incident.get_description()}}
+          {% endif %}
+        </textarea>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="location" class="col-sm-3">Lugar</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="location" {% if new-incident.get_location() is defined %}
+          value="{{new-incident.get_location()}}" {% endif %}>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="words" class="col-sm-3">Palabras clave</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="words" {% if new-incident.get_key_words() is defined %}
+          value="{{new-incident.get_key_words()}}" {% endif %}>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="profilepic" class="col-sm-4">Fotografías</label>
+      <div class="col-sm-8 row">
+        <label for="profilepic" class="custom-file-label">Seleccionar archivo</label>
+        <input type="file" class="custom-file-input" name="profilepic">
+      </div>
+    </div>
+  </div>
+
+  <button class="btn"><i class="fas fa-upload"> Publicar incidencia</i></button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+make[1]: Entering directory '/mnt/68A80B78A80B43D2/Ubuntu/Desktop/TSI-2'
+if [ 0 -eq 0 ];	then \
+	Metric-FF/ff -p Ejercicios/ -o Ej5dominio.pddl -f Ej5problema3.pddl;	\
+else	\
+	Metric-FF/ff -p Ejercicios/ -o Ej5dominio.pddl -f Ej5problema3.pddl -O -g 1 -h 1;	\
+fi;
+
+ff: parsing domain file
+domain 'EJERCICIO-5' defined
+ ... done.
+ff: parsing problem file
+problem 'EJERCICIO-5-APARTADO_B' defined
+ ... done.
+
+
+
+no optimization required. skipping criterion.
+
+
+warning: var quantification of ?O2 overwrites previous declaration
+
+
+warning: var quantification of ?O2 overwrites previous declaration
+
+
+warning: var quantification of ?O2 overwrites previous declaration
+
+
+no metric specified. plan length assumed.
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is EHC, if that fails then  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+Cueing down from goal distance:    3 into depth [1]
+                                   2            [1][2][3][4][5][6][7][8][9][10][11][12][13]
+                                   1            [1]
+                                   0            
+
+ff: found legal plan as follows
+
+step    0: COGER JUGADOR_1 ZONA_1 MANZANA_1 ZAPATILLA_1
+        1: ENTREGAR JUGADOR_1 ZONA_1 MANZANA_1 BRUJA_1
+        2: GIRAR-DERECHA JUGADOR_1 N
+        3: GIRAR-DERECHA JUGADOR_1 E
+        4: IR_SUR JUGADOR_1 ZONA_1 ZONA_6
+        5: GIRAR-DERECHA JUGADOR_1 S
+        6: GIRAR-DERECHA JUGADOR_1 O
+        7: COGER JUGADOR_1 ZONA_6 ZAPATILLA_1 ZAPATILLA_1
+        8: IR_NORTE JUGADOR_1 ZONA_6 ZONA_1
+        9: GIRAR-DERECHA JUGADOR_1 N
+       10: IR_ESTE_BOSQUE JUGADOR_1 ZONA_1 ZONA_2 ZAPATILLA_1
+       11: DEJAR JUGADOR_1 ZONA_2 ZAPATILLA_1
+       12: COGER JUGADOR_1 ZONA_2 ORO_1 ZAPATILLA_1
+       13: IR_ESTE JUGADOR_1 ZONA_2 ZONA_3
+       14: ENTREGAR JUGADOR_1 ZONA_3 ORO_1 PRINCIPE_1
+     		Coste Total: 0.00
+
+
+time spent:    0.00 seconds instantiating 1541 easy, 90 hard action templates
+               0.00 seconds reachability analysis, yielding 235 facts and 1378 actions
+               0.00 seconds creating final representation with 235 relevant facts, 12 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 35 states, to a max depth of 13
+               0.00 seconds total time
+
+make[1]: Leaving directory '/mnt/68A80B78A80B43D2/Ubuntu/Desktop/TSI-2'

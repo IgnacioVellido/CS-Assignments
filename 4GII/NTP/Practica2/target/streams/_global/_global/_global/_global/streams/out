@@ -1,0 +1,5 @@
+[debug] [watch] [practica2 / Compile / run] Found inputs: E:\Nacho\Desktop\GitHub\UGR-NTP\Practica2\*.{java,scala},E:\Nacho\Desktop\GitHub\UGR-NTP\Practica2\src\main\java\**\*.{java,scala},E:\Nacho\Desktop\GitHub\UGR-NTP\Practica2\src\main\resources\**\*,E:\Nacho\Desktop\GitHub\UGR-NTP\Practica2\src\main\scala\**\*.{java,scala},E:\Nacho\Desktop\GitHub\UGR-NTP\Practica2\src\main\scala-2.12\**\*.{java,scala}
+[info] 1. Monitoring source files for practica2/run...
+[info]    Press <enter> to interrupt or '?' for more options.
+[debug] [watch] [debug] Received input event: Run().
+[debug] [watch] [debug] Received input event: Run().

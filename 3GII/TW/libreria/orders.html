@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<!-- Ejercicio 4, Práctica 1 -->
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Ignacio Vellido Expósito"> 
+    <title>La Librería - Pedidos</title>       
+  </head>
+  <body>
+    <header> <!-- Encabezado -->      
+      <img src="./img/logos/logo.png" alt="Logo de La Librería"> <!-- Logo -->
+      <div id="nombre_eslogan">
+        <h1>La Librería</h1>
+        <p>Para los fans de la lectura</p>
+      </div>      
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="catalogue.html">Catálogo</a></li>
+        <li><a href="search.html">Búsqueda</a></li>
+        <li><a href="stores.html">Tiendas</a></li>
+        <li><a href="">Pedidos</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <div id="info-libro">
+        <img src="./img/libros/1984.jpeg" alt="Carátula del libro" height="150">                
+        <ul id="datos-pedido">
+          <li>
+            <h4>Título</h4>
+            <p>El título del libro</p>
+          </li>
+          <li>
+            <h4>Autor</h4>
+            <p>Menganito y Fulanito</p>
+          </li>
+          <li>
+            <h4>ISBN</h4>
+            <p>xxx-xxx-xxx</p>
+          </li>
+          <li>
+            <h4>Editorial</h4>
+            <p>UnaCualquiera.SL</p>
+          </li>
+          <li>
+            <h4>Año</h4>
+            <p>2019</p>
+          </li>
+        </ul>     
+
+        <p id="descripcion-pedido">
+          En el año 1984 Londres es una ciudad lúgubre en la que la Policía del 
+          Pensamiento controla de forma asfixiante la vida de los ciudadanos. 
+          Winston Smith es un peón de este engranaje perverso y su cometido es 
+          reescribir la historia para adaptarla a lo que el Partido considera 
+          la versión oficial de los hechos. Hasta que decide replantearse la 
+          verdad del sistema que los gobierna y somete
+        </p>
+        <p id="precio-pedido">
+          <h4>PRECIO</h4>
+          <p>6€</p>
+        </p>
+      </div>
+
+      <form action="procesar.php" method="POST">
+          <label>Nombre y apellidos<input type="text" name="nombre"/></label>
+          <label>Dirección de envío<textarea name="direccion"></textarea></label>
+          <label>Email<input type="email" name="email"/></label>
+          <label>Número de tarjeta<input type="text" name="tarjeta"/></label>
+          <label>Fecha de caducidad<input type="text" name="caducidad"/></label>
+          <label>CVC<input type="text" name="cvc"/></p>          
+          
+          <p>Marque si procede</p>
+          <label><input type="checkbox" name="condiciones" value="condiciones"/>
+            He leído y acepto las condiciones de compra</label>
+          <label><input type="checkbox" name="maillist" value="maillist"/>
+            Deseo recibir información sobre novedades</label>
+          <label><input type="checkbox" name="regalo" value="regalo"/>
+            Deseo el envío envuelto para regalo</label>            
+  
+          <input type="submit" value="Hacer pedido"/>
+        </form>
+    </main>
+
+    <aside> <!-- Barra lateral -->
+      <div id="mas-vendidos">
+        <h4>Más vendidos</h4>
+        <ul>
+          <li>El Señor de los Anillos</li>
+          <li>El Principito</li>
+          <li>Harry Potter y la Piedra Filosofal</li>
+        </ul>
+      </div>
+
+      <div id="mas-populares">
+        <h4>Más populares</h4>
+        <ul>
+          <li>J. R. R. Tolkien</li>
+          <li>J. K. Rowling</li>
+          <li>Agatha Christie</li>
+        </ul>
+      </div>
+    </aside>
+
+    <footer> <!-- Pie de página -->
+      <div id="tiendas">
+        <ul>
+          <li>Barcelona
+            <ul>
+              <li>Park Güell, 08024, Barcelona</li>
+            </ul>
+          </li>
+          <li>Madrid
+            <ul>
+              <li>Av. de Concha Espina, 1, 28036, Madrid</li>
+              <li>Calle de Floridablanca, S/N, 28071, Madrid</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div id="contacto">
+        <!-- Esta ajustado el tamaño por visibilidad -->
+        <img src="./img/logos/mail.png" alt="Logo dirección de correo" width="20" height="20">
+        <p>lalibreria@gmail.com</p>
+        <img src="./img/logos/twitter.png" alt="Logo de Twitter" width="20" height="20">
+        <img src="./img/logos/youtube.png" alt="Logo de Youtube" width="20" height="20">
+        <img src="./img/logos/facebook.png" alt="Logo de Facebook" width="20" height="20">
+      </div>
+
+      <div id="informacion">
+        <ul>
+          <li><a href="contact">Contacto</a></li>
+          <li><a href="aboutus">Sobre nosotros</a></li>
+          <li><a href="map">Mapa del sitio</a></li>
+        </ul>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+#JSGF V1.0;
+
+grammar boolean;
+
+public <boolean> = <true> {this.bool = true;}
+                 | <false> {this.bool = false;};
+
+<true> = sim | de acordo | claro;
+<false> = no | não | nem falar;

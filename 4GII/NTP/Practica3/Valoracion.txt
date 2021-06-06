@@ -1,0 +1,15 @@
+Realizado con IntelliJ
+
+Aunque sea opcional, veo mejor realizar las 3 variantes. Con Listas se aprende
+a manejar las clases case, Conjuntos resulta interesante por operar con
+funciones, y Árboles da que pensar sobre las distintas formas de implementarlos
+(aunque para este último sugeriría otra funcionalidad mínima, operaciones como
+la unión no tienen una definición muy clara. Por ejemplo, considero más 
+interesante invertir).
+
+También sugeriría un poco más de dificultad en los dos primeros ejercicios. 
+Quizás sea porque lo hice después, pero a mi parecer resulta más sencillo la 
+parte de Conjuntos que la de Listas.
+
+Un saludo,
+Ignacio Vellido Expósito

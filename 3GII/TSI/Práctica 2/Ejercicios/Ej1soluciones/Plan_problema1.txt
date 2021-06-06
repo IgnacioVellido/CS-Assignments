@@ -1,0 +1,57 @@
+make[1]: Entering directory '/mnt/68A80B78A80B43D2/Ubuntu/Desktop/TSI-2'
+if [ 0 -eq 0 ];	then \
+	Metric-FF/ff -p Ejercicios/ -o Ej1dominio.pddl -f Ej1problema1.pddl;	\
+else	\
+	Metric-FF/ff -p Ejercicios/ -o Ej1dominio.pddl -f Ej1problema1.pddl -O -g 1 -h 1;	\
+fi;
+
+ff: parsing domain file
+domain 'EJERCICIO-1' defined
+ ... done.
+ff: parsing problem file
+problem 'EJERCICIO-1-PRUEBA_GIRAR_Y_MOVERSE' defined
+ ... done.
+
+
+warning: var quantification of ?O2 overwrites previous declaration
+
+
+no metric specified. plan length assumed.
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is EHC, if that fails then  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+Cueing down from goal distance:    7 into depth [1]
+                                   6            [1]
+                                   5            [1]
+                                   4            [1][2]
+                                   3            [1][2]
+                                   2            [1]
+                                   1            [1]
+                                   0            
+
+ff: found legal plan as follows
+
+step    0: IR_NORTE JUGADOR_1 ZONA_1 ZONA_2
+        1: GIRAR-DERECHA JUGADOR_1 N
+        2: IR_ESTE JUGADOR_1 ZONA_2 ZONA_3
+        3: GIRAR-DERECHA JUGADOR_1 E
+        4: IR_SUR JUGADOR_1 ZONA_3 ZONA_4
+        5: GIRAR-DERECHA JUGADOR_1 S
+        6: IR_OESTE JUGADOR_1 ZONA_4 ZONA_5
+        7: GIRAR-DERECHA JUGADOR_1 O
+        8: GIRAR-DERECHA JUGADOR_1 N
+     		Coste Total: 0.00
+
+
+time spent:    0.00 seconds instantiating 166 easy, 0 hard action templates
+               0.00 seconds reachability analysis, yielding 14 facts and 16 actions
+               0.00 seconds creating final representation with 9 relevant facts, 0 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 13 states, to a max depth of 2
+               0.00 seconds total time
+
+make[1]: Leaving directory '/mnt/68A80B78A80B43D2/Ubuntu/Desktop/TSI-2'

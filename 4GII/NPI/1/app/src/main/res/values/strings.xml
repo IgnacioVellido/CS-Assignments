@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">NPI</string>
+    <string name="title_activity_alhambra_map">Alhambra</string>
+    <string name="routes">Routes</string>
+    <string name="games">Games</string>
+    <string name="information">Information</string>
+<!--    blow activity -->
+    <string name="blow_description">A thin layer of dust covers a book...</string>
+<!--    Menu -->
+    <string name="menuAlcazaba">Alcazaba</string>
+    <string name="menuJardines">Jardines</string>
+<!--    these are from sender and receiver activities -->
+    <string name="label_your_message">Your team\'s name is</string>
+    <string name="title_btn_set">Set the name</string>
+    <string name="hint_your_message">Type your team name</string>
+    <string name="message_beaming_complete">The message has been sent!</string>
+    <string name="developer_room">Developer Room</string>
+</resources>

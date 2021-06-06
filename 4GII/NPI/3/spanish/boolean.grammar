@@ -1,0 +1,9 @@
+#JSGF V1.0;
+
+grammar boolean;
+
+public <boolean> = <true> {this.bool = true;}
+                 | <false> {this.bool = false;};
+
+<true> = si | vale | de acuerdo | por supuesto | perfecto | maravilloso;
+<false> = no | ni hablar | ni en broma | atras | quita quita;

@@ -1,0 +1,69 @@
+{% extends "/view/html/base.html" %}
+
+{% block Main %}
+
+<!-- Parameters:
+  title
+  place
+  dateIncident
+  authorsName
+  keywords
+  state - CHANGE TO STATUS
+  approveVotes
+  denyVotes
+  description: The description of the incident
+  images: List of images links   -->
+
+<section class="incident main-block">
+  <h1 class="incident-title bg-dark">
+    {{ incident.title }}
+  </h1>
+
+  <div class="incident-content">
+    <div class="incident-special-values row justify-content-center">
+      <dl class="row">
+        <dt class="col-sm-3">Lugar</dt>
+        <dd class="col-sm-8">{{ incident.place }}</dd>
+
+        <dt class="col-sm-3">Autor</dt>
+        <dd class="col-sm-8">{{ incident.authorsName }}</dd>
+
+        <dt class="col-sm-3">Fecha</dt>
+        <dd class="col-sm-8">{{ incident.dateIncident }}</dd>
+      </dl>
+      <dl class="row">
+        <dt class="col-sm-5">Palabras clave</dt>
+        <dd class="col-sm-7">{{ incident.keywords }}</dd>
+
+        <dt class="col-sm-5">Estado</dt>
+        <dd class="col-sm-7">{{ incident.state }}</dd>
+
+        <dt class="col-sm-5">Valoraciones</dt>
+        <dd class="col-sm-7">
+          <i class="far fa-thumbs-up">{{ incident.approveVotes }}</i>
+          <i class="far fa-thumbs-down">{{ incident.denyVotes }}</i>
+        </dd>
+      </dl>
+    </div>
+
+    <p class="incident-description">
+      {{ incident.description }}
+    </p>
+
+    <div class="list-images text-center">
+      {% for img in incident.images %}
+      <img class="incident-image" src="{{ img.path }}" alt="{{ img.description }}">
+      {% endfor %}
+    </div>
+
+    <div class="list-comments form-comment">
+      <form action="new-comment.php">
+        <textarea rows="6" class="form-control" name="comment"></textarea>
+        <button class="btn"><i class="fas fa-comments"> Publicar comentario</i></button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

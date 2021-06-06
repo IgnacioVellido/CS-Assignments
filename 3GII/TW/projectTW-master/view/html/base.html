@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <script src="main.js"></script> -->
+
+  <title>Perfeccionistas</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" media="screen" href="./view/css/main.css">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+</head>
+<body id="myBody">        
+
+  <header class="text-center row">     
+    <div class="col-sm-5 thumbnail text-right">
+      <img class="img-fluid logo" src="./view/img/logo.png" alt='Logo'>
+    </div> 
+    <div class="col text-left">
+      <h1 id="header-name">Perfeccionistas</h1>      
+      <p id="header-phrase">Porque queremos lo mejor</p>          
+    </div>       
+  </header>
+
+  <nav class="navbar navbar-default row" id="mainNav">
+    <div class="container navbar-expand">             
+      <ul class="nav navbar-nav mx-auto">
+      	{% for nav in topNavigation %}
+		      <li class="nav-item"><a class="nav-link" href="{{ nav.link }}">{{ nav.content }}</a></li>
+		    {% endfor %}
+      </ul>
+    </div>
+  </nav>
+        
+  <div class="container" id="wrapper"> <!-- This is a wrapper to make the size of the content fixed -->      
+    <div class="row">
+      <main class="col bg-light rounded"> <!-- Main element of the page -->      
+        {% block Main %}{% endblock %}
+      </main>
+
+      <aside class="col-sm-3 rounded"> <!-- Lateral elements -->
+        
+        {% if user is defined %}
+          <!-- Logout -->
+          <div class="aside-block">
+            <form action="log.php" method="post" class="d-flex flex-column align-items-center">
+              <img class="profilepic" src="./view/img/profile1.jpg" alt="Foto de perfil">
+                      
+              <input type="hidden" name="action" value="logout">            
+              <button type="submit" class="btn btn-secondary">Cerrar sesión</button>
+            </form>
+          </div>
+        {% else %}
+          <!-- Login -->
+          <div class="aside-block text-center">
+            <form action="log.php" method="post">
+              <img class="profilepic" src="./view/img/generic-profilepic.png" alt="Foto de perfil">
+          
+              <div class="form-group text-left">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" placeholder="Email" name="email" required>
+              </div>
+              <div class="form-group text-left">
+                <label for="pass">Contraseña</label>
+                <input type="password" class="form-control" placeholder="Contraseña" name="pass" required>
+              </div>
+              <input type="hidden" name="action" value="login" />
+          
+              <button type="submit" class="btn btn-secondary">Iniciar sesión</button>
+            </form>
+          </div>
+        {% endif %}
+
+        <div class="justify-content-center aside-block">
+            <h1 class="widget-title">Los que más añaden</h1>
+            
+            <table class="table table-striped table-light">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Nº</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for user in usersMostPublished %}
+                <tr>
+                  <th scope="row">{{loop.index}}</th>
+                  <td>{{ user.user.name }} {{ user.user.surname }}</td>
+                  <td>{{ user.incidentsPublished }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
+        <div class="justify-content-center aside-block">
+            <h1 class="widget-title">Los que más opinan</h1>
+            
+            <table class="table table-striped table-light">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Nº</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for user in usersMostCommented %}
+                <tr>
+                  <th scope="row">{{loop.index}}</th>
+                  <td>{{ user.user.name }} {{ user.user.surname }}</td>
+                  <td>{{ user.commentsPublished }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <footer class="row text-center"> <!-- Basic information at the end -->    
+      <div class="col" id="authors">
+        <p>Francisco José Cotán López</p>
+        <p>Ignacio Vellido Expósito</p>
+      </div>
+
+      <div class="col">
+        <p>Enlace a documentación</p>
+        <!-- TO LINK PDF -->
+      </div>
+
+      <div class="col">
+        <p>Tecnologías Web</p>
+      </div>
+
+      <div class="col">
+        <p>2019</p>
+      </div>    
+  </footer>
+  
+  <script type="text/javascript" src="./view/js/common.js"></script>
+</body>
+</html>

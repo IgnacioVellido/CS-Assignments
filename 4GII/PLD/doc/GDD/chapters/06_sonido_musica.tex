@@ -1,0 +1,27 @@
+\chapter{Sonido y música}
+
+% ==============================================================================
+
+\section{Objetivos}
+% \textit{Objetivos técnicos y estéticos para la parte sonora del juego. Describir las emociones que se pretenden inducir al jugador. Nombrar juegos existentes o películas como ejemplos para detallar mejor esta sección.}	
+
+El sonido y la música del juego, de la misma forma que el arte, va a ser minimalista y sencillo, para no distraer al jugador, centrándose en cumplir un objetivo concreto. 
+
+El objetivo de la música es el de la ambientación e inmersión, en función de cada mapa concreto. El objetivo de los efectos de sonido es aportar cierta información adicional al usuario, complementando la información visual que recibe el jugador. Aun así, hemos diseñado el juego para que sea factible jugarlo sin sonido (aunque no sea aconsejable).
+
+
+% ==============================================================================
+
+\section{Efectos de sonido}
+\subsection{GUI}
+Al pulsar un botón, se reproducirá un sonido que funcionará como feedback para el jugador. De la misma forma, se reproducirá un sonido que avisará al jugador cuando se haya encontrado partida. En el futuro, quizás añadamos más sonidos.
+
+Por ahora, no hemos añadido todavía ningún sonido de la GUI.
+	
+\subsection{Efectos especiales}
+Las habilidades tienen un efecto especial de sonido que se reproduce cuando se usan. Este sonido es diferente para cada habilidad del juego de forma que, a partir solo del sonido, un jugador avanzado podrá saber qué habilidad se ha usado. De la misma forma, el sonido es 3D, con lo que se podrá averiguar desde dónde se ha lanzado la habilidad, incluso si el jugador que la ha usado se encuentra fuera del campo de visión del jugador. Algunas habilidades tienen efectos de sonido adicionales. Por ejemplo, la habilidad \emph{E} de la ingeniera lanza una granada que, cuando explota, emite también un sonido.
+
+% ==============================================================================
+
+\section{Música}
+El objetivo de la música, a diferencia de los efectos de sonido, no tiene nada que ver con el gameplay, al menos directamente. La música sirve de ambientación, ayudando a la inmersión del jugador en el juego. Cada mapa (y su modo de juego asociado) tiene un tema diferente, que se reproduce en bucle durante toda la partida al menos que el jugador haya desactivado la música. Este tema será simple (para no distraer al jugador) y estará asociada a la estética del mapa, reforzando la temática de este. Por ejemplo, como el mapa del modo de juego \emph{Captura} es un bosque, el tema de dicho mapa tendrá como temática la naturaleza.

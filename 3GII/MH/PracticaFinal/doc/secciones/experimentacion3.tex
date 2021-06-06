@@ -1,0 +1,2124 @@
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+
+\subsection{Algoritmo de Enfriamiento Simulado}
+
+\vspace*{\fill} 
+
+\begin{table}[H]
+    \centering
+    \resizebox{0.85\columnwidth}{!}{%
+    \makebox[\textwidth][c]{
+        \begin{tabular}{|| c || c c c c || c c c c || c c c c || c c c c ||}
+            \hline
+            & \multicolumn{4}{|c||}{Iris} & \multicolumn{4}{|c||}{Ecoli} & \multicolumn{4}{|c|}{Rand} & \multicolumn{4}{|c|}{Newthyroid}\\
+            \hline
+            & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T \\
+            \hline\hline
+            Ejecución 1 & 
+            0.67 & 0.00 & 0.67 & 21.22 & 21.36 & 105.00 & 24.18 & 263.67 & 0.72 & 0.00 & 0.72 & 12.14 & 10.72 & 99.00 & 14.34 & 45.50
+            \\
+            \hline
+            Ejecución 2 &             
+            0.67 & 0.00 & 0.67 & 21.44 & 21.42 & 73.00 & 23.38 & 387.00 & 0.72 & 0.00 & 0.72 & 13.63 & 13.83 & 6.00 & 14.05 & 24.13
+            \\
+            \hline
+            Ejecución 3 & 
+            0.67 & 0.00 & 0.67 & 24.45 & 22.21 & 59.00 & 23.79 & 288.41 & 0.72 & 0.00 & 0.72 & 15.39 & 10.74 & 99.00 & 14.36 & 32.06
+            \\
+            \hline
+            Ejecución 4 & 
+            0.67 & 0.00 & 0.67 & 25.92 & 22.16 & 69.00 & 24.01 & 294.86 & 0.72 & 0.00 & 0.72 & 17.25 & 13.83 & 6.00 & 14.05 & 25.28
+            \\
+            \hline
+            Ejecución 5 & 
+            0.67 & 0.00 & 0.67 & 17.70 & 21.18 & 108.00 & 24.07 & 286.50 & 0.72 & 0.00 & 0.72 & 14.84 & 13.83 & 6.00 & 14.05 & 39.63
+            \\
+            \hline\hline
+            Media & 
+            0.67 & 0.00 & 0.67 & 22.15 & 21.67 & 82.80 & 23.89 & 304.09 & 0.72 & 0.00 & 0.72 & 14.65 & 12.59 & 43.20 & 14.17 & 33.32
+            \\
+            \hline
+        \end{tabular}
+    }
+    }
+    \caption{Resultados ES para 10\% de restricciones}
+\end{table}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]    
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \caption{Tiempos de ES para 10\% de restricciones}
+\end{figure}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \caption{Agregado de ES para 10\% de restricciones}
+\end{figure}
+
+% ------------------------------------------------------------------------------
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{table}[H]
+    \centering
+    \resizebox{0.85\columnwidth}{!}{%
+    \makebox[\textwidth][c]{
+        \begin{tabular}{|| c || c c c c || c c c c || c c c c || c c c c ||}
+            \hline
+            & \multicolumn{4}{|c||}{Iris} & \multicolumn{4}{|c||}{Ecoli} & \multicolumn{4}{|c|}{Rand} & \multicolumn{4}{|c|}{Newthyroid}\\
+            \hline
+            & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T \\
+            \hline\hline
+            Ejecución 1 & 
+            0.67 & 0.00 & 0.67 & 18.17 & 21.83 & 155.00 & 23.91 & 471.97 & 0.72 & 0.00 & 0.72 & 20.55 & 10.79 & 232.00 & 15.03 & 40.56
+            \\
+            \hline
+            Ejecución 2 & 
+            0.67 & 0.00 & 0.67 & 18.94 & 21.70 & 134.00 & 23.50 & 458.23 & 0.72 & 0.00 & 0.72 & 16.36 & 14.29 & 0.00 & 14.29 & 301.33
+            \\
+            \hline
+            Ejecución 3 & 
+            0.67 & 0.00 & 0.67 & 26.64 & 21.79 & 123.00 & 23.44 & 504.45 & 0.72 & 0.00 & 0.72 & 22.78 & 14.29 & 0.00 & 14.29 & 88.38
+            \\
+            \hline
+            Ejecución 4 & 
+            0.67 & 0.00 & 0.67 & 28.52 & 21.62 & 117.00 & 117.00 & 582.22 & 0.72 & 0.00 & 0.72 & 25.30 & 10.82 & 229.00 & 15.01 & 42.22
+            \\
+            \hline
+            Ejecución 5 & 
+            0.67 & 0.00 & 0.67 & 25.84 & 21.43 & 129.00 & 23.16 & 635.98 & 0.72 & 0.00 & 0.72 & 16.95 & 14.29 & 0.00 & 14.29 & 136.27
+            \\
+            \hline\hline
+            Media & 
+            0.67 & 0.00 & 0.67 & 23.62 & 21.67 & 131.60 & 42.20 & 530.57 & 0.72 & 0.00 & 0.72 & 20.39 & 12.90 & 92.20 & 14.58 & 121.75
+            \\
+            \hline
+        \end{tabular}
+    }
+    }
+    \caption{Resultados ES para 20\% de restricciones}
+\end{table}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]    
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \caption{Tiempos de ES para 20\% de restricciones}
+\end{figure}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/iris_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/ecoli_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/rand_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/es/newthyroid_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \caption{Agregado de ES para 20\% de restricciones}
+\end{figure}
+
+\vspace*{\fill}
+\newpage
+
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+
+\subsection{Algoritmo de Búsqueda Multiarranque Básica}
+
+\vspace*{\fill}
+
+\begin{table}[H]
+    \centering
+    \resizebox{0.85\columnwidth}{!}{%
+    \makebox[\textwidth][c]{
+        \begin{tabular}{|| c || c c c c || c c c c || c c c c || c c c c ||}
+            \hline
+            & \multicolumn{4}{|c||}{Iris} & \multicolumn{4}{|c||}{Ecoli} & \multicolumn{4}{|c|}{Rand} & \multicolumn{4}{|c|}{Newthyroid}\\
+            \hline
+            & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T \\
+            \hline\hline
+            Ejecución 1 & 
+            1.12 & 178.00 & 2.25 & 202.83 & 45.19 & 1681.00 & 90.29 & 831.31 & 1.28 & 182.00 & 2.59 & 196.31 & 14.04 & 847.00 & 45.02 & 331.13
+            \\
+            \hline
+            Ejecución 2 & 
+            1.15 & 209.00 & 2.47 & 195.88 & 44.76 & 1706.00 & 90.53 & 750.25 & 1.36 & 183.00 & 2.68 & 197.11 & 14.23 & 812.00 & 43.92 & 325.42
+            \\
+            \hline
+            Ejecución 3 &
+            1.10 & 206.00 & 2.40 & 204.25 & 44.98 & 1692.00 & 90.38 & 766.94 & 1.45 & 186.00 & 2.79 & 207.08 & 14.40 & 795.00 & 43.48 & 343.75
+            \\
+            \hline
+            Ejecución 4 & 
+            1.00 & 186.00 & 2.18 & 197.78 & 45.38 & 1685.00 & 90.59 & 748.66 & 1.36 & 173.00 & 2.61 & 204.02 & 13.36 & 900.00 & 46.28 & 328.59
+            \\
+            \hline
+            Ejecución 5 & 
+            1.15 & 186.00 & 2.33 & 203.25 & 45.30 & 1712.00 & 91.23 & 763.69 & 1.37 & 184.00 & 2.70 & 203.17 & 13.91 & 842.00 & 44.70 & 339.63
+            \\
+            \hline\hline
+            Media & 
+            1.10 & 193.00 & 2.33 & 200.80 & 45.12 & 1695.20 & 90.60 & 772.17 & 1.36 & 181.60 & 2.67 & 201.54 & 13.99 & 839.20 & 44.68 & 333.70
+            \\
+            \hline
+        \end{tabular}
+    }
+    }
+    \caption{Resultados BMB para 10\% de restricciones}
+\end{table}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]    
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \caption{Tiempos de BMB para 10\% de restricciones}
+\end{figure}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \caption{Agregado de BMB para 10\% de restricciones}
+\end{figure}
+
+% ------------------------------------------------------------------------------
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{table}[H]
+    \centering
+    \resizebox{0.85\columnwidth}{!}{%
+    \makebox[\textwidth][c]{
+        \begin{tabular}{|| c || c c c c || c c c c || c c c c || c c c c ||}
+            \hline
+            & \multicolumn{4}{|c||}{Iris} & \multicolumn{4}{|c||}{Ecoli} & \multicolumn{4}{|c|}{Rand} & \multicolumn{4}{|c|}{Newthyroid}\\
+            \hline
+            & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T \\
+            \hline\hline
+            Ejecución 1 & 
+            1.10 & 392.00 & 2.34 & 299.50 & 45.52 & 3473.00 & 92.11 & 1259.47 & 1.37 & 362.00 & 2.67 & 296.06 & 14.51 & 1675.00 & 45.14 & 528.73
+            \\
+            \hline
+            Ejecución 2 &         
+            1.08 & 407.00 & 2.37 & 288.38 & 44.78 & 3384.00 & 90.17 & 1284.16 & 1.39 & 424.00 & 2.91 & 325.56 & 14.62 & 1654.00 & 44.86 & 576.09
+            \\
+            \hline
+            Ejecución 3 & 
+            1.17 & 377.00 & 2.37 & 296.86 & 44.79 & 3391.00 & 90.28 & 1243.17 & 1.37 & 409.00 & 2.84 & 293.64 & 14.46 & 1618.00 & 44.04 & 533.00
+            \\
+            \hline
+            Ejecución 4 & 
+            1.00 & 353.00 & 2.12 & 296.72 & 45.13 & 3392.00 & 90.63 & 1249.06 & 1.20 & 285.00 & 2.22 & 303.36 & 14.07 & 1671.00 & 44.62 & 536.02
+            \\
+            \hline
+            Ejecución 5 & 
+            1.07 & 362.00 & 2.22 & 306.38 & 45.07 & 3467.00 & 91.58 & 1288.84 & 1.35 & 375.00 & 2.70 & 301.88 & 14.49 & 1657.00 & 44.79 & 555.53
+            \\
+            \hline\hline
+            Media & 
+            1.08 & 378.20 & 2.28 & 297.57 & 45.06 & 3421.40 & 90.95 & 1264.94 & 1.33 & 371.00 & 2.67 & 304.10 & 14.43 & 1655.00 & 44.69 & 545.88
+            \\
+            \hline
+        \end{tabular}
+    }
+    }
+    \caption{Resultados BMB para 20\% de restricciones}
+\end{table}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]    
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \caption{Tiempos de BMB para 20\% de restricciones}
+\end{figure}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/iris_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/ecoli_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/rand_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/bmb/newthyroid_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \caption{Agregado de BMB para 20\% de restricciones}
+\end{figure}
+
+\vspace*{\fill}
+\newpage
+
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+
+\subsection{Algoritmo de Búsqueda Local Reiterada}
+
+\vspace*{\fill}
+
+\begin{table}[H]
+    \centering
+    \resizebox{0.85\columnwidth}{!}{%
+    \makebox[\textwidth][c]{
+        \begin{tabular}{|| c || c c c c || c c c c || c c c c || c c c c ||}
+            \hline
+            & \multicolumn{4}{|c||}{Iris} & \multicolumn{4}{|c||}{Ecoli} & \multicolumn{4}{|c|}{Rand} & \multicolumn{4}{|c|}{Newthyroid}\\
+            \hline
+            & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T \\
+            \hline\hline
+            Ejecución 1 & 
+            0.77 & 66.00 & 1.19 & 70.30 & 45.03 & 1606.00 & 88.12 & 756.86 & 0.93 & 69.00 & 1.43 & 61.81 & 15.24 & 179.00 & 21.78 & 239.17
+            \\
+            \hline
+            Ejecución 2 & 
+            0.75 & 46.00 & 1.04 & 66.64 & 44.49 & 1650.00 & 88.76 & 743.06 & 0.92 & 59.00 & 1.34 & 67.44 & 14.35 & 165.00 & 20.38 & 232.33
+            \\
+            \hline
+            Ejecución 3 & 
+            0.78 & 86.00 & 1.32 & 58.66 & 44.80 & 1664.00 & 89.44 & 743.84 & 0.76 & 12.00 & 0.84 & 68.97 & 14.11 & 226.00 & 22.37 & 250.02
+            \\
+            \hline
+            Ejecución 4 & 
+            0.70 & 37.00 & 0.94 & 60.30 & 44.19 & 1621.00 & 87.68 & 728.95 & 0.76 & 16.00 & 0.88 & 66.88 & 13.43 & 293.00 & 24.14 & 223.95
+            \\
+            \hline
+            Ejecución 5 & 
+            0.70 & 12.00 & 0.78 & 66.81 & 45.30 & 1638.00 & 89.25 & 778.59 & 0.85 & 43.00 & 1.16 & 75.52 & 14.26 & 188.00 & 21.13 & 229.80
+            \\
+            \hline\hline
+            Media & 
+            0.74 & 49.40 & 1.05 & 64.54 & 44.76 & 1635.80 & 88.65 & 750.26 & 0.84 & 39.80 & 1.13 & 68.12 & 14.28 & 210.20 & 21.96 & 235.05
+            \\
+            \hline
+        \end{tabular}
+    }
+    }
+    \caption{Resultados ILS para 10\% de restricciones}
+\end{table}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]    
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \caption{Tiempos de ILS para 10\% de restricciones}
+\end{figure}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \caption{Agregado de ILS para 10\% de restricciones}
+\end{figure}
+
+% ------------------------------------------------------------------------------
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{table}[H]
+    \centering
+    \resizebox{0.85\columnwidth}{!}{%
+    \makebox[\textwidth][c]{
+        \begin{tabular}{|| c || c c c c || c c c c || c c c c || c c c c ||}
+            \hline
+            & \multicolumn{4}{|c||}{Iris} & \multicolumn{4}{|c||}{Ecoli} & \multicolumn{4}{|c|}{Rand} & \multicolumn{4}{|c|}{Newthyroid}\\
+            \hline
+            & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T \\
+            \hline\hline
+            Ejecución 1 & 
+            0.79 & 196.00 & 1.42 & 102.61 & 44.46 & 3300.00 & 88.73 & 1255.16 & 0.91 & 166.00 & 1.50 & 94.33 & 14.37 & 295.00 & 19.77 & 345.83
+            \\
+            \hline
+            Ejecución 2 & 
+            0.74 & 156.00 & 1.24 & 92.50 & 44.22 & 3334.00 & 88.94 & 1247.73 & 0.79 & 57.00 & 1.00 & 93.05 & 14.49 & 239.00 & 18.86 & 371.36
+            \\
+            \hline
+            Ejecución 3 & 
+            0.68 & 22.00 & 0.75 & 90.53 & 44.64 & 3397.00 & 90.21 & 1254.19 & 0.91 & 148.00 & 1.44 & 86.97 & 14.31 & 418.00 & 21.95 & 351.64
+            \\
+            \hline
+            Ejecución 4 & 
+            0.70 & 41.00 & 0.83 & 90.70 & 43.93 & 3295.00 & 88.13 & 1244.72 & 0.78 & 43.00 & 0.94 & 89.53 & 14.76 & 437.00 & 22.75 & 334.66
+            \\
+            \hline
+            Ejecución 5 & 
+            0.79 & 153.00 & 1.28 & 93.98 & 44.68 & 3337.00 & 89.44 & 1295.20 & 0.94 & 135.00 & 1.42 & 95.61 & 14.34 & 345.00 & 20.65 & 344.13
+            \\
+            \hline\hline
+            Media & 
+            0.74 & 113.60 & 1.10 & 94.07 & 44.39 & 3332.60 & 89.09 & 1259.40 & 0.86 & 109.80 & 1.26 & 91.90 & 14.46 & 346.80 & 20.80 & 349.52
+            \\
+            \hline
+        \end{tabular}
+    }
+    }
+    \caption{Resultados ILS para 20\% de restricciones}
+\end{table}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]    
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \caption{Tiempos de ILS para 20\% de restricciones}
+\end{figure}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/iris_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/ecoli_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/rand_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils/newthyroid_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \caption{Agregado de ILS para 20\% de restricciones}
+\end{figure}
+
+\vspace*{\fill}
+\newpage
+
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+
+\subsection{Algoritmo Híbrido ILS-ES}
+
+\vspace*{\fill}
+
+\begin{table}[H]
+    \centering
+    \resizebox{0.85\columnwidth}{!}{%
+    \makebox[\textwidth][c]{
+        \begin{tabular}{|| c || c c c c || c c c c || c c c c || c c c c ||}
+            \hline
+            & \multicolumn{4}{|c||}{Iris} & \multicolumn{4}{|c||}{Ecoli} & \multicolumn{4}{|c|}{Rand} & \multicolumn{4}{|c|}{Newthyroid}\\
+            \hline
+            & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T \\
+            \hline\hline
+            Ejecución 1 & 
+            0.67 & 0.00 & 0.67 & 82.84 & 29.82 & 378.00 & 39.96 & 413.06 & 0.72 & 0.00 & 0.72 & 79.28 & 13.83 & 6.00 & 14.05 & 216.23
+            \\
+            \hline
+            Ejecución 2 & 
+            0.67 & 0.00 & 0.67 & 84.83 & 28.30 & 290.00 & 36.08 & 401.22 & 0.72 & 0.00 & 0.72 & 84.45 & 10.78 & 96.00 & 14.29 & 233.95
+            \\
+            \hline
+            Ejecución 3 & 
+            0.67 & 0.00 & 0.67 & 80.69 & 29.79 & 283.00 & 37.38 & 410.06 & 0.72 & 0.00 & 0.72 & 71.30 & 10.87 & 100.00 & 14.52 & 224.58
+            \\
+            \hline
+            Ejecución 4 & 
+            0.67 & 0.00 & 0.67 & 79.95 & 30.32 & 461.00 & 42.69 & 405.66 & 0.72 & 0.00 & 0.72 & 77.86 & 10.81 & 98.00 & 14.40 & 214.73
+            \\
+            \hline
+            Ejecución 5 & 
+            0.67 & 0.00 & 0.67 & 76.09 & 29.32 & 369.00 & 39.22 & 400.17 & 0.72 & 0.00 & 0.72 & 80.78 & 13.83 & 6.00 & 14.05 & 200.00
+            \\
+            \hline\hline
+            Media & 
+            0.67 & 0.00 & 0.67 & 80.88 & 29.51 & 356.20 & 39.07 & 406.03 & 0.72 & 0.00 & 0.72 & 78.73 & 12.03 & 61.20 & 14.26 & 217.90
+            \\
+            \hline
+        \end{tabular}
+    }
+    }
+    \caption{Resultados ILS-ES para 10\% de restricciones}
+\end{table}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]    
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_10_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_10_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_10_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_10_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_10_3773969821_time.png}
+    \end{subfigure}
+    \caption{Tiempos de ILS-ES para 10\% de restricciones}
+\end{figure}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_10_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_10_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_10_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_10_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_10_3773969821_cost.png}
+    \end{subfigure}
+    \caption{Agregado de ILS-ES para 10\% de restricciones}
+\end{figure}
+
+% ------------------------------------------------------------------------------
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{table}[H]
+    \centering
+    \resizebox{0.85\columnwidth}{!}{%
+    \makebox[\textwidth][c]{
+        \begin{tabular}{|| c || c c c c || c c c c || c c c c || c c c c ||}
+            \hline
+            & \multicolumn{4}{|c||}{Iris} & \multicolumn{4}{|c||}{Ecoli} & \multicolumn{4}{|c|}{Rand} & \multicolumn{4}{|c|}{Newthyroid}\\
+            \hline
+            & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T & TasaC & TasaInf & Agr & T \\
+            \hline\hline
+            Ejecución 1 & 
+            0.67 & 0.00 & 0.67 & 120.80 & 29.85 & 811.00 & 40.73 & 666.36 & 0.72 & 0.00 & 0.72 & 144.52 & 14.29 & 0.00 & 14.29 & 482.97
+            \\
+            \hline
+            Ejecución 2 & 
+            0.67 & 0.00 & 0.67 & 119.72 & 26.44 & 659.00 & 35.28 & 691.61 & 0.72 & 0.00 & 0.72 & 120.20 & 14.29 & 0.00 & 14.29 & 480.19
+            \\
+            \hline
+            Ejecución 3 & 
+            0.67 & 0.00 & 0.67 & 117.86 & 29.71 & 750.00 & 39.77 & 695.67 & 0.72 & 0.00 & 0.72 & 127.22 & 14.29 & 0.00 & 14.29 & 468.30
+            \\
+            \hline
+            Ejecución 4 & 
+            0.67 & 0.00 & 0.67 & 113.95 & 31.47 & 728.00 & 41.23 & 695.47 & 0.72 & 0.00 & 0.72 & 130.08 & 14.29 & 0.00 & 14.29 & 447.88
+            \\
+            \hline
+            Ejecución 5 & 
+            0.67 & 0.00 & 0.67 & 121.14 & 27.33 & 645.00 & 35.98 & 689.31 & 0.72 & 0.00 & 0.72 & 113.66 & 14.29 & 0.00 & 14.29 & 473.03
+            \\
+            \hline\hline
+            Media & 
+            0.67 & 0.00 & 0.67 & 118.69 & 28.96 & 718.60 & 38.60 & 687.68 & 0.72 & 0.00 & 0.72 & 127.13 & 14.29 & 0.00 & 14.29 & 470.47
+            \\
+            \hline
+        \end{tabular}
+    }
+    }
+    \caption{Resultados ILS-ES para 20\% de restricciones}
+\end{table}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]    
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_20_949004259_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_20_589741062_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_20_277451237_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_20_49258669_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_20_3773969821_time.png}
+    \end{subfigure}
+    \caption{Tiempos de ILS-ES para 20\% de restricciones}
+\end{figure}
+
+\vspace*{\fill}
+\newpage
+\vspace*{\fill}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_20_949004259_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_20_589741062_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_20_277451237_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_20_49258669_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/iris_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/ecoli_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/rand_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}
+        \centering
+        \includegraphics[width=0.234\textwidth]{img/ils-es/newthyroid_set_const_20_3773969821_cost.png}
+    \end{subfigure}
+    \caption{Agregado de ILS-ES para 20\% de restricciones}
+\end{figure}
+
+\vspace*{\fill}
+\newpage
+
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================

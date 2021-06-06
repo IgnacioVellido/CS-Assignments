@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/r_shoot.wav-d0dcf952b0f4d2e0dba160b22713cd51.sample"
+
+[deps]
+
+source_file="res://Audio/SFX/Engineer/r_shoot.wav"
+dest_files=[ "res://.import/r_shoot.wav-d0dcf952b0f4d2e0dba160b22713cd51.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

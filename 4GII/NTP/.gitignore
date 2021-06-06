@@ -1,0 +1,4 @@
+*.class
+*.log
+Practica1/.vscode/settings.json
+**/out/*

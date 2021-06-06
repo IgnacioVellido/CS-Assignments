@@ -1,0 +1,5 @@
+#JSGF V1.0;
+
+grammar cancel;
+
+public <cancel> = cancelar | para | fin | adios | salir;

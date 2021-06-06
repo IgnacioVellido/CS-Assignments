@@ -1,0 +1,127 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Area",
+"class": "AreaOfEffect",
+"language": "GDScript",
+"path": "res://Areas/AreaOfEffect.gd"
+}, {
+"base": "KinematicBody",
+"class": "BaseCharacter",
+"language": "GDScript",
+"path": "res://Characters/BaseCharacter.gd"
+}, {
+"base": "KinematicBody",
+"class": "BaseProjectile",
+"language": "GDScript",
+"path": "res://Projectiles/BaseProjectile.gd"
+}, {
+"base": "RigidBody",
+"class": "BaseProjectileRigid",
+"language": "GDScript",
+"path": "res://Projectiles/BaseProjectileRigid.gd"
+}, {
+"base": "BaseProjectile",
+"class": "BouncingProjectile",
+"language": "GDScript",
+"path": "res://Projectiles/BouncingProjectile.gd"
+}, {
+"base": "KinematicBody",
+"class": "Dummy",
+"language": "GDScript",
+"path": "res://Characters/Dummy.gd"
+}, {
+"base": "BaseCharacter",
+"class": "Engineer",
+"language": "GDScript",
+"path": "res://Characters/Engineer.gd"
+}, {
+"base": "BaseProjectile",
+"class": "HomingProjectile",
+"language": "GDScript",
+"path": "res://Projectiles/HomingProjectile.gd"
+}, {
+"base": "BaseProjectile",
+"class": "HookProjectile",
+"language": "GDScript",
+"path": "res://Projectiles/HookProjectile.gd"
+}, {
+"base": "BaseCharacter",
+"class": "Mage",
+"language": "GDScript",
+"path": "res://Characters/Mage.gd"
+}, {
+"base": "BaseProjectile",
+"class": "PierceProjectile",
+"language": "GDScript",
+"path": "res://Projectiles/PierceProjectile.gd"
+} ]
+_global_script_class_icons={
+"AreaOfEffect": "",
+"BaseCharacter": "",
+"BaseProjectile": "",
+"BaseProjectileRigid": "",
+"BouncingProjectile": "",
+"Dummy": "",
+"Engineer": "",
+"HomingProjectile": "",
+"HookProjectile": "",
+"Mage": "",
+"PierceProjectile": ""
+}
+
+[application]
+
+config/name="SynVic - Server"
+run/main_scene="res://Menus/MainMenu.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+projectileSpawner="*res://Projectiles/projectileSpawner.gd"
+areaSpawner="*res://Areas/areaSpawner.gd"
+
+[input]
+
+ui_move_action={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+ui_skill1={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_skill2={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_skill3={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_skill_ultimate={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_basic_skill={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

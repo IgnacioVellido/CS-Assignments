@@ -1,0 +1,56 @@
+\documentclass[14pt,a4paper]{book}
+\usepackage[spanish,es-nodecimaldot]{babel}	% Utilizar español
+\usepackage[utf8]{inputenc}					% Caracteres UTF-8
+\usepackage{graphicx}						% Imagenes
+\usepackage[hidelinks]{hyperref}			% Poner enlaces sin marcarlos en rojo
+\usepackage{fancyhdr}						% Modificar encabezados y pies de pagina
+\usepackage{float}							% Insertar figuras
+\usepackage[textwidth=390pt]{geometry}		% Anchura de la pagina
+\usepackage[nottoc]{tocbibind}				% Referencias (no incluir num pagina indice en Indice)
+\usepackage{enumitem}						% Permitir enumerate con distintos simbolos
+\usepackage[T1]{fontenc}					% Usar textsc en sections
+\usepackage{amsmath}						% Símbolos matemáticos
+
+\usepackage[table,xcdraw]{xcolor}
+\setlength\headheight{26pt} 
+\pagestyle{fancy}
+\rhead{\includegraphics[width=1cm]{./images/logo.png}}
+
+% Comandos para poner el nombre de la asignatura
+\newcommand{\asignatura}{Programación Lúdica}
+\newcommand{\autor}{Carlos Nuñez Molina \\ Ignacio Vellido Expósito}
+\newcommand{\titulo}{SynVic}
+\newcommand{\subtitulo}{Game Description Document}
+
+\begin{document}
+    \pagenumbering{gobble}
+    \input{portada/portada}
+    
+    \pagenumbering{arabic}
+    \tableofcontents
+    \thispagestyle{empty}				% No usar estilo en la pagina de indice
+
+    % ==============================================================================
+
+    \input{chapters/01_control_versiones}
+	\input{chapters/02_descripcion_juego}
+	\input{chapters/03_mecanicas_juego}
+	\input{chapters/04_interfaz_usuario}
+	\input{chapters/05_arte_video}
+	\input{chapters/06_sonido_musica}
+	\input{chapters/07_diseno_niveles}
+	\input{chapters/08_diseno_personajes}
+	\input{chapters/09_implementacion}
+	\input{chapters/11_monetizacion}
+
+    \setlength{\parskip}{1em}
+    
+    % ==============================================================================
+    
+    % \newpage
+    % \bibliography{bibliografia}
+	% \bibliographystyle{plain}
+\end{document}
+
+
+\end{document}

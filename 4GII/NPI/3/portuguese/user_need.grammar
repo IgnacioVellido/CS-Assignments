@@ -1,0 +1,11 @@
+#JSGF V1.0;
+
+grammar user_need;
+
+public <user_need> = [<polite>] <information> {mode = 'true';}
+                    | [<polite>] <payment>;
+
+<information> = [me diga] informação [por favor] | rotas | rota | preço | preços;
+<payment> = (pagar | comprar | pagamento | venda) [por favor] | genérico;
+
+<polite> = por favor | poderia [dizer] [me dizer] | se importaria [dizer] [me dizer];

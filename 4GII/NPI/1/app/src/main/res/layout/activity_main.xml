@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/alhambra_background2"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/routes"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="@string/routes" />
+
+    <Button
+        android:id="@+id/games"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="@string/games" />
+
+    <Button
+        android:id="@+id/information"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="@string/information" />
+</LinearLayout>

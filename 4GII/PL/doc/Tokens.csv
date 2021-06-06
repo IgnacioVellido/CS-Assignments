@@ -1,0 +1,33 @@
+Token,Patrón,Atributos,Identificador
+IDENTIFICADOR,"( ('_' [a-zA-Z0-9]+) | ([a-zA-Z][a-zA-Z0-9]*) )",,256
+CONSTANTE,"('true' | 'false' | \'[^\']*\' | ('+' | '-')? [0-9]+ ('.' [0-9]+)?",,257
+OP_TERNARIO2BINARIO,'@',,258
+OP_UNARIO,'!' | '#' | '?', 0: '!' 1: '#' 3: '?',259
+OP_BINARIO,"'*' | '/' | '<' | '>' | '==' | '!=' | '<=' | '>=' | '&&' | '||' | '^' | '--' | '%' | '**' | '+' | '-'", 0: '*' 1: '/' 2: '<' 3: '>' 4: '==' 5: '!=' 6: '<=' 7: '>=' 8: '&&' 9: '||' 10: '^' 11: '--' 12: '%' 13: '**' 14: '+' 15: '-' ,260
+OP_TERNARIO1,'++',,261
+PYC,';',,262
+CORIZQ,'[',,263
+CORDCH,']',,264
+PARDCH,')',,265
+PARIZQ,'(',,266
+LLAVEIZQ,'{',,267
+LLAVEDCH,'}',,268
+SCANF,'scanf',,269
+PRINT,'print',,270
+AVANRETRO,'<<' | '>>',0: '<<' 1: '>>',271
+SWITCH,'switch',,272
+BREAK,'break',,273
+CASE,'case',,274
+DEFAULT,'default',,275
+TIPO,'int' | 'char' | 'bool' | 'float', 0:'int' 1:'char' 2:'bool' 3:'float',276
+ASIGN,'=',,277
+LISTOF,'list of',,278
+RETURNCOMIENZO,'return' | '$',"0: return 1: '$'",279
+ELSE,'else',,280
+IF,'if',,281
+WHILE,'while',,282
+MAIN,'main',,283
+VARIABLES,'Variables',,284
+COMA,"','",,285
+CADENA," \""[^\""]*\"" ",,286
+DOSPUNTOS,':',,287

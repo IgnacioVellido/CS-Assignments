@@ -1,0 +1,188 @@
+{% extends "/view/html/base.html" %}
+
+{% block Main %}
+
+<form action="search.php" class="main-block" method="GET">
+  <h1 class="search-title">Criterios de búsqueda</h1>
+
+  <div class="search-block text-center">
+    <h1 class="search-subtitle text-left">Ordenar por:</h1>
+
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="new" id="new" value="new">
+      <label class="form-check-label" for="new">Más recientes</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="upvotes" id="upvotes" value="upvotes">
+      <label class="form-check-label" for="upvotes">Valoraciones positivas</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="votes" id="votes" value="votes">
+      <label class="form-check-label" for="votes">Valoraciones netas</label>
+    </div>
+  </div>
+
+  <div class="search-block">
+    <h1 class="search-subtitle">Incidencias que contengan:</h1>
+    <div class="form-group row">
+      <label for="words" class="col-sm-3">Texto de búsqueda</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="words">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="place" class="col-sm-3">Lugar</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="place">
+      </div>
+    </div>
+  </div>
+
+  <div class="search-block text-center">
+    <h1 class="search-subtitle text-left">Estado:</h1>
+
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="pending" value="pending">
+      <label class="form-check-label" for="pending">Pendiente</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="checked" value="checked">
+      <label class="form-check-label" for="checked">Comprobada</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="completed" value="completed">
+      <label class="form-check-label" for="completed">Tramitada</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="unsolvable" value="unsolvable">
+      <label class="form-check-label" for="unsolvable">Irresoluble</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="solved" value="solved">
+      <label class="form-check-label" for="solved">Resuelta</label>
+    </div>
+  </div>
+
+  <div class="search-block">
+    <div class="form-group row">
+      <label for="number" class="col-sm-3">Incidencias por página</label>
+      <div class="col-sm-9">
+        <select class="form-control form-control-sm" name="number">
+          <option value="5">5 incidencias</option>
+          <option value="15">15 incidencias</option>
+          <option value="25">25 incidencias</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn"><i class="fas fa-search"> Aplicar criterios de búsqueda</i></button>
+</form>
+
+
+<!-- Parameters:
+  title
+  place
+  dateIncident
+  authorsName
+  keywords
+  status
+  approveVotes
+  denyVotes
+  description: The description of the incident
+  images: List of images links    
+  comments: List of comments
+    authorsDate
+    publishDate
+    hour
+    text --> 
+
+{% for incident in incidents %}
+  <section class="incident main-block">
+    <h1 class="incident-title bg-dark">
+      {{ incident.title }}
+    </h1>
+
+    <div class="incident-content">
+      <div class="incident-special-values row justify-content-center">
+        <dl class="row">
+          <dt class="col-sm-3">Lugar</dt>
+          <dd class="col-sm-8">{{ incident.place }}</dd>
+
+          <dt class="col-sm-3">Autor</dt>
+          <dd class="col-sm-8">{{ incident.authorsName }}</dd>
+
+          <dt class="col-sm-3">Fecha</dt>
+          <dd class="col-sm-8">{{ incident.dateIncident }}</dd>
+        </dl>
+        <dl class="row">
+          <dt class="col-sm-5">Palabras clave</dt>
+          <dd class="col-sm-7">{{ incident.keywords }}</dd>
+
+          <dt class="col-sm-5">Estado</dt>
+          <dd class="col-sm-7">{{ incident.state }}</dd>
+
+          <dt class="col-sm-5">Valoraciones</dt>
+          <dd class="col-sm-7">
+            <i class="far fa-thumbs-up">{{ incident.approveVotes }}</i>
+            <i class="far fa-thumbs-down">{{ incident.denyVotes }}</i>
+          </dd>
+        </dl>
+      </div>
+
+      <p class="incident-description">
+        {{ incident.description }}
+      </p>
+
+      <div class="list-images text-center">
+        {% for img in incident.images %}
+        <img class="incident-image" src="{{ img.path }}" alt="{{ img.description }}">
+        {% endfor %}
+      </div>
+
+      <div class="list-comments">
+        {% for comment in incident.comments %}
+        <section class="comment row">
+          <div class="col-sm-3">
+            <h1 class="comment-author">
+              {{ comment.authorsName }}
+            </h1>
+            <h2 class="comment-date">
+              {{ comment["publishDate"] }} {{ comment["hour"] }}
+            </h2>
+          </div>
+
+          <p class="col-sm-9 comment-author">
+            {{ comment.text }}
+          </p>
+        </section>
+        {% endfor %}
+      </div>
+
+      <!-- TO CHECK -->
+      <div class="incident-actions text-right"> 
+        <button class="btn" title="Valorar positivamente"><i class="far fa-thumbs-up"></i></button>
+        <button class="btn" title="Valorar negativamente"><i class="far fa-thumbs-down"></i></button>
+        <button class="btn" title="Comentar"><i class="far fa-comments"></i></button>   
+
+        {% if user is defined %}
+          {% if user.kind == "Admin" %}
+            <button class="btn" title="Editar"><i class="far fa-edit"></i></button>
+            <button class="btn" onclick="deleteIncident({{ incident.id }})" title="Eliminar"><i class="far fa-trash-alt"></i></button>                 
+          {% endif %}
+        {% endif %}
+      </div>
+
+    </div>
+
+  </section>
+{% endfor %}
+
+{% endblock %}

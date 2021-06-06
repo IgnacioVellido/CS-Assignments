@@ -1,0 +1,16 @@
+INSERT INTO Gestor VALUES ('0','A', '00000000A', '000-000-000', 'AAAA', 0, 'N');
+INSERT INTO Gestor VALUES ('1','B', '11111111B', '111-111-111', 'BBBB', 1, 'N');
+INSERT INTO Gestor VALUES ('2','C', '22222222C', '222-222-222', 'CCCC', 2, 'N');
+INSERT INTO Gestor VALUES ('3','D', '33333333D', '333-333-333', 'DDDD', 3, 'N');
+INSERT INTO Gestor VALUES ('4','E', '44444444E', '444-444-444', 'EEEE', 4, 'N');
+INSERT INTO Gestor VALUES ('5','F', '55555555F', '555-555-555', 'FFFF', 5, 'N');
+INSERT INTO Gestor VALUES ('6','G', '66666666G', '666-666-666', 'GGGG', 6, 'N');
+INSERT INTO Gestor VALUES ('7','H', '77777777H', '777-777-777', 'HHHH', 7, 'N');
+INSERT INTO Gestor VALUES ('8','I', '88888888I', '888-888-888', 'IIII', 8, 'N');
+INSERT INTO Gestor VALUES ('9','J', '99999999J', '999-999-999', 'JJJJ', 9, 'N');
+
+INSERT INTO Ingresarpagar VALUES ('0', '1', '1', '10-10-2010', '1000');
+INSERT INTO Ingresarpagar VALUES ('0', '2', '2', '11-10-2010', '1300');
+INSERT INTO Ingresarpagar VALUES ('0', '3', '3', '12-10-2010', '1500');
+INSERT INTO Ingresarpagar VALUES ('0', '4', '4', '13-10-2010', '1010');
+INSERT INTO Ingresarpagar VALUES ('0', '3', '5', '13-10-2010', '1800');

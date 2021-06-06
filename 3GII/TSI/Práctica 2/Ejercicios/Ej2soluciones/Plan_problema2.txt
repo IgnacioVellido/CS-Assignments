@@ -1,0 +1,122 @@
+make[1]: Entering directory '/mnt/68A80B78A80B43D2/Ubuntu/Desktop/TSI-2'
+if [ 0 -eq 0 ];	then \
+	Metric-FF/ff -p Ejercicios/ -o Ej2dominio.pddl -f Ej2problema2.pddl;	\
+else	\
+	Metric-FF/ff -p Ejercicios/ -o Ej2dominio.pddl -f Ej2problema2.pddl -O -g 1 -h 1;	\
+fi;
+
+ff: parsing domain file
+domain 'EJERCICIO-2' defined
+ ... done.
+ff: parsing problem file
+problem 'EJERCICIO-2-APARTADO_B' defined
+ ... done.
+
+
+
+no optimization required. skipping criterion.
+
+
+warning: var quantification of ?O2 overwrites previous declaration
+
+
+no metric specified. plan length assumed.
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is EHC, if that fails then  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+Cueing down from goal distance:   21 into depth [1]
+                                  20            [1]
+                                  19            [1]
+                                  18            [1][2][3][4][5][6][7][8][9][10]
+                                  17            [1][2][3][4][5]
+                                  16            [1][2][3][4][5]
+                                  15            [1]
+                                  14            [1]
+                                  13            [1]
+                                  11            [1]
+                                  10            [1][2][3][4][5][6][7][8][9][10][11][12][13]
+                                   9            [1][2]
+                                   8            [1][2][3][4][5][6][7][8]
+                                   7            [1]
+                                   6            [1]
+                                   5            [1]
+                                   4            [1]
+                                   3            [1]
+                                   2            [1]
+                                   1            [1]
+                                   0            
+
+ff: found legal plan as follows
+
+step    0: COGER JUGADOR_1 ZONA_1 MANZANA_1 ORO_1
+        1: GIRAR-DERECHA JUGADOR_1 N
+        2: ENTREGAR JUGADOR_1 ZONA_1 MANZANA_1 BRUJA_1
+        3: IR_ESTE JUGADOR_1 ZONA_1 ZONA_2
+        4: COGER JUGADOR_1 ZONA_2 ORO_1 ORO_1
+        5: IR_ESTE JUGADOR_1 ZONA_2 ZONA_3
+        6: GIRAR-DERECHA JUGADOR_1 E
+        7: IR_SUR JUGADOR_1 ZONA_3 ZONA_8
+        8: IR_SUR JUGADOR_1 ZONA_8 ZONA_13
+        9: GIRAR-DERECHA JUGADOR_1 S
+       10: ENTREGAR JUGADOR_1 ZONA_13 ORO_1 PRINCIPE_1
+       11: IR_OESTE JUGADOR_1 ZONA_13 ZONA_12
+       12: GIRAR-DERECHA JUGADOR_1 O
+       13: GIRAR-DERECHA JUGADOR_1 N
+       14: GIRAR-DERECHA JUGADOR_1 E
+       15: IR_SUR JUGADOR_1 ZONA_12 ZONA_17
+       16: IR_SUR JUGADOR_1 ZONA_17 ZONA_22
+       17: GIRAR-IZQUIERDA JUGADOR_1 S
+       18: IR_ESTE JUGADOR_1 ZONA_22 ZONA_23
+       19: GIRAR-DERECHA JUGADOR_1 E
+       20: GIRAR-DERECHA JUGADOR_1 S
+       21: COGER JUGADOR_1 ZONA_23 OSCAR_1 ORO_1
+       22: IR_OESTE JUGADOR_1 ZONA_23 ZONA_22
+       23: GIRAR-DERECHA JUGADOR_1 O
+       24: ENTREGAR JUGADOR_1 ZONA_22 OSCAR_1 LEONARDO_1
+       25: IR_NORTE JUGADOR_1 ZONA_22 ZONA_17
+       26: IR_NORTE JUGADOR_1 ZONA_17 ZONA_12
+       27: GIRAR-DERECHA JUGADOR_1 N
+       28: IR_ESTE JUGADOR_1 ZONA_12 ZONA_13
+       29: IR_ESTE JUGADOR_1 ZONA_13 ZONA_14
+       30: IR_ESTE JUGADOR_1 ZONA_14 ZONA_15
+       31: GIRAR-DERECHA JUGADOR_1 E
+       32: GIRAR-DERECHA JUGADOR_1 S
+       33: COGER JUGADOR_1 ZONA_15 ROSA_1 ORO_1
+       34: IR_OESTE JUGADOR_1 ZONA_15 ZONA_14
+       35: IR_OESTE JUGADOR_1 ZONA_14 ZONA_13
+       36: IR_OESTE JUGADOR_1 ZONA_13 ZONA_12
+       37: GIRAR-DERECHA JUGADOR_1 O
+       38: IR_NORTE JUGADOR_1 ZONA_12 ZONA_7
+       39: ENTREGAR JUGADOR_1 ZONA_7 ROSA_1 PRINCESA_1
+       40: IR_NORTE JUGADOR_1 ZONA_7 ZONA_2
+       41: GIRAR-DERECHA JUGADOR_1 N
+       42: IR_ESTE JUGADOR_1 ZONA_2 ZONA_3
+       43: IR_ESTE JUGADOR_1 ZONA_3 ZONA_4
+       44: IR_ESTE JUGADOR_1 ZONA_4 ZONA_5
+       45: GIRAR-DERECHA JUGADOR_1 E
+       46: IR_SUR JUGADOR_1 ZONA_5 ZONA_10
+       47: IR_SUR JUGADOR_1 ZONA_10 ZONA_15
+       48: GIRAR-DERECHA JUGADOR_1 S
+       49: COGER JUGADOR_1 ZONA_15 ALGORITMO_1 ORO_1
+       50: IR_OESTE JUGADOR_1 ZONA_15 ZONA_14
+       51: IR_OESTE JUGADOR_1 ZONA_14 ZONA_13
+       52: IR_OESTE JUGADOR_1 ZONA_13 ZONA_12
+       53: GIRAR-DERECHA JUGADOR_1 O
+       54: IR_NORTE JUGADOR_1 ZONA_12 ZONA_7
+       55: IR_NORTE JUGADOR_1 ZONA_7 ZONA_2
+       56: ENTREGAR JUGADOR_1 ZONA_2 ALGORITMO_1 PROFESOR_1
+     		Coste Total: 0.00
+
+
+time spent:    0.00 seconds instantiating 863 easy, 0 hard action templates
+               0.00 seconds reachability analysis, yielding 189 facts and 863 actions
+               0.00 seconds creating final representation with 189 relevant facts, 1 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.03 seconds searching, evaluating 931 states, to a max depth of 13
+               0.03 seconds total time
+
+make[1]: Leaving directory '/mnt/68A80B78A80B43D2/Ubuntu/Desktop/TSI-2'
