@@ -4,8 +4,8 @@ Assigments solved and notes taken during my Computer Science bachelor's degree.
 ## Index
 **1º**
   * Álgebra (no files)
-  * [Cálculo] (1GII/CA)
-  * [Fundamentos Físicos y Tecnológicos] (1GII/FFT)
+  * [Cálculo](1GII/CA)
+  * [Fundamentos Físicos y Tecnológicos](1GII/FFT)
   * [Fundamentos de Programación](1GII/FP)
   * [Fundamentos del Software](1GII/FS)
   * [Ingeniería, Empresa y Sociedad](1GII/IES)
