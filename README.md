@@ -33,7 +33,7 @@ Assigments solved and notes taken during my Computer Science bachelor's degree.
   * [Informática Gráfica](3GII/IG)   
   * [Ingeniería de Servidores](3GII/ISE)
   * [Ingeniería del Conocimiento](3GII/IC)
-  * [Modelos de Computación](3GII/UGR-MC)
+  * [Modelos de Computación](3GII/MC)
   * [Técnicas de los Sistemas Inteligentes](3GII/TSI)
   * [Tecnologías Web](3GII/TW)  
   * [Metaheurísticas](3GII/MH)
