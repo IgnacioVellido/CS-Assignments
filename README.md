@@ -9,7 +9,7 @@ Assigments solved and notes taken during my Computer Science bachelor's degree.
   * [Fundamentos de Programación](1GII/FP)
   * [Fundamentos del Software](1GII/FS)
   * [Ingeniería, Empresa y Sociedad](1GII/IES)
-  * [Metodología de la Programación](1GII/MP)
+  * Metodología de la Programación (no files)
   * Estadística (no files)
   * Lógica y Métodos Discretos (no files)
   * Tecnología y Organización de Computadores (no files)
